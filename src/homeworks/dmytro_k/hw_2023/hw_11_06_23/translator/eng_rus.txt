@@ -1,0 +1,4 @@
+Human:Человек
+Hello:Привет
+Black:Черный
+Home:Дом

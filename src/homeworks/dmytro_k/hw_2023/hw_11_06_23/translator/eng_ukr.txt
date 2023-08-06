@@ -1,0 +1,5 @@
+Human:Людина
+woman:жінка
+Hello:Привіт
+Black:Чорний
+Home:Дім

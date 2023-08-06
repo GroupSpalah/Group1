@@ -1,0 +1,20 @@
+public class Car extends TrafficLight{
+
+	private int countOfSpeeds;
+	private int countOfDoors;
+	private String model;
+
+	protected Car(int countOfSpeeds, double countOfDoors, String model){ // int не double, конструктор не соответствует переменным класса.
+		
+	// не вызывается родительский конструктор из TrafficLight
+
+	countOfSpeeds = countOfSpeeds; // не указано, какие именно переменные инициализируются, нет ключевого слова this
+	countOfDoors = countOfDoors;
+	model = model;
+	}
+	
+	public void drive(){
+		System.out.println("Go...");
+	}
+		
+}

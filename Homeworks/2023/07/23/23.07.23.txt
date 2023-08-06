@@ -1,0 +1,2 @@
+1) Regirster on github
+2) Generate and add ssh-keys - https://docs.github.com/ru/authentication/connecting-to-github-with-ssh/generating-a-new-ssh-key-and-adding-it-to-the-ssh-agent

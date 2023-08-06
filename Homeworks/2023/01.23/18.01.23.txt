@@ -1,0 +1,61 @@
+Bytecode, compiliation, interpretation
+
+      by compiler       JVM
+.java     ->     .class  -> machine code
+
+1) Please create an abstarct class Shape and two subclasses Square and Circle. Replace code in method drawShape()
+according to principles of polymorphism. Please propose the other solutions for improving quality of the code.
+
+enum ShareType {
+    SQUARE, CIRCLE
+}
+
+class Shape {
+    private ShareType shareType;
+
+    //other fields
+
+
+    public Shape(ShareType shareType) {
+        this.shareType = shareType;
+    }
+
+    public ShareType getShareType() {
+        return shareType;
+    }
+
+    public void drawSquare() {
+        //Code for drawing square
+    }
+
+    public void drawCircle() {
+        //Code for drawing square
+    }
+
+    public void drawShape() {
+        if (getShareType() == ShareType.SQUARE) {
+            drawSquare();
+        } else {
+            drawCircle();
+        }
+    }
+
+    //others methods
+}
+
+2)  Please model in classes domain described below.
+    Using of interfaces, abstract classes & inheritances & abstract methods are highly recommended.
+    Exceptions needed as well.
+
+    Vehicles. There are different kind of vehicles - cars, trucks, buses.
+    Cars could be different kind as well - suv, racing car, compact car.
+
+    Vehicle runs on some fuel - gasoline, diesel, electricity.
+    Its possible to fuel car. If wrong fuel is used - car should break. (exception)
+    All vehicles can do some actions: like accelerate or brake.
+
+    Each and every vehicle has wheels. But trucks & buses has more wheels than cars.
+    It should be possible to request number of wheels from car.
+
+            P.S. BONUS - for implementing plug-in hybrid car: it runs on gasoline. But could also be charged by electricity.
+

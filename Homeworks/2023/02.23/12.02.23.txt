@@ -1,0 +1,3 @@
+Unit tests FileManager
+(https://mkyong.com/java/itext-read-and-write-pdf-in-java/ - чтение pdf файлов (для тестов))
+

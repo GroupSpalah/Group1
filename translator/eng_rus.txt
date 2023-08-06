@@ -1,0 +1,3 @@
+Hello:Привет
+Morning:Утро
+Friend:Друг

@@ -1,0 +1,8 @@
+Все действия юзера записывать в файл с название Logs.txt в формате: название метода + входящие параметры.
+            По запросу юзера выводить в консоль данные файла Logs.txt.
+            Выводить данные по определенному методу
+            При работе с файлами использовать класс Files.
+        String log = "\nMethod addElement, params -> " + value;
+        String log = "\nMethod resize, params -> " + value;
+        String log = "\nMethod addArray, params -> " + value;
+        String log = "\nMethod addArray, params -> " + value;

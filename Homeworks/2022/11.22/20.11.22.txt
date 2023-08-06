@@ -1,0 +1,62 @@
+For debagging
+
+1) public static void main(String[] args) {
+           String myStr1 = "Cartoon value=value+1;Tomcat count=count+1;Address variable=variable+1;";
+
+           StringBuilder builder = new StringBuilder();
+
+           while (myStr1.length() != 0) {
+               int plusIndex = myStr1.indexOf("+");
+               int equalIndex = myStr1.indexOf("=");
+
+               String varName = myStr1.substring(equalIndex + 1, plusIndex);
+
+               String result = varName.concat("=").concat(varName).concat("\\+1;");
+
+               String temp = myStr1.replaceAll(result, varName.concat("\\++;"));
+
+               int dotIndex = temp.indexOf(";");
+
+               String s = temp.substring(0, dotIndex + 1);
+
+               builder.append(s);
+
+               myStr1 = myStr1.substring(plusIndex + 3);
+
+           }
+
+           System.out.println(builder);
+       }
+2) Имеется строка, к примеру "Hello my young dog".
+   Необходимо перевернуть строку в след. формате "godgn uo yymol leH".
+   То есть после реверса длина слова равнялась изначальной длине.
+
+    public static void main(String[] args) {
+
+           String str = "Don't speak my English";
+
+           String replacedStr = str.replaceAll(" ", "");
+
+           String s = new StringBuilder(replacedStr).reverse().toString();
+           String[] words = str.split(" ");
+
+           StringBuilder builder = new StringBuilder();
+
+           for (String word : words) {
+               int length = word.length();
+               String value = s.substring(0, length);
+
+               builder.append(value).append(" ");
+               s = s.substring(length);
+           }
+           System.out.println(builder);
+
+       }
+
+       3) Photos
+       4) Создать класс Банковский счет.
+       Установить изначально сумму для счета - 200$
+       Создать метод, который будет отнимать от счета сумму. Если денег недостаточно, тогда написать в консоль - "Пополните счет".
+       Счет можно пополнить другим методом.
+
+!!! Passing params, enums

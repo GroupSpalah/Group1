@@ -1,0 +1,103 @@
+1) Write a function to convert a name into initials.
+   	This kata strictly takes two words with one space in between them.
+   	The output should be two capital letters with a dot separating them.
+   	It should look like this:
+   	Sam Harris => S.H
+   	patrick feeney => P.F
+
+2) write a program that can check if the given website is valid website or not
+               starts with: www.
+               ends with: .com, .edu, .gov, startsWith, endsWith
+
+ 3) write a program that asks user to enter a word. If the work starts with x, replace it with a.
+                        Input:
+                            xcodex
+                        Output:
+                            acodex, replace
+
+4)Ask user to enter two words. Print first word without its first character
+                                  then print the second word without its first character.
+                                          Input:
+                                              apple
+                                              banana
+                                          Output:
+                                              ppleanana
+  5) Ask user to enter two words. Then add them together and print.
+         But if the last letter if the first word and the first letter of the last letter is the same, print that character once.
+
+                     Input:
+                         one
+                         eight
+                     Output:
+                         oneight
+
+6) Assume that email address is constructed by person's first name and followed by an underscore and last name.
+
+      Write a program that will print out information about user based on email. Print first name, last name, and domain.
+
+      First and Last name should be printed with proper format - uppercase first letter and remaining lowercase.
+
+              Ex:
+                  input:
+                      craig_federighi@apple.com
+
+               Output:
+                   First name: Craig
+                   Last name: Federighi
+                   Domain: apple
+
+7)  Дано слово. Переставить первые три и последние три буквы, сохранив порядок их следования.
+
+//See solutions
+8) public static void main(String[] args) {
+           String myStr1 = "Cartoon value=value+1;Tomcat count=count+1;Address variable=variable+1;";
+
+           StringBuilder builder = new StringBuilder();
+
+           while (myStr1.length() != 0) {
+               int plusIndex = myStr1.indexOf("+");
+               int equalIndex = myStr1.indexOf("=");
+
+               String varName = myStr1.substring(equalIndex + 1, plusIndex);
+
+               String result = varName.concat("=").concat(varName).concat("\\+1;");
+
+               String temp = myStr1.replaceAll(result, varName.concat("\\++;"));
+
+               int dotIndex = temp.indexOf(";");
+
+               String s = temp.substring(0, dotIndex + 1);
+
+               builder.append(s);
+
+               myStr1 = myStr1.substring(plusIndex + 3);
+
+           }
+
+           System.out.println(builder);
+       }
+9) Имеется строка, к примеру "Hello my young dog".
+   Необходимо перевернуть строку в след. формате "godgn uo yymol leH".
+   То есть после реверса длина слова равнялась изначальной длине.
+
+    public static void main(String[] args) {
+
+           String str = "Don't speak my English";
+
+           String replacedStr = str.replaceAll(" ", "");
+
+           String s = new StringBuilder(replacedStr).reverse().toString();
+           String[] words = str.split(" ");
+
+           StringBuilder builder = new StringBuilder();
+
+           for (String word : words) {
+               int length = word.length();
+               String value = s.substring(0, length);
+
+               builder.append(value).append(" ");
+               s = s.substring(length);
+           }
+           System.out.println(builder);
+
+       }

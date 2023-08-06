@@ -1,0 +1,20 @@
+package homeworks.dmytro_k.hw_2023.hw_09_07_23;
+
+public enum SubCategory {
+    SMARTPHONE,
+    PHONE,
+    GAMELAPTOP,
+    BUSINESSLAPTOP,
+    OFFICEMOUSE,
+    LAPTOPMOUSE,
+    GAMEMOUSE,
+    TV4k,
+    SMARTTV,
+    ANDROIDTV,
+    WIRELESSCHARGER,
+    SOLARCHARGER,
+    QUICKCHARGER,
+    GAMEKEYBOARD,
+    OFFICEKEYBOARD,
+    TVKEYBOARD;
+}

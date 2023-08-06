@@ -1,0 +1,4 @@
+1) Create a generic class ArrayWorker with generic array field for working Integer and Double
+Add code to counts the number of elements in each of arrays that are greater
+than a specified element.
+2) 4.5 photo

@@ -1,0 +1,25 @@
+
+	private class Operator extends Runnable implements Ballable { // классами интерфейсы не наследуются, а реализуются. 
+																  // Нельзя использовать модификаиор private
+																  // Operator != Factorial
+
+	// не реализуются методы интерфейсов
+
+	public static void main(String args){
+
+		System.out.println("Hello world");
+
+	}
+	@Override
+	public void jump(){
+		System.out.println(Jumping); // нет кавычек
+	}
+
+	}
+
+
+	public class Tree{ // Tree != Factorial
+
+	public Tree(){}
+
+	}

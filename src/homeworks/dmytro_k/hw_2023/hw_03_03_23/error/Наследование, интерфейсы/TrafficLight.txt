@@ -1,0 +1,22 @@
+public class TrafficLight{
+
+private String nameOfStreet;
+
+TrafficLight(String name){
+	numberOfStreet = nameOfStreet; // numberOfStreet != nameOfStreet, а nameOfStreet != name; нет ключевого слова this.
+}
+
+private String getNameOfStreet(){ // зачем нужен private геттер?
+
+return nameOfStreet;
+
+}
+
+private abstract getNumberOfColor(){}; // модификаторы private abstract не применимы для геттера, геттер ничего не возвращает.
+
+public static void main(string[] args){
+
+TrafficLight trafficLight = new TrafficLight(); // при создании экземпляра не передаются типы данных в конструкторе.
+}
+
+}

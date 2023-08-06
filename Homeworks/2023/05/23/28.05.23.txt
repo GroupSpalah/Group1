@@ -1,0 +1,24 @@
+1) В Map<String, Integer> хранить данные(Город, количество улиц) вывести на печать(в отдельных методах):
+   - названия городов длина которых больше 5.
+   - названия городов, которые заканчиваются на определенную букву и количество улиц больше 15.
+2) Given a map of food keys and topping values, modify and return the map as follows: if the
+   key "ice cream" is present, set its value to "cherry". In all cases,
+   set the key "bread" to have the value "butter".
+
+3) Modify and return the given map as follows:
+if the keys "a" and "b" are both in the map and have equal values, remove them both.
+
+4) Modify and return the given map as follows: if the key "a" has a value, set the key "b" to have
+that same value. In all cases remove the key "c", leaving the rest of the map unchanged.
+
+5) Given a map of food keys and their topping values, modify
+and return the map as follows: if the key "ice cream" has a value,
+set that as the value for the key "yogurt" also. If the key "spinach"
+has a value, change that value to "nuts".
+
+6) Modify and return the given map as follows: if exactly one of
+the keys "a" or "b" has a value in the map (but not both),
+set the other to have that same value in the map.
+
+https://codingbat.com/java/Map-1
+https://codingbat.com/java/Map-2

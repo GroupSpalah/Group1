@@ -1,0 +1,12 @@
+public interface Ballable{
+
+    private abstract int count = 0; // переменные в интерфейсах неявно являются public, static и final.
+
+    public void jump(){} // не нужны фигурные скобки и модификатор public, должна быть точка с запятой.
+
+    default String getName(){
+
+        return "John";
+    }
+
+}

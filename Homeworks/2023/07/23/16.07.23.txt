@@ -1,0 +1,4 @@
+1) Translator
+2) Git
+
+https://git-scm.com/downloads

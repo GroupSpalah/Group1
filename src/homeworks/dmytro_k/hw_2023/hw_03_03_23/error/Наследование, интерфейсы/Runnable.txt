@@ -1,0 +1,7 @@
+private interface Runnable{ // нельзя использовать модификатор private 
+
+private void print(){
+	System.out.println("Print");
+}
+
+}

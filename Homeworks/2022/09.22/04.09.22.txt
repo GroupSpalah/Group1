@@ -1,0 +1,35 @@
+1) Написать логическое выражение для выбора коэффициента учета
+стажа работы по специальности в конкурсе на бюджетные места.Если 
+стаж до 2 лет, то коэффициент равен 11, если стаж от 2 до 5 лет –12, 
+если больше 5 лет –13.
+
+2) Дано число, нужно вывести в консоль оно больше/меньше/равно нулю.
+
+3) write a program that can define the age groups of a person
+               age groups are:
+                       Teenager (< 21)
+                       Adult   (>=21 && <55 )
+                       Senior  ( > 55 )
+
+                if age is negative or greater than 150, print invalid
+
+                4)Switch
+                               ex:
+                                   number = 3
+                                   output:
+                                         FIN
+                                   number = 10
+                   	            output:
+                   	                RA
+                               	number = 15
+                               	5) Switch      'A': excellent
+                                               'B': great job
+                                               'C': good
+                                               'D': passed
+                                               'F': failed
+                                               other wise: invalid
+
+                                               Java 12 and older;
+
+                                               https://mkyong.com/java/java-12-switch-expressions/
+

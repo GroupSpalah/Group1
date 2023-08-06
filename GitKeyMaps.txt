@@ -1,0 +1,21 @@
+git init - create local repo
+git status - check repo's status
+git add file_name - add file to index
+git commit -m"Message for commit" - create commit
+git log --graph - show all commits
+git push url_remote_repo or pseudonim_remote_repo branch_name - push commits to remote repo
+git remote add pseudonim_name url_remote_repo - create pseudonim
+git remote -v -show all pseudonims
+
+git clone url_remote_repo - clone repo
+git pull url_remote_repo or pseudonim_remote_repo branch_name - pull changes from remote repo
+
+gitk - open editor
+
+Branches
+
+git branch name_branch - create branch without move to it
+git checkout -b name_branch - create branch with move to it
+git branch - show all branches
+git checkout name_branch - move to branch with given name
+git merge branch_name - merge given branch with another branch

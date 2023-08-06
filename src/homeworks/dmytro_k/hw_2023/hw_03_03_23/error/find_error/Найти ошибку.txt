@@ -1,0 +1,18 @@
+
+++class Task implements Actionable {
+ public void doIt() { }
+ }
+++abstract class Test extends Task {
+}
+++abstract class Compile extends Task {
+public void doIt(int x) { }
+}
+++class Run extends Task implements Actionable {
+public void doStuff() { }
+}
+++ interface Actionable {
+public void doIt();
+}
+
+Какие будут ошибки?
+- никаких.

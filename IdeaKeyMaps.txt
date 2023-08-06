@@ -1,0 +1,6 @@
+alt + insert -create package, java file, etc.
+ctrl + d - duplication code
+ctrl + / - oneline comment
+ctrl + shift + / - manyline comment
+ctrl + shift + F10 - run programm
+ctrl + alt + l - format code
