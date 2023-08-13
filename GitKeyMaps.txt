@@ -19,3 +19,9 @@ git checkout -b name_branch - create branch with move to it
 git branch - show all branches
 git checkout name_branch - move to branch with given name
 git merge branch_name - merge given branch with another branch
+
+Stashing
+git stash save "message" - stashing of changes
+git stash apply stash@{number} - applying of stash
+git stash list - show all stashes
+git stash clear - delete all stashes
