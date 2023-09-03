@@ -10,7 +10,7 @@ public class LearnStreams {
 
         Predicate<Integer> predicate = element -> element > 5;
 
-        Consumer<Integer> consumer = element -> System.out.println(element);
+        Consumer<Integer> consumer = element -> System.out.print(element + " ");
 
         list
                 .stream()// List -> Stream, all elements
