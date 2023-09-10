@@ -28,8 +28,6 @@ public class Task1 {
         List<String> filteredCountries4 = countries.stream()
                         .filter(predicate4).toList();
 
-
-
         filteredCountries1.forEach(System.out::println);
         System.out.println();
         filteredCountries2.forEach(System.out::println);

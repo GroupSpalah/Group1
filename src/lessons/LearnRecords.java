@@ -1,5 +1,7 @@
 package lessons;
 
+import java.io.File;
+
 public class LearnRecords {
     public static void main(String[] args) {
         PersonRecord record = new PersonRecord("John", 23);
@@ -49,4 +51,18 @@ class PersonStream {
                 '}';
     }
 }
+
+/*
+* String {
+*       print() {
+*       sout("Hello");
+* }
+*
+* class ChildString extends String {
+*    print() {
+ *       sout("World");
+ * }
+* }
+* }
+* */
 

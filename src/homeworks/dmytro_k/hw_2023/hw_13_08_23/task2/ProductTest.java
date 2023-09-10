@@ -52,7 +52,8 @@ public class ProductTest {
         products.add(mattePro);
         products.add(tpuEpikBlack);
 
-        Predicate<Product> predicate1 = element -> element.manufacturer().name().equals("Apple") && element.fragility();
+        Predicate<Product> predicate1 = element ->
+                element.manufacturer().name().equals("Apple") && element.fragility();
         Predicate<Product> predicate2 = Product::fragility;
         Predicate<Product> predicate3 = element -> element.price() > 1000 && element.price() < 20000;
 
