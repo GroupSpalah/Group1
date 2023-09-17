@@ -2,7 +2,7 @@ package homeworks.sergii_khvostov.hw_2023.hw_10_09_23;
 
 import java.util.Date;
 
-public class Bus extends Vehicles {
+public class Bus extends Vehicle {
     private int pollutionIndicator;
 
     public Bus(int id, String licensePlate, int maxPassengers, String status, String fuelType,

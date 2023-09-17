@@ -4,9 +4,9 @@ import java.util.List;
 
 public class Route {
     private List<Station> stations;
-    private List<Vehicles> vehicles;
+    private List<Vehicle> vehicles;
 
-    public Route(List<Station> stations, List<Vehicles> vehicles) {
+    public Route(List<Station> stations, List<Vehicle> vehicles) {
         this.stations = stations;
         this.vehicles = vehicles;
     }
@@ -19,11 +19,11 @@ public class Route {
         this.stations = stations;
     }
 
-    public List<Vehicles> getVehicles() {
+    public List<Vehicle> getVehicles() {
         return vehicles;
     }
 
-    public void setVehicles(List<Vehicles> vehicles) {
+    public void setVehicles(List<Vehicle> vehicles) {
         this.vehicles = vehicles;
     }
 }

@@ -11,7 +11,6 @@ import java.util.List;
 
 
 public class Route {
-
     private int number;
     private List<String> stations;
     private List<Vehicle> vehicles;

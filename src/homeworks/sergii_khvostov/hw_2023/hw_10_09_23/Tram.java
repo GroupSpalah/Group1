@@ -2,7 +2,7 @@ package homeworks.sergii_khvostov.hw_2023.hw_10_09_23;
 
 import java.util.Date;
 
-public class Tram extends Vehicles {
+public class Tram extends Vehicle {
     private int yearsInService;
 
     public Tram(int id, String licensePlate, int maxPassengers, String status, String fuelType,

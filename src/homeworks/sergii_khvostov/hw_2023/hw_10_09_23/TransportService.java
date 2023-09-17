@@ -4,19 +4,19 @@ import java.util.*;
 
 
 public class TransportService {
-    private List<Vehicles> vehicles;
+    private List<Vehicle> vehicles;
     private List<Route> routes;
 
-    public TransportService(List<Vehicles> vehicles, List<Route> routes) {
+    public TransportService(List<Vehicle> vehicles, List<Route> routes) {
         this.vehicles = vehicles;
         this.routes = routes;
     }
 
-    public List<Vehicles> getVehicles() {
+    public List<Vehicle> getVehicles() {
         return vehicles;
     }
 
-    public void setVehicles(List<Vehicles> vehicles) {
+    public void setVehicles(List<Vehicle> vehicles) {
         this.vehicles = vehicles;
     }
 
@@ -37,7 +37,7 @@ public class TransportService {
     }
 
 
-    public void assignRouteToVehicle(Vehicles vehicle, Route route) {
+    public void assignRouteToVehicle(Vehicle vehicle, Route route) {
         if (vehicle.getStatus().equalsIgnoreCase("in operation")) {
             route.getVehicles().add(vehicle);
         }

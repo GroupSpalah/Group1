@@ -25,9 +25,6 @@ public class Vehicle {
     private Fuel fuelType; //задавать по умолчанию в потомках
     private LocalDate serviceDate;
 
-    public Vehicle() {
-    }
-
     public Vehicle(int identifier, String numberplate, int numberOfPassengers, Fuel fuelType, LocalDate serviceDate) {
         this.identifier = identifier;
         this.numberplate = numberplate;

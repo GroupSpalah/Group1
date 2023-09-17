@@ -2,7 +2,7 @@ package homeworks.sergii_khvostov.hw_2023.hw_10_09_23;
 
 import java.util.Date;
 
-public class Trolleybus extends Vehicles {
+public class Trolleybus extends Vehicle {
     private boolean hasElectricEngine;
 
     public Trolleybus(int id, String licensePlate, int maxPassengers, String status,

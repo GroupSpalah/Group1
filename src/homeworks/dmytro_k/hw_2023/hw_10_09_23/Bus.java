@@ -26,8 +26,10 @@ public class Bus extends Vehicle {
 
         if (monthsAfterService >= 0 && monthsAfterService <= 6 && contaminationIndicator > 5) {
             this.status = Status.INOPERATION;
-        } else if (monthsAfterService >= 0 && monthsAfterService <= 12
-                && contaminationIndicator >= 3 && contaminationIndicator <= 5) {
+        } else if (monthsAfterService >= 0 &&
+                monthsAfterService <= 12 &&
+                contaminationIndicator >= 3 &&
+                contaminationIndicator <= 5) {
             this.status = Status.NEEDSREPAIR;
         } else {
             this.status = Status.SCRAPPED;

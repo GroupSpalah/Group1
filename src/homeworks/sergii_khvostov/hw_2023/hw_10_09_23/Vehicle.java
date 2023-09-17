@@ -2,7 +2,7 @@ package homeworks.sergii_khvostov.hw_2023.hw_10_09_23;
 
 import java.util.Date;
 
-public class Vehicles {
+public class Vehicle {
     private int id;
     private String licensePlate;
     private int maxPassengers;
@@ -10,8 +10,8 @@ public class Vehicles {
     private String fuelType;
     private Date lastMaintenanceDate;
 
-    public Vehicles(int id, String licensePlate, int maxPassengers, String status,
-                    String fuelType, Date lastMaintenanceDate) {
+    public Vehicle(int id, String licensePlate, int maxPassengers, String status,
+                   String fuelType, Date lastMaintenanceDate) {
         this.id = id;
         this.licensePlate = licensePlate;
         this.maxPassengers = maxPassengers;
