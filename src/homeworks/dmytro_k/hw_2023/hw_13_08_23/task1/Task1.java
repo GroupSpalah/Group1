@@ -14,12 +14,10 @@ package homeworks.dmytro_k.hw_2023.hw_13_08_23.task1;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.function.Consumer;
 import java.util.function.Predicate;
 
 public class Task1 {
     public static void main(String[] args) {
-
         List<String> countries = new ArrayList<>();
 
         countries.add("Austria");
@@ -39,31 +37,25 @@ public class Task1 {
         Predicate<String> predicate3 = element -> element.contains("A") || element.contains("a");
         Predicate<String> predicate4 = element -> element.length() > 5;
 
-        Consumer<String> consumer1 = System.out::println;
-
-        //1
         System.out.println("-1-");
         countries
                 .stream()
                 .filter(predicate1)
-                .forEach(consumer1);
-        //2
+                .forEach(System.out::println);
         System.out.println("-2-");
         countries
                 .stream()
                 .filter(predicate2)
-                .forEach(consumer1);
-        //3
+                .forEach(System.out::println);
         System.out.println("-3-");
         countries
                 .stream()
                 .filter(predicate3)
-                .forEach(consumer1);
-        //4
+                .forEach(System.out::println);
         System.out.println("-4-");
         countries
                 .stream()
                 .filter(predicate4)
-                .forEach(consumer1);
+                .forEach(System.out::println);
     }
 }

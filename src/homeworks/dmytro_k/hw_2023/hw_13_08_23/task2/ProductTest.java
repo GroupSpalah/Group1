@@ -38,8 +38,8 @@ public class ProductTest {
                 Samsung, true, 10000);
         Product mattePro = new Product("Nillkin Matte Pro", LocalDate.of(2023, 5, 10),
                 Nillkin, false, 350);
-        Product tpuEpikBlack = new Product("Nillkin TPU Epik Black", LocalDate.of(2023, 5, 10),
-                Nillkin, false, 400);
+        Product tpuEpikBlack = new Product("Nillkin TPU Epik Black", LocalDate.of(2023, 5,
+                10), Nillkin, false, 400);
 
         List<Product> products = new ArrayList<>();
 
@@ -59,19 +59,18 @@ public class ProductTest {
 
         Consumer<Product> consumer = System.out::println;
 
-        //1
         System.out.println("-1-");
         products
                 .stream()
                 .filter(predicate1)
                 .forEach(consumer);
-        //2
+
         System.out.println("-2-");
         products
                 .stream()
                 .filter(predicate2)
                 .forEach(consumer);
-        //3
+
         System.out.println("-3-");
         products
                 .stream()
