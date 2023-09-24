@@ -12,7 +12,8 @@ public class Task1 {
     public static void main(String[] args) {
 
 
-        List<String> countries = List.of("USA", "Australia", "Poland", "Argentina", "India", "Ukraine");
+        List<String> countries = List.of("USA", "Australia", "Poland", "Argentina",
+                "India", "Ukraine");
 
         Predicate<String> predicate1 = country1 -> country1.startsWith("A");
         Predicate<String> predicate2 = country2 -> country2.toLowerCase().endsWith("a");
@@ -35,12 +36,6 @@ public class Task1 {
         filteredCountries3.forEach(System.out::println);
         System.out.println();
         filteredCountries4.forEach(System.out::println);
-
-
-
-
-
-
 
     }
 }

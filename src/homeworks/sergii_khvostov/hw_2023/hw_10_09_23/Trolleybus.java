@@ -1,13 +1,14 @@
 package homeworks.sergii_khvostov.hw_2023.hw_10_09_23;
 
-import java.util.Date;
+import java.time.LocalDate;
+
 
 public class Trolleybus extends Vehicle {
     private boolean hasElectricEngine;
 
     public Trolleybus(int id, String licensePlate, int maxPassengers, String status,
-                      String fuelType, Date lastMaintenanceDate, boolean hasElectricEngine) {
-        super(id, licensePlate, maxPassengers, status, fuelType, lastMaintenanceDate);
+                      LocalDate lastMaintenanceDate, FuelType fuelTypes, boolean hasElectricEngine) {
+        super(id, licensePlate, maxPassengers, status, lastMaintenanceDate, fuelTypes);
         this.hasElectricEngine = hasElectricEngine;
     }
 
