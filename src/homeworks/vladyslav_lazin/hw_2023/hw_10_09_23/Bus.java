@@ -5,7 +5,8 @@ import java.time.LocalDate;
 public class Bus extends Vehicle{
 private int contaminationIndicator;
 
-    public Bus(String licensePlate, int capacity, Condition condition, LocalDate lastService, int contaminationIndicator) {
+    public Bus(String licensePlate, int capacity, Condition condition,
+               LocalDate lastService, int contaminationIndicator) {
         super(licensePlate, capacity, lastService);
         this.contaminationIndicator = contaminationIndicator;
         this.setFuelType(FuelType.GAS);

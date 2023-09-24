@@ -38,4 +38,13 @@ public class Bus extends Vehicle {
             this.status = Status.SCRAPPED;
         }
     }
+
+    @Override
+    public String toString() {
+        return "Bus{" +
+                super.toString() +
+                "contaminationIndicator=" + contaminationIndicator +
+                ", status=" + status +
+                '}';
+    }
 }

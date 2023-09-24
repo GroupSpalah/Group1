@@ -25,12 +25,23 @@ public class UseFlatMap {
                 new Pharmacy("DS", List.of("Vitamin C", "Advil", "DoppelHerz")),
                 new Pharmacy("Kopiiochka", List.of("Ibuprofen", "Vitamin C")));
 
-        List<String> medicinesOnline = List.of("Askorbinka", "Nazonex", "Dekatylen", "Strepsils", "Zelenka");
+        List<String> medicinesOnline =
+                List.of("Askorbinka", "Nazonex", "Dekatylen", "Strepsils", "Zelenka");
 
 
-        Stream<List<String>> listStream = pharmacies
+   /*     Stream<List<String>> listStream = pharmacies
                 .stream()//Stream<Pharmacy>
-                .map(pharmacy -> pharmacy.medicines());
+                .map(pharmacy -> pharmacy.medicines());*/
+
+        Stream<String> medicines = pharmacies
+                .stream()
+                .flatMap(pharmacy -> pharmacy.medicines().stream());
+
+        Stream<String> stream = medicinesOnline.stream();
+
+        Stream.concat(medicines, stream)
+                .distinct()
+                .forEach(System.out::println);
 
     }
 }

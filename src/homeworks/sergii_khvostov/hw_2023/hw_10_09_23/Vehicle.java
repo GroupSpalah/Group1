@@ -10,7 +10,9 @@ public class Vehicle {
     private int maxPassengers;
     private String status;
     private LocalDate lastMaintenanceDate;
-    FuelType fuelTypes;
+    private FuelType fuelTypes;
+
+    private static int counterIds = 1;
 
     public static final String IN_OPERATION = "in operation";
     public static final String NEEDS_RENOVATION = "needs renovation";
@@ -26,7 +28,17 @@ public class Vehicle {
         this.fuelTypes = fuelTypes;
     }
 
-   /* private static LocalDate parseDate(String dateString) {
+    public Vehicle(String licensePlate, int maxPassengers, String status,
+                   LocalDate lastMaintenanceDate, FuelType fuelTypes) {
+        this.id = counterIds++;
+        this.licensePlate = licensePlate;
+        this.maxPassengers = maxPassengers;
+        this.status = status;
+        this.lastMaintenanceDate = lastMaintenanceDate;
+        this.fuelTypes = fuelTypes;
+    }
+
+    /* private static LocalDate parseDate(String dateString) {
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
         return LocalDate.parse(dateString, formatter);
     }*/

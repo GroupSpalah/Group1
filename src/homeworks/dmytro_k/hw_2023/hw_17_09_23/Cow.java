@@ -7,7 +7,6 @@ public class Cow extends Animal{
         this.voice = "moo";
     }
 
-
     public void childbirth(int babyWeight){
 
     }

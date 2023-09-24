@@ -51,6 +51,11 @@ public class TransportService {
 
     public void numberOfVehiclesByStatus(Status status) {
 
+        vehicles
+                .stream()
+                .filter(v -> v.status == status)
+                .forEach(System.out::println);
+
         if (status.equals(Status.IN_OPERATION)) {
             System.out.println("Bus in operation: " +
                     numberOfVehicles(isBus, vehiclesInOperation));

@@ -16,7 +16,6 @@ public class Bus extends Vehicle {
         return pollutionIndicator;
     }
 
-
     @Override
     public void updateStatus() {
         super.updateStatus();

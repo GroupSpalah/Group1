@@ -15,7 +15,6 @@ public class Route {
     private int number;
     private List<String> stations;
     private List<Vehicle> vehicles;
-
     public Route(int number, List<String> stations, List<Vehicle> vehicles) {
         this.number = number;
         long countStations = stations.size();
@@ -44,7 +43,7 @@ public class Route {
     }
 
     public void routInfo() {
-        System.out.println(stations.toString());
+        System.out.println(stations);
 
         Consumer<Vehicle> identifierConsumer = vehicle ->
                 System.out.println(vehicle.getClass().getSimpleName()

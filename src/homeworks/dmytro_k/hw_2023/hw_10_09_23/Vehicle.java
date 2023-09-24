@@ -32,6 +32,12 @@ public abstract class Vehicle {
         this.serviceDate = serviceDate;
     }
 
+    public Vehicle(int identifier, String numberplate,
+                   int numberOfPassengers, Fuel fuelType, LocalDate serviceDate) {
+        this(identifier, numberplate, numberOfPassengers, serviceDate);
+        this.fuelType = fuelType;
+    }
+
     public Status getStatus() {
         return status;
     }
@@ -67,5 +73,16 @@ public abstract class Vehicle {
 
     public void setFuelType(Fuel fuelType) {
         this.fuelType = fuelType;
+    }
+
+    @Override
+    public String toString() {
+        return  "identifier=" + identifier +
+                ", numberplate='" + numberplate + '\'' +
+                ", numberOfPassengers=" + numberOfPassengers +
+                ", status=" + status +
+                ", fuelType=" + fuelType +
+                ", serviceDate=" + serviceDate +
+                '}';
     }
 }

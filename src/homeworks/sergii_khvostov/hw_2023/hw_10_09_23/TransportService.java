@@ -8,7 +8,6 @@ import static homeworks.sergii_khvostov.hw_2023.hw_10_09_23.Vehicle.IN_OPERATION
 public class TransportService {
     private List<Vehicle> vehicles;
     private List<Route> routes;
-
     public TransportService(List<Vehicle> vehicles, List<Route> routes) {
         this.vehicles = vehicles;
         this.routes = routes;
