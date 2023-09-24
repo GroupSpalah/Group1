@@ -1,6 +1,7 @@
 package homeworks.vladyslav_lazin.hw_2023.hw_10_09_23;
 
 import java.time.LocalDate;
+import java.util.Objects;
 
 public class Vehicle {
     private int id;
@@ -9,6 +10,8 @@ public class Vehicle {
     private Condition condition;
     private FuelType fuelType;
     private LocalDate lastService;
+
+    private String route;
 
     public Vehicle(String licensePlate, int capacity, LocalDate lastService) {
         this.id = (int) (1 + Math.random() * 1000 + System.currentTimeMillis() % 10000);
@@ -63,5 +66,25 @@ public class Vehicle {
 
     public void setLastService(LocalDate lastService) {
         this.lastService = lastService;
+    }
+
+    public String getRoute() {
+        return route;
+    }
+
+    public void setRoute(String route) {
+        this.route = route;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof Vehicle vehicle)) return false;
+        return id == vehicle.id && capacity == vehicle.capacity && Objects.equals(licensePlate, vehicle.licensePlate) && condition == vehicle.condition && fuelType == vehicle.fuelType && Objects.equals(lastService, vehicle.lastService);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(id, licensePlate, capacity, condition, fuelType, lastService);
     }
 }
