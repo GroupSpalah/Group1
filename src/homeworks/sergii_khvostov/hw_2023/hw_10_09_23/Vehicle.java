@@ -1,24 +1,35 @@
 package homeworks.sergii_khvostov.hw_2023.hw_10_09_23;
 
-import java.util.Date;
+import java.time.LocalDate;
+import java.time.Period;
+import java.time.format.DateTimeFormatter;
 
 public class Vehicle {
     private int id;
     private String licensePlate;
     private int maxPassengers;
     private String status;
-    private String fuelType;
-    private Date lastMaintenanceDate;
+    private LocalDate lastMaintenanceDate;
+    FuelType fuelTypes;
+
+    public static final String IN_OPERATION = "in operation";
+    public static final String NEEDS_RENOVATION = "needs renovation";
+    public static final String SCRAP = "scrap";
 
     public Vehicle(int id, String licensePlate, int maxPassengers, String status,
-                   String fuelType, Date lastMaintenanceDate) {
+                   LocalDate lastMaintenanceDate, FuelType fuelTypes) {
         this.id = id;
         this.licensePlate = licensePlate;
         this.maxPassengers = maxPassengers;
         this.status = status;
-        this.fuelType = fuelType;
         this.lastMaintenanceDate = lastMaintenanceDate;
+        this.fuelTypes = fuelTypes;
     }
+
+   /* private static LocalDate parseDate(String dateString) {
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
+        return LocalDate.parse(dateString, formatter);
+    }*/
 
     public int getId() {
         return id;
@@ -36,52 +47,37 @@ public class Vehicle {
         return status;
     }
 
-    public String getFuelType() {
-        return fuelType;
-    }
 
-    public Date getLastMaintenanceDate() {
+    public LocalDate getLastMaintenanceDate() {
         return lastMaintenanceDate;
     }
 
-    public void setId(int id) {
-        this.id = id;
-    }
-
-    public void setLicensePlate(String licensePlate) {
-        this.licensePlate = licensePlate;
-    }
-
-    public void setMaxPassengers(int maxPassengers) {
-        this.maxPassengers = maxPassengers;
+    public FuelType getFuelTypes() {
+        return fuelTypes;
     }
 
     public void setStatus(String status) {
         this.status = status;
     }
 
-    public void setFuelType(String fuelType) {
-        this.fuelType = fuelType;
-    }
-
-    public void setLastMaintenanceDate(Date lastMaintenanceDate) {
-        this.lastMaintenanceDate = lastMaintenanceDate;
-    }
 
     public void updateStatus() {
-        Date currentDate = new Date();
-        long diffInMonths = (currentDate.getTime() - lastMaintenanceDate.getTime())
-                / (30L * 24L * 60L * 60L * 1000L);
+        LocalDate currentDate = LocalDate.now();
 
-        if (diffInMonths >= 0 && diffInMonths <= 6) {
-            status = "in operation";
-        } else if (diffInMonths >= 7 && diffInMonths <= 36) {
-            status = "needs renovation";
+        Period period = Period.between(lastMaintenanceDate, currentDate);
+
+        int months = period.getMonths();
+
+        if (months >= 0 && months <= 6) {
+            status = IN_OPERATION;
+        } else if (months >= 7 && months <= 36) {
+            status = NEEDS_RENOVATION;
         } else {
-            status = "scrap";
+            status = SCRAP;
         }
     }
 }
+
 
 
 
