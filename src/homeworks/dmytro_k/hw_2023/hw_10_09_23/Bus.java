@@ -13,30 +13,29 @@ public class Bus extends Vehicle {
 
     private int contaminationIndicator;
 
-    public Bus(int identifier, String numberplate, int numberOfPassengers, Fuel fuelType,
+    public Bus(int identifier, String numberplate, int numberOfPassengers,
                LocalDate serviceDate, int contaminationIndicator) {
-        super(identifier, numberplate, numberOfPassengers, fuelType, serviceDate);
+        super(identifier, numberplate, numberOfPassengers, serviceDate);
+        super.setFuelType(Fuel.GAS);
         this.contaminationIndicator = contaminationIndicator;
         setStatus(serviceDate, contaminationIndicator);
     }
 
     public void setStatus(LocalDate serviceDate, int contaminationIndicator) {
 
-        int monthsAfterService = LocalDate.now().getMonth().getValue() - serviceDate.getMonth().getValue();
+        LocalDate sixMonthsAfterService = serviceDate.plusMonths(6);
+        LocalDate twelveMonthsAfterService = serviceDate.plusMonths(12);
 
-        if (monthsAfterService >= 0 && monthsAfterService <= 6 && contaminationIndicator > 5) {
-            this.status = Status.INOPERATION;
-        } else if (monthsAfterService >= 0 &&
-                monthsAfterService <= 12 &&
-                contaminationIndicator >= 3 &&
+        int m6 = sixMonthsAfterService.compareTo(LocalDate.now());
+        int m12 = twelveMonthsAfterService.compareTo(LocalDate.now());
+
+        if (m6 >= 0 && contaminationIndicator > 5) {
+            this.status = Status.IN_OPERATION;
+        } else if (m12 >= 0 && contaminationIndicator >= 3 &&
                 contaminationIndicator <= 5) {
-            this.status = Status.NEEDSREPAIR;
+            this.status = Status.NEEDS_REPAIR;
         } else {
             this.status = Status.SCRAPPED;
         }
-    }
-
-    public int getContaminationIndicator() {
-        return contaminationIndicator;
     }
 }

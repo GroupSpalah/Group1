@@ -17,19 +17,18 @@ import java.time.LocalDate;
  * Все трамваи электрические и хранят количество лет эксплуатации.
  */
 
-public class Vehicle {
-    private int identifier;
-    private String numberplate;
-    private int numberOfPassengers;
+public abstract class Vehicle {
+    private final int identifier;
+    private final String numberplate;
+    private final int numberOfPassengers;
     protected Status status;
-    private Fuel fuelType; //задавать по умолчанию в потомках
-    private LocalDate serviceDate;
+    private Fuel fuelType;
+    private final LocalDate serviceDate;
 
-    public Vehicle(int identifier, String numberplate, int numberOfPassengers, Fuel fuelType, LocalDate serviceDate) {
+    public Vehicle(int identifier, String numberplate, int numberOfPassengers, LocalDate serviceDate) {
         this.identifier = identifier;
         this.numberplate = numberplate;
         this.numberOfPassengers = numberOfPassengers;
-        this.fuelType = fuelType;
         this.serviceDate = serviceDate;
     }
 
@@ -39,14 +38,34 @@ public class Vehicle {
 
     public void setStatus(LocalDate serviceDate) {
 
-        int monthsAfterService = LocalDate.now().getMonth().getValue() - serviceDate.getMonth().getValue();
+        LocalDate sixMonthsAfterService = serviceDate.plusMonths(6);
+        LocalDate thirtySixMonthsAfterService = serviceDate.plusMonths(36);
 
-        if (monthsAfterService >= 0 && monthsAfterService <= 6) {
-            this.status = Status.INOPERATION;
-        } else if (monthsAfterService >= 7 && monthsAfterService <= 36) {
-            this.status = Status.NEEDSREPAIR;
-        } else if (monthsAfterService >= 37) {
+        int m6 = sixMonthsAfterService.compareTo(LocalDate.now());
+        int m36 = thirtySixMonthsAfterService.compareTo(LocalDate.now());
+
+        if (m6 >= 0) {
+            this.status = Status.IN_OPERATION;
+        } else if (m36 >= 0) {
+            this.status = Status.NEEDS_REPAIR;
+        } else {
             this.status = Status.SCRAPPED;
         }
+    }
+
+    public int getIdentifier() {
+        return identifier;
+    }
+
+    public String getNumberplate() {
+        return numberplate;
+    }
+
+    public Fuel getFuelType() {
+        return fuelType;
+    }
+
+    public void setFuelType(Fuel fuelType) {
+        this.fuelType = fuelType;
     }
 }

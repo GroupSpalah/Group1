@@ -5,5 +5,5 @@ package homeworks.dmytro_k.hw_2023.hw_10_09_23;
  */
 
 public enum Status {
-    NEEDSREPAIR, INOPERATION, SCRAPPED
+    NEEDS_REPAIR, IN_OPERATION, SCRAPPED
 }

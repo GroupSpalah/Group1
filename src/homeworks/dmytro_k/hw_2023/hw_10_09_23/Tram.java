@@ -7,8 +7,9 @@ public class Tram extends Vehicle {
     private int operationYears;
 
     public Tram(int identifier, String numberplate, int numberOfPassengers,
-                Fuel fuelType, LocalDate serviceDate, int operationYears) {
-        super(identifier, numberplate, numberOfPassengers, fuelType, serviceDate);
+                LocalDate serviceDate, int operationYears) {
+        super(identifier, numberplate, numberOfPassengers, serviceDate);
+        super.setFuelType(Fuel.ELECTRIC);
         this.operationYears = operationYears;
         setStatus(serviceDate);
     }
