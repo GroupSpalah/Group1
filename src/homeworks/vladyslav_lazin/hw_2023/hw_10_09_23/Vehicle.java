@@ -4,17 +4,18 @@ import java.time.LocalDate;
 import java.util.Objects;
 
 public class Vehicle {
-    private int id;
-    private String licensePlate;
-    private int capacity;
-    private Condition condition;
-    private FuelType fuelType;
-    private LocalDate lastService;
-
-    private String route;
+    private static int currentId = 0;
+    int id;
+    String licensePlate;
+    int capacity;
+    Condition condition;
+    FuelType fuelType;
+    LocalDate lastService;
+    String route;
 
     public Vehicle(String licensePlate, int capacity, LocalDate lastService) {
-        this.id = (int) (1 + Math.random() * 1000 + System.currentTimeMillis() % 10000);
+        this.id = currentId;
+        currentId++;
         this.licensePlate = licensePlate;
         this.capacity = capacity;
         this.lastService = lastService;
