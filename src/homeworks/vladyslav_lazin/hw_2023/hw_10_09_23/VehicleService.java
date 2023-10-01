@@ -5,28 +5,16 @@ import java.util.stream.Collectors;
 
 public class VehicleService {
 
-    public static Set<Vehicle> findInOperation(Set<Vehicle> vehicles) {
+    public static Set<Vehicle> findByCondition(Set<Vehicle> vehicles, Condition condition) {
         return vehicles
                 .stream()
-                .filter(element -> element.getCondition().equals(Condition.IN_OPERATION))
-                .collect(Collectors.toSet());
-    }
-    public static Set<Vehicle> findNeedsRepairs(Set<Vehicle> vehicles) {
-        return vehicles
-                .stream()
-                .filter(element -> element.getCondition().equals(Condition.NEEDS_REPAIRS))
-                .collect(Collectors.toSet());
-    }
-    public static Set<Vehicle> findScrapped(Set<Vehicle> vehicles) {
-        return vehicles
-                .stream()
-                .filter(element -> element.getCondition().equals(Condition.SCRAPPED))
+                .filter(element -> element.getCondition().equals(condition))
                 .collect(Collectors.toSet());
     }
 
     public static Set<Vehicle> findOnRoute(Set<Vehicle> vehicles, String route) {
         return VehicleService
-                .findInOperation(vehicles)
+                .findByCondition(vehicles, Condition.IN_OPERATION)
                 .stream()
                 .filter(element -> element.getRoute().equals(route))
                 .collect(Collectors.toSet());

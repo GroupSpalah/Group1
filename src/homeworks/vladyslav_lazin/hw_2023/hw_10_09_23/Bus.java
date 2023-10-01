@@ -5,21 +5,22 @@ import java.time.LocalDate;
 public class Bus extends Vehicle{
 private int contaminationIndicator;
 
-    public Bus(String licensePlate, int capacity, Condition condition,
-               LocalDate lastService, int contaminationIndicator) {
+    public Bus(String licensePlate, int capacity, LocalDate lastService, int contaminationIndicator) {
         super(licensePlate, capacity, lastService);
         this.contaminationIndicator = contaminationIndicator;
-        this.setFuelType(FuelType.GAS);
-        setCondition(this.getLastService(), this.contaminationIndicator);
+        this.licensePlate = licensePlate;
+        this.condition = setCondition(this.getLastService(), this.contaminationIndicator);
     }
-    public void setCondition(LocalDate lastService, int contaminationIndicator) {
+    public Condition setCondition(LocalDate lastService, int contaminationIndicator) {
+        Condition condition;
         int timeArterService = LocalDate.now().getMonth().getValue() - lastService.getMonth().getValue();
         if (timeArterService <= 6 && contaminationIndicator > 5) {
-            this.setCondition(Condition.IN_OPERATION);
+            condition = Condition.IN_OPERATION;
         } else if (timeArterService <= 12 && contaminationIndicator >= 3 && contaminationIndicator <= 6)  {
-            this.setCondition(Condition.NEEDS_REPAIRS);
+            condition = Condition.NEEDS_REPAIRS;
         } else {
-            this.setCondition(Condition.SCRAPPED);
+            condition = Condition.SCRAPPED;
         }
+        return condition;
     }
 }
