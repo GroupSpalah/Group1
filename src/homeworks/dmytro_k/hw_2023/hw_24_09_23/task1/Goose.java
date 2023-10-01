@@ -1,4 +1,4 @@
-package homeworks.dmytro_k.hw_2023.hw_17_09_23;
+package homeworks.dmytro_k.hw_2023.hw_24_09_23.task1;
 
 /**
  * Гуси несут яйца, и мы хотим вести их учет.
@@ -8,10 +8,15 @@ package homeworks.dmytro_k.hw_2023.hw_17_09_23;
 public class Goose extends Animal {
 
     private int eggs;
+    private static int eggCounters = 0;
 
-    public Goose(int weight, int identifier) {
-        super(weight, identifier);
+    public Goose(int weight, AnimalClass aAnimalClass) {
+        super(weight, aAnimalClass);
         this.voice = "beep";
+    }
+
+    public int getEggs() {
+        return eggs;
     }
 
     public void numberOfEggs() {
@@ -19,6 +24,6 @@ public class Goose extends Animal {
     }
 
     public void layEggs() {
-        eggs++;
+        eggs = eggCounters++;
     }
 }

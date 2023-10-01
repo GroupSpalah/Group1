@@ -1,4 +1,4 @@
-package homeworks.dmytro_k.hw_2023.hw_17_09_23;
+package homeworks.dmytro_k.hw_2023.hw_24_09_23.task1;
 
 /**
  * Собаки на ферме могут быть типа овчарки, ретривера, хаски.
@@ -11,8 +11,8 @@ public class Dog extends Animal {
     private DogType dogType;
     private int pit;
 
-    public Dog(int weight, int identifier, DogType dogType) {
-        super(weight, identifier);
+    public Dog(int weight, AnimalClass aAnimalClass, DogType dogType) {
+        super(weight, aAnimalClass);
         this.voice = "woof";
         this.dogType = dogType;
     }
@@ -20,7 +20,7 @@ public class Dog extends Animal {
     public void dig() {
         if (pit < 10) {
             pit++;
-        } else{
+        } else {
             System.out.println("you can't dig");
         }
     }

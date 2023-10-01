@@ -12,4 +12,9 @@ public class Tram extends Vehicle {
         this.operationYears = operationYears;
         setStatus(serviceDate);
     }
+
+    @Override
+    public String toString() {
+        return "Tram{" + super.toString() + '}';
+    }
 }

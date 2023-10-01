@@ -8,4 +8,9 @@ public class Trolleybus extends Vehicle {
         this.setFuelType(Fuel.HYBRID);//super?
         setStatus(serviceDate);
     }
+
+    @Override
+    public String toString() {
+        return "Trolleybus {" + super.toString() + '}';
+    }
 }

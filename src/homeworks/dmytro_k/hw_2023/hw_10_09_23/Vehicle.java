@@ -75,14 +75,14 @@ public abstract class Vehicle {
         this.fuelType = fuelType;
     }
 
+
     @Override
     public String toString() {
-        return  "identifier=" + identifier +
-                ", numberplate='" + numberplate + '\'' +
-                ", numberOfPassengers=" + numberOfPassengers +
-                ", status=" + status +
-                ", fuelType=" + fuelType +
-                ", serviceDate=" + serviceDate +
-                '}';
+        return  status +
+                ", identifier = " + identifier +
+                ", numberplate = '" + numberplate + '\'' +
+                ", numberOfPassengers = " + numberOfPassengers +
+                ", fuelType = " + fuelType +
+                ", serviceDate = " + serviceDate;
     }
 }
