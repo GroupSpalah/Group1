@@ -33,6 +33,7 @@ public class ManTest {
         mans.add(man3);
 
         Predicate<Man> predicate1 = element -> element.getAge() >= 20;
+
         Predicate<Man> predicate2 = element ->
                 element
                         .getADDRESS()
@@ -84,6 +85,15 @@ public class ManTest {
                 man.setCountOfChildren(3);
             }
         }
+
+        mans
+                .stream()
+                .filter(predicate3)
+                        .forEach(man -> {
+                            man.setFirstName("John");
+                            man.setLastName("Kennedi");
+                            man.setCountOfChildren(3);
+                        });
 
         mans
                 .stream()

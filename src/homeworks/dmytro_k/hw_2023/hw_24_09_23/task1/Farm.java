@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
 import java.util.function.Predicate;
+import java.util.stream.Stream;
 
 /**
  * 2) Ферма животных
@@ -70,12 +71,15 @@ public class Farm {
 
         animals.forEach(System.out::println);
 
-        Comparator<Goose> comparatorEggs = (g1, g2) -> g1.getEggs();//?
+        Comparator<Goose> comparatorEggs = (g1, g2) -> Integer.compare(g1.getEggs(), g2.getEggs());//?
 
-        Predicate<Animal> predicate1 = animal -> animal.getaAnimalClass().equals(AnimalClass.BIRDS);
+//        Predicate<Goose> predicate1 = animal -> animal.getaAnimalClass().equals(AnimalClass.GOOSE);
+     /*   Predicate<? super Animal> predicate1 = animal -> animal instanceof Goose;
 
-/*        animals.stream()
-                .filter(predicate1)
-                .sorted(Comparator.comparingInt(value -> g))*/
+        Stream<Goose> stream = (Stream<Goose>) animals.stream()
+                .filter(predicate1);
+        stream
+                .max(comparatorEggs)*/
+
     }
 }

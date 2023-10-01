@@ -40,7 +40,7 @@ public abstract class Animal {
 
     public void giveBirth(int babyWeight) {
         if (aAnimalClass == AnimalClass.MAMMALS) {
-            weight = weight - babyWeight;
+            weight -= babyWeight;
         }
     }
 
