@@ -15,10 +15,6 @@ public class Worker {
         return name;
     }
 
-    public WorkerRole getRole() {
-        return role;
-    }
-
     public int getDaysOnPlatform() {
         return daysOnPlatform;
     }

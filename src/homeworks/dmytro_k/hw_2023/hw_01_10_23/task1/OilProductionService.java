@@ -43,10 +43,10 @@ public class OilProductionService {
         extractors.add(extractor);
     }
 
-    Predicate<Extractor> topExtractor = element ->
-            element.getQuantity() > element.getExpectedPerformance() * MAX_PERCENT;
-
     public void topExtractor() {
+        Predicate<Extractor> topExtractor = element ->
+                element.getQuantity() > element.getExpectedPerformance() * MAX_PERCENT;
+
         if (extractors.stream().anyMatch(topExtractor)) {
             toString();
         }

@@ -4,6 +4,9 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 public class OilExtractorManager {
+
+
+
     public long countFaultyExtractors(List<Extractor> extractors) {
         return extractors.stream()
                 .filter(Extractor::isHasError)
@@ -19,6 +22,7 @@ public class OilExtractorManager {
 
     public void checkSeaPlatformErrors(List<SeaPlatform> seaPlatforms) {
         for (SeaPlatform platform : seaPlatforms) {
+
             double productivityRatio = (double) platform.getActualProductivity() / platform.getPlannedProductivity();
             boolean workerOverstay = platform.getWorkers().stream()
                     .anyMatch(worker -> worker.getDaysOnPlatform() > 14);

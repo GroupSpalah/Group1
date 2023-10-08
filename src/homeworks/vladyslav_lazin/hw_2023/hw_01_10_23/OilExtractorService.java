@@ -9,6 +9,9 @@ public long inspectForErrors(List<OilExtractor> oilExtractors) {
 }
 
 public List<OilExtractor> findBestExtracors(List<OilExtractor> oilExtractors) {
-    return oilExtractors.stream().filter(oilExtractor -> oilExtractor.getExtractedPerDay() > .95 * oilExtractor.getDailyExtractionRate()).toList();
+    return oilExtractors
+            .stream()
+            .filter(oilExtractor -> oilExtractor.getExtractedPerDay() > .95 *
+                    oilExtractor.getDailyExtractionRate()).toList();
 }
 }

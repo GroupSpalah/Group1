@@ -20,9 +20,6 @@ public class StreamMap {
     }
 }
 
-record ManMap(String name, int age) {
-
-}
 record ChildMap(String name, int age) {
 
 }
