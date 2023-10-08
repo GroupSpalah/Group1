@@ -7,4 +7,9 @@ public class Dog extends Animal {
     public void say() {
         System.out.println("Bow-Wow");
     }
+
+    @Override
+    public void giveBirth(int childWeight) {
+
+    }
 }
