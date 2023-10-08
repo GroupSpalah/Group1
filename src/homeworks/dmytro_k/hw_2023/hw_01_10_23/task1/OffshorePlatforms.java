@@ -23,7 +23,6 @@ public class OffshorePlatforms extends Extractor {
     public OffshorePlatforms(int expectedPerformance, int quantity) {
         super(EXTRACTOR_TYPE, expectedPerformance, quantity);
         this.employees = new LinkedList<>();
-        //error();//?
     }
 
     public void addEmployee(Employee employee) {

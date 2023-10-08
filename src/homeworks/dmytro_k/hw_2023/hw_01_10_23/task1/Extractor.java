@@ -22,32 +22,12 @@ public abstract class Extractor {
         this.quantity = quantity;
     }
 
-    public ExtractorType getExtractorType() {
-        return extractorType;
-    }
-
-    public void setExtractorType(ExtractorType extractorType) {
-        this.extractorType = extractorType;
-    }
-
     public int getExpectedPerformance() {
         return expectedPerformance;
     }
 
-    public void setExpectedPerformance(int expectedPerformance) {
-        this.expectedPerformance = expectedPerformance;
-    }
-
     public int getQuantity() {
         return quantity;
-    }
-
-    public void setQuantity(int quantity) {
-        this.quantity = quantity;
-    }
-
-    public String getERROR_MESSAGE() {
-        return ERROR_MESSAGE;
     }
 
     public String errorMessage(String errorNumber) {

@@ -16,27 +16,11 @@ public class Employee {
         this.workDays = workDays;
     }
 
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
-
     public Post getPost() {
         return post;
     }
 
-    public void setPost(Post post) {
-        this.post = post;
-    }
-
     public int getWorkDays() {
         return workDays;
-    }
-
-    public void setWorkDays(int workDays) {
-        this.workDays = workDays;
     }
 }
