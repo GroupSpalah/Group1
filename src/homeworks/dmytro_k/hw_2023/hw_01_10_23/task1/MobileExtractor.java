@@ -17,7 +17,7 @@ public class MobileExtractor extends Extractor {
 
     public void error() {
         if (getQuantity() < getExpectedPerformance() * MIN_PERCENT) {
-            errorMessage(" (1)");
+            System.out.println(errorMessage(" (1)"));
         }
     }
 }

@@ -34,15 +34,15 @@ public class OffshorePlatforms extends Extractor {
 
     public void error() {
         if (getQuantity() < getExpectedPerformance() * 0.7) {
-            errorMessage(" (2)");
+            System.out.println(errorMessage(" (2)"));
         } else if (employees
                 .stream()
                 .noneMatch(postMedic)) {
-            errorMessage(" (3)");
+            System.out.println(errorMessage(" (3)"));
         } else if (employees
                 .stream()
                 .anyMatch(dayOnBoard)) {
-            errorMessage(" (4)");
+            System.out.println(errorMessage(" (4)"));
         }
     }
 }
