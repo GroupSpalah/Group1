@@ -1,24 +1,26 @@
-package homeworks.vladyslav_lazin.hw_2023.hw_24_09_23;
+package homeworks.vladyslav_lazin.hw_2023.hw_24_09_23.entity;
+
+import homeworks.vladyslav_lazin.hw_2023.hw_24_09_23.entity.Address;
 
 public class Man {
     private String name;
     private String surname;
     private int age;
-    int childrenCount;
-    Address address;
+    private int childrenNumber;
+    private Address address;
     
-    public Man(String name, String surname, int age, int childrenCount, Address address) {
+    public Man(String name, String surname, int age, int childrenNumber, Address address) {
         this.name = name;
         this.surname = surname;
         this.age = age;
-        this.childrenCount = childrenCount;
+        this.childrenNumber = childrenNumber;
         this.address = address;
     }
 
     @Override
     public String toString() {
-        return "Man [name=" + name + ", surname=" + surname + ", age=" + age + ", childrenCount=" + childrenCount
-                + ", address=" + address + "]";
+        return name + " " + surname + ", age: " + age + ", children number: " + childrenNumber
+                + ", address: " + address;
     }
 
     public String getName() {
@@ -45,12 +47,12 @@ public class Man {
         this.age = age;
     }
 
-    public int getChildrenCount() {
-        return childrenCount;
+    public int getChildrenNumber() {
+        return childrenNumber;
     }
 
-    public void setChildrenCount(int childrenCount) {
-        this.childrenCount = childrenCount;
+    public void setChildrenNumber(int childrenNumber) {
+        this.childrenNumber = childrenNumber;
     }
 
     public Address getAddress() {

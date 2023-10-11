@@ -1,22 +1,21 @@
-package homeworks.vladyslav_lazin.hw_2023.hw_24_09_23;
+package homeworks.vladyslav_lazin.hw_2023.hw_24_09_23.entity;
 
 public class Address {
-    String country;
-    String city;
-    String street;
-    int houseNumb;
+    private String country;
+    private String city;
+    private String street;
+    private int houseNumber;
     
-    public Address(String country, String city, String street, int houseNumb) {
+    public Address(String country, String city, String street, int houseNumber) {
         this.country = country;
         this.city = city;
         this.street = street;
-        this.houseNumb = houseNumb;
+        this.houseNumber = houseNumber;
     }
 
     @Override
     public String toString() {
-        return "Address [country=" + country + ", city=" + city + ", street=" + street + ", houseNumb=" + houseNumb
-                + "]";
+        return country + ", " + city + ", " + street + ", " + houseNumber;
     }
 
     public String getCountry() {
@@ -43,13 +42,11 @@ public class Address {
         this.street = street;
     }
 
-    public int getHouseNumb() {
-        return houseNumb;
+    public int getHouseNumber() {
+        return houseNumber;
     }
 
-    public void setHouseNumb(int houseNumb) {
-        this.houseNumb = houseNumb;
+    public void setHouseNumber(int houseNumber) {
+        this.houseNumber = houseNumber;
     }
-
-    
 }

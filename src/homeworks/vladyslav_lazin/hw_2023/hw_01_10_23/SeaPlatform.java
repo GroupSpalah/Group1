@@ -4,7 +4,7 @@ import java.util.LinkedList;
 import java.util.List;
 
 public class SeaPlatform extends OilExtractor implements Reportable{
-    private List<Worker> crew = new LinkedList<>();
+    private final List<Worker> crew;
 
     public SeaPlatform(String serialNumber, int dailyExtractionRate, int extractedPerDay,
                        List<Worker> crew) {
@@ -15,8 +15,12 @@ public class SeaPlatform extends OilExtractor implements Reportable{
 
     @Override
     public void checkErrors() {
-        if (this.getCrew().stream().filter(worker -> worker.position() == Position.MEDIC).toList().isEmpty()
-        || !this.getCrew().stream().filter(worker -> worker.timeAboard() > 14).toList().isEmpty()
+        if (this.getCrew()
+                .stream()
+                .anyMatch(worker -> worker.timeAboard() > 14)
+        || this.getCrew()
+                .stream().
+                noneMatch(worker -> worker.position() == Position.MEDIC)
         || this.getExtractedPerDay() < .7 * this.getDailyExtractionRate()) {
             this.setHasErrors(true);
         }
