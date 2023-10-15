@@ -3,9 +3,9 @@ package homeworks.vladyslav_lazin.hw_2023.hw_01_10_23;
 import java.util.List;
 
 public abstract class OilExtractor {
-    private String serialNumber;
-    private int dailyExtractionRate;
-    private int extractedPerDay;
+    private final String serialNumber;
+    private final int dailyExtractionRate;
+    private final int extractedPerDay;
 
     private boolean hasErrors = false;
 

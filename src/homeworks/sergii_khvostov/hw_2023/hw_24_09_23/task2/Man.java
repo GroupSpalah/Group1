@@ -34,4 +34,14 @@ public class Man {
     public Address getAddress() {
         return address;
     }
+
+    @Override
+    public String toString() {
+        return
+                "firstName= " + firstName +
+                " lastName= " + lastName;
+                /*"age= " + age +
+                "countOfChildren= " + countOfChildren +
+                "address= " + address;*/
+    }
 }

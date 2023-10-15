@@ -1,6 +1,6 @@
 package homeworks.vladyslav_lazin.hw_2023.hw_17_09_23;
 
-public class Dog extends Animal {
+public abstract class Dog extends Animal {
     DogBreed dogBreed;
     
     @Override
