@@ -17,6 +17,6 @@ public class EventTest {
                         new Assistant("Kitty Fox"),
                         new Assistant("Ron Jeremy")
                         ), 145);
-        EventOrganizerCompany.getCompanyStaff();
+//        EventOrganizerCompany.getCompanyStaff();
     }
 }

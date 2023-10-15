@@ -1,5 +1,7 @@
 package lessons;
 
+import java.math.BigDecimal;
+
 public class Datatype {
     public static void main(String[] args) {
 //        datatype name = value;
@@ -38,5 +40,6 @@ public class Datatype {
         c = '\u00A5';
 
         System.out.println(c);
+
     }
 }

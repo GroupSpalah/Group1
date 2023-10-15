@@ -28,7 +28,6 @@ public class EventManagement {
     public EventManagement(List<Event> events) {
         this.events = events;
     }
-
     public void manageEvents() {
         Map<String, Long> organizerCount = events.stream()
                 .filter(this::canEventStart)

@@ -40,7 +40,8 @@ public class ManService {
     public void getAddressNumberMoreThanFour(Stream<Man> menStream) {
         //Сгруппировать людей по городу и названию улицы и вывести количество адресов,где количество людей больше 4.
         Map<GroupByCityAndStreet, Long> menByCityAndStreet = menStream
-                .collect(Collectors.groupingBy(man -> new GroupByCityAndStreet(man.getAddress().getCity(), man.getAddress().getStreet()),
+                .collect(Collectors.groupingBy(man ->
+                                new GroupByCityAndStreet(man.getAddress().getCity(), man.getAddress().getStreet()),
                         Collectors.counting()));
         menByCityAndStreet
                 .entrySet()
