@@ -1,5 +1,6 @@
 package homeworks.dmytro_k.hw_2023.hw_01_10_23.task1;
 
+import java.util.LinkedList;
 import java.util.List;
 import java.util.function.Predicate;
 
@@ -26,9 +27,9 @@ import java.util.function.Predicate;
  * и имеют список основных рабочих.
  * У работника есть имя, должность (рабочий, медик или менеджер) и количество дней,
  * которое он провел на платформе.
- * Все платформы сообщают об ошибке, если они извлекли менее 70%
- * от запланированной мощности, у них нет медика
- * или кто-либо из рабочих находится на борту более 14 дней.
+ * Все платформы сообщают об ошибке, если они извлекли менее 70% от запланированной мощности (2),
+ * у них нет медика (3)
+ * или кто-либо из рабочих находится на борту более 14 дней (4).
  * <p>
  * Бизнес интересует пара важных отчетов:
  * ??? Каково количество экстракторов с активными неисправностями?
@@ -36,19 +37,38 @@ import java.util.function.Predicate;
  */
 
 public class OilProductionService {
-    private List<Extractor> extractors;
+    private final List<Extractor> EXTRACTORS = new LinkedList<>();
     private static final double MAX_PERCENT = 0.95;
 
     public void addExtractor(Extractor extractor) {
-        extractors.add(extractor);
+        EXTRACTORS.add(extractor);
     }
 
     public void topExtractor() {
-        Predicate<Extractor> topExtractor = element ->
+
+        Predicate<Extractor> topExtractorPredicate = element ->
                 element.getQuantity() > element.getExpectedPerformance() * MAX_PERCENT;
 
-        if (extractors.stream().anyMatch(topExtractor)) {
-            toString();
-        }
+        EXTRACTORS
+                .stream()
+                .filter(topExtractorPredicate)
+                .forEach(System.out::println);
+    }
+
+    public void extractorError() {
+
+        Predicate<Extractor> extractorError1 = Extractor::isError;
+        Predicate<Extractor> extractorError = element ->
+                element.getStatus().equals(Status.ERROR);
+//v1
+        EXTRACTORS
+                .stream()
+                .filter(extractorError1)
+                .forEach(System.out::println);
+//v2
+        EXTRACTORS
+                .stream()
+                .filter(extractorError)
+                .forEach(System.out::println);
     }
 }

@@ -11,13 +11,19 @@ public class MobileExtractor extends Extractor {
     private static final ExtractorType EXTRACTOR_TYPE = ExtractorType.MOBILE;
     private static final double MIN_PERCENT = 0.25;
 
-    public MobileExtractor(int expectedPerformance, int quantity) {
+    public MobileExtractor(double expectedPerformance, double quantity) {
         super(EXTRACTOR_TYPE, expectedPerformance, quantity);
     }
 
-    public void error() {
+    public void mobileExtractorError() {//проверить
         if (getQuantity() < getExpectedPerformance() * MIN_PERCENT) {
-            System.out.println(errorMessage(" (1)"));
+            this.setError(true);
+        }
+    }
+
+    public void mobileExtractorError2() {//проверить
+        if (getQuantity() < getExpectedPerformance() * MIN_PERCENT) {
+            error2();
         }
     }
 }

@@ -14,13 +14,13 @@ import java.util.function.Predicate;
  * ++ или кто-либо из рабочих находится на борту более 14 дней.
  */
 
-public class OffshorePlatforms extends Extractor {
+public class SeaPlatform extends Extractor {
 
     private List<Employee> employees;
-    private static final ExtractorType EXTRACTOR_TYPE = ExtractorType.OFFSHORE_PLATFORMS;
+    private static final ExtractorType EXTRACTOR_TYPE = ExtractorType.SEA_PLATFORMS;
     private static final int MAX_DAY = 14;
 
-    public OffshorePlatforms(int expectedPerformance, int quantity) {
+    public SeaPlatform(double expectedPerformance, double quantity) {
         super(EXTRACTOR_TYPE, expectedPerformance, quantity);
         this.employees = new LinkedList<>();
     }
@@ -32,17 +32,27 @@ public class OffshorePlatforms extends Extractor {
     Predicate<Employee> postMedic = element -> element.getPost().equals(Post.MEDIC);
     Predicate<Employee> dayOnBoard = element -> element.getWorkDays() > MAX_DAY;
 
-    public void error() {
-        if (getQuantity() < getExpectedPerformance() * 0.7) {
-            System.out.println(errorMessage(" (2)"));
-        } else if (employees
+    public void seaPlatformError() {//проверить
+        if (getQuantity() < getExpectedPerformance() * 0.7
+                || employees
                 .stream()
-                .noneMatch(postMedic)) {
-            System.out.println(errorMessage(" (3)"));
-        } else if (employees
+                .noneMatch(postMedic)
+                || employees
                 .stream()
                 .anyMatch(dayOnBoard)) {
-            System.out.println(errorMessage(" (4)"));
+            this.setError(true);
+        }
+    }
+
+    public void seaPlatformError2() {
+        if (getQuantity() < getExpectedPerformance() * 0.7
+                || employees
+                .stream()
+                .noneMatch(postMedic)
+                || employees
+                .stream()
+                .anyMatch(dayOnBoard)) {
+            error2();
         }
     }
 }

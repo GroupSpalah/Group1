@@ -10,7 +10,7 @@ public class StationaryExtractor extends Extractor {
 
     private static final ExtractorType EXTRACTOR_TYPE = ExtractorType.STATIONARY;
 
-    public StationaryExtractor(int expectedPerformance, int quantity) {
+    public StationaryExtractor(double expectedPerformance, double quantity) {
         super(EXTRACTOR_TYPE, expectedPerformance, quantity);
     }
 }

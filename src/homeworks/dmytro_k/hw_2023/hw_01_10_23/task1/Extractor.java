@@ -8,40 +8,51 @@ package homeworks.dmytro_k.hw_2023.hw_01_10_23.task1;
  */
 
 public abstract class Extractor {
-    private int serialNumb;
+    private int serialNumber;
     private static int counterSNumbs = 1;
     private ExtractorType extractorType;
-    private int expectedPerformance;
-    private int quantity;
-    private final String ERROR_MESSAGE = "error";
+    private double expectedPerformance;
+    private double quantity;
+    private boolean error;//v1
+    private Status status;//v2
 
-    public Extractor(ExtractorType extractorType, int expectedPerformance, int quantity) {
-        this.serialNumb = counterSNumbs++;
+    public Extractor(ExtractorType extractorType, double expectedPerformance, double quantity) {
+        this.serialNumber = counterSNumbs++;
         this.extractorType = extractorType;
         this.expectedPerformance = expectedPerformance;
         this.quantity = quantity;
+        this.error = false;
+        this.status = Status.WORK;
     }
 
-    public int getExpectedPerformance() {
+    public double getExpectedPerformance() {
         return expectedPerformance;
     }
 
-    public int getQuantity() {
+    public double getQuantity() {
         return quantity;
     }
 
-    public String errorMessage(String errorNumber) {
-        return "Extractor{" +
-                "serialNumb=" + serialNumb +
-                ", extractorType=" + extractorType +
-                ", ERROR_MESSAGE='" + ERROR_MESSAGE + errorNumber + '\'' +
-                '}';
+    public boolean isError() {
+        return error;
+    }
+
+    public void setError(boolean error) {
+        this.error = error;
+    }
+
+    public Status getStatus() {
+        return status;
+    }
+
+    public void error2() { // v2
+        this.status = Status.ERROR;
     }
 
     @Override
     public String toString() {
         return "Extractor{" +
-                "serialNumb=" + serialNumb +
+                "serialNumb=" + serialNumber +
                 ", extractorType=" + extractorType +
                 ", expectedPerformance=" + expectedPerformance +
                 ", quantity=" + quantity + '\'' +
