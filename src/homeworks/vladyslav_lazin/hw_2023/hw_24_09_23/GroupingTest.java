@@ -25,8 +25,6 @@ public class GroupingTest {
                 new Man("Stevie", "Ray", 52, 4, new Address("Australia", "Melburn", "Kings road", 32)),
                 new Man("Vincent", "Furnier", 25, 2, new Address("Canada", "Quebec", "Rue Flaubert",45))
         );
-
-
         manService.getAddressNumberMoreThanFour(menStream);
     }
 }

@@ -1,6 +1,5 @@
 package homeworks.vladyslav_lazin.hw_2023.hw_24_09_23;
 
-import homeworks.vladyslav_lazin.hw_2023.hw_24_09_23.entity.Address;
 import homeworks.vladyslav_lazin.hw_2023.hw_24_09_23.entity.Man;
 import homeworks.vladyslav_lazin.hw_2023.hw_24_09_23.group.GroupByChildrenNuber;
 import homeworks.vladyslav_lazin.hw_2023.hw_24_09_23.group.GroupByChildrenNumbeAndAge;
