@@ -30,7 +30,7 @@ public class ManagerService {
                 System.out.println("Platform S/N: " + platform.getSerialNumber());
                 System.out.println("Current performance: " + platform.getActualProductivity());
                 System.out.println("Planned power: " + platform.getPlannedProductivity());
-                System.out.println("List of employees: " + platform.getWorkers());
+                System.out.println("List of mainOrganizer: " + platform.getWorkers());
             }
         }
     }

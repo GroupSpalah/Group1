@@ -4,7 +4,7 @@ import java.time.Year;
 
 /**
  * Implement method `getSalaryInfo(String name, int yearFrom, int yearTo)`.
- * It should calculate salary for employees.
+ * It should calculate salary for mainOrganizer.
  *
  * Пример:
  *
