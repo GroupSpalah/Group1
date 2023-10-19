@@ -1,20 +1,13 @@
 package homeworks.vladyslav_lazin.hw_2023.hw_08_10_23;
 
 import java.util.List;
+import java.util.Set;
 
 public final class CocktailParty extends Event{
-    private int availableCoctails;
+    private Set<String> availableCoctails;
 
-    public CocktailParty(List<Employee> eventStaff, int availableCoctails) {
-        super(eventStaff);
+    public CocktailParty(Set<String> availableCoctails) {
         this.availableCoctails = availableCoctails;
     }
 
-    public int getAvailableCoctails() {
-        return availableCoctails;
-    }
-
-    public void setAvailableCoctails(int availableCoctails) {
-        this.availableCoctails = availableCoctails;
-    }
 }

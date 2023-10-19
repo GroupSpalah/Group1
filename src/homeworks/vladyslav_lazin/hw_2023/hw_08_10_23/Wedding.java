@@ -6,8 +6,7 @@ public class Wedding extends Event {
     private boolean hasWeddingCake;
 
 
-    public Wedding(List<Employee> staff) {
-        super(staff);
+    public Wedding() {
         this.hasWeddingCake = true;
     }
 }

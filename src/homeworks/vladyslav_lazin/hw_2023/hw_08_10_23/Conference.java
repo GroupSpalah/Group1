@@ -5,8 +5,7 @@ import java.util.List;
 public final class Conference extends Event {
     private int totalGiftBags;
 
-    public Conference(List<Employee> staff, int totalGiftBags) {
-        super(staff);
+    public Conference(int totalGiftBags) {
         this.totalGiftBags = totalGiftBags;
     }
 }
