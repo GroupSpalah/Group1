@@ -11,7 +11,7 @@ package homeworks.sergii_khvostov.hw_2023.hw_24_09_23.task2;
   - Вывести firstName, lastName, nameOfStreet, когда country == 'Canada'
    и numberOfHome == 3 или age >= 25";*/
 
-import org.apache.commons.lang3.tuple.Pair;
+//import org.apache.commons.lang3.tuple.Pair;
 
 import java.util.Comparator;
 import java.util.LinkedList;

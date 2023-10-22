@@ -4,7 +4,7 @@ package homeworks.dmytro_k.hw_2023.hw_08_10_23.task1;
  * Адрес(страна, город, улица, номер дома)
  */
 
-public class Address {
+public class Address { //сделать рекорд?
     private String country;
     private String city;
     private String street;

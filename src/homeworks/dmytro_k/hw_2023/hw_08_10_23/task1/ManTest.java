@@ -8,7 +8,7 @@ package homeworks.dmytro_k.hw_2023.hw_08_10_23.task1;
  * ++ - Вывести firstName, lastName, countOfChildren, когда возраст более или равно 20 и отсортировать по firstName.
  * ++ - Изменить firstName = 'John', lastName = 'Kennedi', countOfChildren = 3, когда country == 'US' (or another country).
  * ++ - Вывести firstName, lastName, nameOfStreet, когда country == 'Canada' AND numberOfHome == 3 OR age >= 25";
- *
+ * <p>
  * 1) Since 24/09/23
  * - Сгруппировать людей по количеству детей.
  * - Сгруппировать людей по количеству детей и возрасту.
@@ -17,31 +17,36 @@ package homeworks.dmytro_k.hw_2023.hw_08_10_23.task1;
  * где количество людей больше 4.
  */
 
-import lessons.streams.ManMap;
-
 import java.util.Comparator;
-import java.util.LinkedList;
-import java.util.List;
-import java.util.Map;
 import java.util.function.Consumer;
 import java.util.function.Predicate;
-import java.util.stream.Collectors;
 
 public class ManTest {
     public static void main(String[] args) {
-        List<Man> people = new LinkedList<>();
+        ManService manService = new ManService();
 
         Address addressMan1 = new Address("US", "New York", "45", 135);
         Address addressMan2 = new Address("US", "New York", "20", 40);
+        Address addressMan6 = new Address("US", "New York", "20", 40);
+        Address addressMan4 = new Address("US", "New York", "20", 40);
+        Address addressMan5 = new Address("US", "New York", "20", 40);
         Address addressMan3 = new Address("Canada", "Toronto", "Colgate Ave", 50);
 
         Man man1 = new Man("John", "Kennedi", 30, 3, addressMan1);
         Man man2 = new Man("Elvis", "Presley", 40, 5, addressMan2);
+        Man man7 = new Man("Elvis", "Presley", 40, 5, addressMan2);
         Man man3 = new Man("Justin", "Trudeau", 50, 3, addressMan3);
+        Man man4 = new Man("Justin", "Trudeau", 50, 3, addressMan4);
+        Man man5 = new Man("Justin", "Trudeau", 50, 3, addressMan5);
+        Man man6 = new Man("Justin", "Trudeau", 50, 3, addressMan6);
 
-        people.add(man1);
-        people.add(man2);
-        people.add(man3);
+        manService.add(man1);
+        manService.add(man2);
+        manService.add(man3);
+        manService.add(man4);
+        manService.add(man5);
+        manService.add(man6);
+        manService.add(man7);
 
         Predicate<Man> predicate1 = element -> element.getAge() >= 20;
 
@@ -79,17 +84,15 @@ public class ManTest {
         Consumer<Man> address = man ->
                 System.out.println(man.getADDRESS());
 
-        people.forEach(System.out::println);
-
-        people.forEach(address);
-
-        people
+        manService.people.forEach(System.out::println);
+        manService.people.forEach(address);
+        manService.people
                 .stream()
                 .filter(predicate1)
                 .sorted(comparatorName)
                 .forEach(filteredMan1);
 
-        for (Man man : people) {
+        for (Man man : manService.people) {
             if (predicate3.test(man)) {
                 man.setFirstName("John");
                 man.setLastName("Kennedi");
@@ -97,16 +100,16 @@ public class ManTest {
             }
         }
 
-        people
+        manService.people
                 .stream()
                 .filter(predicate3)
-                        .forEach(man -> {
-                            man.setFirstName("John");
-                            man.setLastName("Kennedi");
-                            man.setCountOfChildren(3);
-                        });
+                .forEach(man -> {
+                    man.setFirstName("John");
+                    man.setLastName("Kennedi");
+                    man.setCountOfChildren(3);
+                });
 
-        people
+        manService.people
                 .stream()
                 .filter(predicate2)
                 .forEach(filteredMan2);
@@ -114,8 +117,14 @@ public class ManTest {
 
 // Grouping
 
-        ManService manService = new ManService();
-        manService.groupingByCountOfChildren(people);
-        manService.groupingByCountOfChildrenAndAge(people);
+        System.out.println("---------");
+        manService.groupingByCountOfChildren();
+        manService.groupingByCountOfChildrenAndAge();
+        System.out.println("+++++++");
+        manService.groupingByCityAndStreet();
+        System.out.println("---------");
+        manService.groupingByCityAndStreetMore4();
+        System.out.println("V2");
+        manService.groupingByCityAndStreetMore4V2();
     }
 }
