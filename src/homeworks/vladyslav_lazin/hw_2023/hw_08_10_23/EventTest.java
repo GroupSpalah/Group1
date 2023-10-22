@@ -24,8 +24,11 @@ public class EventTest {
 
         Event event = new CocktailParty(Set.of("Bloody Mary", "Sex at the Beach", "Yorsh", "Rum-cola"));
         eventOrganizerCompanySrvice.createEvent(event);
-        System.out.println(eventOrganizerCompanySrvice.getTheBestOrganizer());
-
         System.out.println(event);
+        System.out.println(eventOrganizerCompanySrvice.getStaff());
+        System.out.println(eventOrganizerCompanySrvice.getTheBestOrganizer());
+        System.out.println(event.getMainOrganizer());
+
+
     }
 }

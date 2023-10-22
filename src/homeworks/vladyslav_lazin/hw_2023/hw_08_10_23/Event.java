@@ -14,6 +14,10 @@ public abstract class Event {
         this.organizers = organizers;
     }
 
+    public Employee getMainOrganizer() {
+        return mainOrganizer;
+    }
+
     @Override
     public String toString() {
         return "Event{" +
