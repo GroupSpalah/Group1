@@ -4,7 +4,7 @@ import java.util.List;
 
 public abstract class Event {
     private List<Employee> organizers;
-    private Employee mainOrganizer;
+    private Employee mainOrganizer;//delete
 
     public void setMainOrganizer(Employee mainOrganizer) {
         this.mainOrganizer = mainOrganizer;

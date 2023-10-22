@@ -4,7 +4,7 @@ import java.util.List;
 import java.util.Set;
 
 public final class CocktailParty extends Event{
-    private Set<String> availableCoctails;
+    private Set<String> availableCoctails;//aaa
 
     public CocktailParty(Set<String> availableCoctails) {
         this.availableCoctails = availableCoctails;

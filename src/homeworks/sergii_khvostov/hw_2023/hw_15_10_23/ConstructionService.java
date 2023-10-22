@@ -55,6 +55,6 @@ public class ConstructionService {
                 .mapToLong(site -> site.employees().size())
                 .sum();
 
-        return (double) totalOfficeWorkers / officeSites.size();
+        return totalOfficeWorkers * 1.0 / officeSites.size();
     }
 }

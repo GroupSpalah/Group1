@@ -23,7 +23,8 @@ public final class ConstructionSite {
     }
 
     public void addEmployeeToStaff(Employee employee) {
-        boolean sectionChiefExixts = this.staff.stream().anyMatch(element -> element instanceof SectionChief);
+        boolean sectionChiefExixts =
+                this.staff.stream().anyMatch(element -> element instanceof SectionChief);
         if (!sectionChiefExixts) {
             this.staff.add(employee);
         }

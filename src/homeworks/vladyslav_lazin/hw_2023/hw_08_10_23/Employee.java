@@ -1,10 +1,13 @@
 package homeworks.vladyslav_lazin.hw_2023.hw_08_10_23;
 
+/**
+ *
+ */
 public class Employee {
 
     private final String name;
     Role role;
-    int mainOrganizerEventsCount;
+    int mainOrganizerEventsCount;//delete
     public Employee(String name, Role role, int mainOrganizerEventsCount) {
         this.name = name;
         this.role = role;
@@ -40,3 +43,10 @@ public class Employee {
                 '}';
     }
 }
+
+/**
+ * Item     Price   Count       Sum
+ * phone    100       5         500
+ *
+ *
+ */
