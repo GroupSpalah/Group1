@@ -3,7 +3,7 @@ package homeworks.sergii_khvostov.hw_2023.hw_08_10_23;
 import java.util.ArrayList;
 import java.util.List;
 
-public class ListEmployeesAndEvents {
+public class ListEmployees {
 
     public List<Employee> addEmployee() {
 
@@ -46,21 +46,5 @@ public class ListEmployeesAndEvents {
         employees.add(bobo);
 
         return employees;
-    }
-
-    public List<Event> addEvent() {
-
-        List<Event> events = new ArrayList<>();
-
-        Event event1 = new Event(EventType.COCKTAIL_PARTY, addEmployee(), false, false);
-        Event event2 = new Event(EventType.CONFERENCE, addEmployee(), false, true);
-        Event event3 = new Event(EventType.WEDDING, addEmployee(), true, false);
-
-        events.add(event1);
-        events.add(event2);
-        events.add(event3);
-
-        return events;
-
     }
 }
