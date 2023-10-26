@@ -21,13 +21,19 @@ public final class ConstructionSite {
     public List<Employee> getStaff() {
         return staff;
     }
-
+    public Boolean isInProgress() {
+        return this.staff.stream()
+                .anyMatch(element -> element.getPosition() == Position.SUPERVISOR);
+    }
     public void addEmployeeToStaff(Employee employee) {
-        boolean sectionChiefExixts =
-                this.staff.stream().anyMatch(element -> element instanceof SectionChief);
-        if (!sectionChiefExixts) {
+        if (employee.getPosition() == Position.SUPERVISOR) {
+            if(this.staff
+                    .stream()
+                    .noneMatch(element -> element.getPosition() == Position.SUPERVISOR)) {
+                this.staff.add(employee);
+            }
+        } else {
             this.staff.add(employee);
         }
-
     }
 }

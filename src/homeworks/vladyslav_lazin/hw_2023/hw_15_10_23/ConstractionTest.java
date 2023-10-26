@@ -5,16 +5,20 @@ import java.math.BigDecimal;
 public class ConstractionTest {
     public static void main(String[] args) {
         ConstructionSite constructionSite = new ConstructionSite(BuildingType.OFFICE_BUILDING);
-        constructionSite.addEmployeeToStaff(new SectionChief("John Doe"));
-        constructionSite.addEmployeeToStaff(new FullTimeWorker("Ben Smith"));
-        constructionSite.addEmployeeToStaff(new FullTimeWorker("Kenny Long"));
-        constructionSite.addEmployeeToStaff(new FullTimeWorker("Kyly Brochlovsky"));
-        constructionSite.addEmployeeToStaff(new FullTimeWorker("Eric Cartman"));
-        constructionSite.addEmployeeToStaff(new PartTimeWorker("Stanley Walsh"));
-        constructionSite.addEmployeeToStaff(new PartTimeWorker("Parry Mayson"));
+        constructionSite.addEmployeeToStaff(new Employee("Cahrles Manson", Position.SUPERVISOR, Employment.FULL_TIME));
+        constructionSite.addEmployeeToStaff(new Employee("John Doe", Position.SECTION_CHIEF, Employment.FULL_TIME));
+        constructionSite.addEmployeeToStaff(new Employee("Ben Smith", Position.WORKER, Employment.FULL_TIME));
+        constructionSite.addEmployeeToStaff(new Employee("Kenny Long", Position.WORKER, Employment.FULL_TIME));
+        constructionSite.addEmployeeToStaff(new Employee("Kyly Brochlovsky", Position.WORKER, Employment.FULL_TIME));
+        constructionSite.addEmployeeToStaff(new Employee("Eric Cartman", Position.WORKER, Employment.FULL_TIME));
+        constructionSite.addEmployeeToStaff(new Employee("Stanley Walsh", Position.WORKER, Employment.PART_TIME));
+        constructionSite.addEmployeeToStaff(new Employee("Parry Mayson", Position.WORKER, Employment.PART_TIME));
+
 
         ConstructionService constructionService = new ConstructionService();
         System.out.println(constructionService.getWorkersNumber(constructionSite));
+
+        System.out.println(constructionService.calculateStaffSalary(constructionSite, 176));
 
 
     }
