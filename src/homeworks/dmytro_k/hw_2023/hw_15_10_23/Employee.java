@@ -4,7 +4,7 @@ package homeworks.dmytro_k.hw_2023.hw_15_10_23;
  * Первый модуль приложения — управление сотрудниками.
  * ++У сотрудника есть имя, идентификатор сотрудника,
  * ++а также должность: рабочий, супервайзер, инженер.
- * Работники могут работать как на окладе, так и на условиях неполного рабочего времени.
+ * ++Работники могут работать как на окладе, так и на условиях неполного рабочего времени.
  * Работники получают заработную плату в деньгах на основе следующих правил:
  * <p>
  * Рабочие получают базовую заработную плату в размере 408$ и 6$ за отработанные часы.
@@ -22,7 +22,7 @@ public class Employee {
     private int id;
     private static final int countId = 1;
     private EmployeeType employeeType;
-    private double salary;
+    private float salary;
     private boolean fullTimeWork;
     private double hoursWorked;
 
@@ -31,27 +31,49 @@ public class Employee {
         this.id += countId;
         this.employeeType = employeeType;
         this.fullTimeWork = fullTimeWork;
-        //this.salary = setSalary(employeeType);
+        if (fullTimeWork) {
+            this.salary = employeeType.getBaseSalary();
+        } else {
+            this.salary = employeeType.getHourSalary() * 2;
+        }
     }
 
-/*    private double setSalary(EmployeeType employeeType) {
+    public void setSupervisorSalary() {
 
-        if (fullTimeWork) {
-            if (employeeType.equals(EmployeeType.WORKER)) {
-                return 408;
-            } else if (employeeType.equals(EmployeeType.SUPERVISOR)) {
-                return 788;
-            } else if (employeeType.equals(EmployeeType.ENGINEER)) {
-                return 700;
-            }
-        } else {
-            if (employeeType.equals(EmployeeType.WORKER)) {
-                return hoursWorked * 6 * 2;
-            } else if (employeeType.equals(EmployeeType.SUPERVISOR)) {
-                return hoursWorked * 5 * 2;
-            } else if (employeeType.equals(EmployeeType.ENGINEER)) {
-                return hoursWorked * 40 * 2;
-            }
-        }
-    }*/
+/*        if (employeeType.equals(EmployeeType.SUPERVISOR)) {
+            salary +=
+        }*/
+    }
+
+    public EmployeeType getEmployeeType() {
+        return employeeType;
+    }
+
+    public void setEmployeeType(EmployeeType employeeType) {
+        this.employeeType = employeeType;
+    }
+
+    public float getSalary() {
+        return salary;
+    }
+
+    public void setSalary(float salary) {
+        this.salary = salary;
+    }
+
+    public boolean isFullTimeWork() {
+        return fullTimeWork;
+    }
+
+    public void setFullTimeWork(boolean fullTimeWork) {
+        this.fullTimeWork = fullTimeWork;
+    }
+
+    public double getHoursWorked() {
+        return hoursWorked;
+    }
+
+    public void setHoursWorked(double hoursWorked) {
+        this.hoursWorked = hoursWorked;
+    }
 }

@@ -1,6 +1,6 @@
 package homeworks.dmytro_k.hw_2023.hw_08_10_23.task2;
 
-import java.util.LinkedList;
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -35,7 +35,7 @@ public abstract class Event {
     private EventType eventType;
 
     public Event(EventType eventType) {
-        this.employees = new LinkedList<>();
+        this.employees = new ArrayList<>();
         this.eventType = eventType;
     }
 
@@ -73,7 +73,7 @@ public abstract class Event {
         return employees;
     }
 
-    public boolean isStart() {
+    public boolean isStart() {//может ли начаться ивент
         return containsMainOrganizer() && containsTwoOrganizer() && employees.size() >= COUNT_STAFF;
     }
 }

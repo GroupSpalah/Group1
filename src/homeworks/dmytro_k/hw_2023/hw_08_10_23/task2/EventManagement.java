@@ -5,10 +5,7 @@ package homeworks.dmytro_k.hw_2023.hw_08_10_23.task2;
  * больше всего событий.
  */
 
-import java.util.Comparator;
-import java.util.LinkedList;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 import java.util.stream.Collectors;
 
 public class EventManagement {
@@ -16,8 +13,9 @@ public class EventManagement {
     private List<Event> events;
 
     public EventManagement() {
-        this.events = new LinkedList<>();
+        this.events = new ArrayList<>();
     }
+
 
     public void add(Event event) {//если старт, то эдд
         if (event.isStart()) {
