@@ -6,8 +6,13 @@ import java.util.List;
 
 public class ConstructionService {
 
-    private List<ConstructionSite> sites = new ArrayList<>();
-    private List<Employee> employees = new ArrayList<>();
+    private List<ConstructionSite> sites;
+    private List<Employee> employees;
+
+    public ConstructionService() {
+        sites = new ArrayList<>();
+        employees = new ArrayList<>();
+    }
 
     public BigDecimal calculateSalary(Employee employee) {
         BigDecimal baseSalary = employee.getPosition().getBaseSalary();
@@ -37,7 +42,7 @@ public class ConstructionService {
                 .toList();
 
         double totalOfficeWorkers = officeSites.stream()
-                .mapToLong(site -> site.employees().size())
+                .mapToInt(site -> site.employees().size())
                 .sum();
 
         return totalOfficeWorkers / officeSites.size();
@@ -48,8 +53,7 @@ public class ConstructionService {
         employees.addAll(employeesList);
     }
 
-    public void addSites(ConstructionSite site) {
+    public void addSite(ConstructionSite site) {
         sites.add(site);
-
     }
 }

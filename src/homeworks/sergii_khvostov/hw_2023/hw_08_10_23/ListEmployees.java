@@ -7,7 +7,7 @@ public class ListEmployees {
 
     public static List<Employee> addEmployee() {
 
-        List<Employee> employees = new ArrayList<>();
+        List<Employee> employees = new ArrayList<>();//List.of
 
         Employee jim = new Employee("Jim", EmployeeRole.HELPER);
         Employee bill = new Employee("Bill", EmployeeRole.HELPER);

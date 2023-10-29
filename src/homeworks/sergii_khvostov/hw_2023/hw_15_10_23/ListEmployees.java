@@ -5,7 +5,7 @@ import java.util.List;
 
 public class ListEmployees {
     public static List<Employee> createEmployees() {
-        List<Employee> employees = new ArrayList<>();
+        List<Employee> employees = new ArrayList<>();//List.of
         employees.add(new Employee("John", 1, EmployeePosition.WORKER, 40));
         employees.add(new Employee("Bill", 2, EmployeePosition.SUPERVISOR, 30));
         employees.add(new Employee("Jack", 3, EmployeePosition.ENGINEER, 50));

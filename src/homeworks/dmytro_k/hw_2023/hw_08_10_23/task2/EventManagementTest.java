@@ -29,8 +29,8 @@ public class EventManagementTest {
 
         Conferences conferences1 = new Conferences();
 
-        CocktailParties cocktailParties1 = new CocktailParties();
-        CocktailParties cocktailParties2 = new CocktailParties();
+        CocktailParty cocktailParties1 = new CocktailParty();
+        CocktailParty cocktailParties2 = new CocktailParty();
 
         wedding1.addEmployee(employee1);
         wedding1.addEmployee(employee2);

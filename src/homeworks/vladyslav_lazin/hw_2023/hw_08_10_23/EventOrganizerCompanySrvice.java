@@ -61,8 +61,7 @@ public class EventOrganizerCompanySrvice {
 
     public Event organizeEvent(Event event) {
         event = assignStaffToEvent(event);
-        event = assignMainOrganizer(event);
-        return event;
+        return assignMainOrganizer(event);
 
     }
 

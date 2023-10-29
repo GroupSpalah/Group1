@@ -17,7 +17,7 @@ public class Conferences extends Event {
     }
 
     public void setVisitorBag(Visitor visitor) {
-        if (visitorBag.get(visitor).equals(true)) {
+        if (visitorBag.get(visitor)) {
             System.out.println("you have bag");
         } else {
             visitorBag.put(visitor, true);

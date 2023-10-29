@@ -14,9 +14,9 @@ public class ConstructionTest {
 
 
         ConstructionService cs = new ConstructionService();
-        cs.addSites(constructionSite1);
-        cs.addSites(constructionSite2);
-        cs.addSites(constructionSite3);
+        cs.addSite(constructionSite1);
+        cs.addSite(constructionSite2);
+        cs.addSite(constructionSite3);
         cs.fillEmployees();
         BigDecimal totalSalary = cs.calculateTotalSalary();
         System.out.println("Total salary employees: " + totalSalary);

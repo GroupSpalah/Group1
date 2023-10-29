@@ -8,11 +8,11 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Set;
 
-public class CocktailParties extends Event {
+public class CocktailParty extends Event {
 
     private Map<Visitor, Set<Cocktail>> visitorCocktails;//мапа, где ключ - юзер, значение - сет коктейлей++
 
-    public CocktailParties() {
+    public CocktailParty() {
         super(EventType.COCKTAIL_PARTIES);
         this.visitorCocktails = new HashMap<>();
     }

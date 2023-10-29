@@ -7,7 +7,7 @@ public abstract class Event {
     private EventType type;
     private List<Employee> employees;
 
-    static List<Event> events = new ArrayList<>();
+    static List<Event> events = new ArrayList<>();//remove
 
 
     public Event(EventType type, List<Employee> employees) {

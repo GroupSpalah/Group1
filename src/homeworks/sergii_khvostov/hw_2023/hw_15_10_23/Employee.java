@@ -6,6 +6,8 @@ public class Employee {
     private EmployeePosition position;
     private int hoursWorked;
 
+    private boolean isFullDay;
+
     public Employee(String name, int id, EmployeePosition position, int hoursWorked) {
         this.name = name;
         this.id = id;
