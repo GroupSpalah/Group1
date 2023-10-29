@@ -31,13 +31,12 @@ public class ManTest {
             .forEach(element -> System.out.println(element.getName() + " " + element.getSurname() + " " + element.getChildrenNumber()));
         
         //Изменить firstName = 'John', lastName = 'Kennedi', countOfChildren = 3, когда country == 'US' (or another country).
-        menList.stream().map(man -> {
+        menList.stream().peek(man -> {
             if ("USA".equals(man.getAddress().getCountry())) {
                 man.setName("John");
                 man.setSurname("Kennedy");
                 man.setChildrenNumber(3);
             }
-            return man;
         }).forEach(System.out::println);
 
         //Вывести firstName, lastName, nameOfStreet, когда country == 'Canada' AND numberOfHome == 3 OR age >= 25"

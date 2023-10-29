@@ -7,9 +7,14 @@ public class ConstructionService {
         return constructionSite.getStaff().size();
     }
     public BigDecimal calculateStaffSalary(ConstructionSite constructionSite, int workTime) {
-
+        int subordinaryNumber = constructionSite.getStaff().size() - 1;
         return constructionSite.getStaff()
                 .stream()
+                .peek(element -> {
+                    if (element.getPosition() == Position.SUPERVISOR) {
+                        element.setSubordinaryNumber(subordinaryNumber);
+                    }
+                })
                 .map(element -> element.calculateSalary(workTime))
                 .reduce(BigDecimal.ZERO, BigDecimal::add);
 

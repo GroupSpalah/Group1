@@ -9,10 +9,11 @@ public class ConstractionTest {
         constructionSite.addEmployeeToStaff(new Employee("John Doe", Position.SECTION_CHIEF, Employment.FULL_TIME));
         constructionSite.addEmployeeToStaff(new Employee("Ben Smith", Position.WORKER, Employment.FULL_TIME));
         constructionSite.addEmployeeToStaff(new Employee("Kenny Long", Position.WORKER, Employment.FULL_TIME));
-        constructionSite.addEmployeeToStaff(new Employee("Kyly Brochlovsky", Position.WORKER, Employment.FULL_TIME));
+        constructionSite.addEmployeeToStaff(new Employee("Kyle Brochlovsky", Position.WORKER, Employment.FULL_TIME));
         constructionSite.addEmployeeToStaff(new Employee("Eric Cartman", Position.WORKER, Employment.FULL_TIME));
         constructionSite.addEmployeeToStaff(new Employee("Stanley Walsh", Position.WORKER, Employment.PART_TIME));
         constructionSite.addEmployeeToStaff(new Employee("Parry Mayson", Position.WORKER, Employment.PART_TIME));
+        constructionSite.addEmployeeToStaff(new Employee("Rex Stout", Position.SECTION_CHIEF, Employment.PART_TIME));
 
 
         ConstructionService constructionService = new ConstructionService();

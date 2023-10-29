@@ -1,6 +1,5 @@
 package homeworks.vladyslav_lazin.hw_2023.hw_08_10_23;
 
-import java.util.List;
 import java.util.Set;
 
 public class EventTest {
@@ -22,13 +21,13 @@ public class EventTest {
         eventOrganizerCompanySrvice.addEmployeeToStaff(new Employee("John Walker", Role.ASSISTENT));
         eventOrganizerCompanySrvice.addEmployeeToStaff(new Employee("Joe Folkner", Role.ASSISTENT));
 
-        Event event = new CocktailParty(Set.of("Bloody Mary", "Sex at the Beach", "Yorsh", "Rum-cola"));
-        eventOrganizerCompanySrvice.createEvent(event);
+        Event event = new CocktailParty(Set.of(Cocktail.BLOODY_MARY, Cocktail.GINN_TONIC, Cocktail.RUM_COLA, Cocktail.SLEZA_KOMSONOLKI));
+        eventOrganizerCompanySrvice.organizeEvent(event);
         System.out.println(event);
         System.out.println(eventOrganizerCompanySrvice.getStaff());
         System.out.println(eventOrganizerCompanySrvice.getTheBestOrganizer());
         System.out.println(event.getMainOrganizer());
-
-
+        System.out.println("__________________________________________");
+        eventOrganizerCompanySrvice.getStaff().forEach(System.out::println);
     }
 }

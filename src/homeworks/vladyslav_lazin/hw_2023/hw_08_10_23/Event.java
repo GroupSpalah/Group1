@@ -4,18 +4,17 @@ import java.util.List;
 
 public abstract class Event {
     private List<Employee> organizers;
-    private Employee mainOrganizer;//delete
-
-    public void setMainOrganizer(Employee mainOrganizer) {
-        this.mainOrganizer = mainOrganizer;
-    }
-
     public void setOrganizers(List<Employee> organizers) {
         this.organizers = organizers;
     }
-
     public Employee getMainOrganizer() {
-        return mainOrganizer;
+        return this.organizers.stream()
+                .filter(element -> element.getRole() == Role.MAIN_ORGANIZER)
+                .findFirst().orElse(null);
+    }
+
+    public List<Employee> getOrganizers() {
+        return organizers;
     }
 
     @Override

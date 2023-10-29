@@ -30,19 +30,6 @@ public class Employee {
         this.subordinaryNumber = 0;
     }
 
-    /**
-     * @param name - String
-     * @param subordinaryNumber - int, subordinary workers number, only for supervisers
-     */
-    public Employee(String name, int subordinaryNumber) {
-        this.id = currentId;
-        currentId++;
-        this.name = name;
-        this.position = Position.SUPERVISOR;
-        this.employment = Employment.FULL_TIME;
-        this.subordinaryNumber = subordinaryNumber;
-    }
-
     public Position getPosition() {
         return position;
     }
@@ -52,6 +39,8 @@ public class Employee {
     }
 
     public void setSubordinaryNumber(int subordinaryNumber) {
-        this.subordinaryNumber = subordinaryNumber;
+        if (this.position == Position.SUPERVISOR) {
+            this.subordinaryNumber = subordinaryNumber;
+        }
     }
 }

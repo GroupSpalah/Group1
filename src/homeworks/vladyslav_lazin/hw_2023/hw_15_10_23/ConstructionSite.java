@@ -27,9 +27,7 @@ public final class ConstructionSite {
     }
     public void addEmployeeToStaff(Employee employee) {
         if (employee.getPosition() == Position.SUPERVISOR) {
-            if(this.staff
-                    .stream()
-                    .noneMatch(element -> element.getPosition() == Position.SUPERVISOR)) {
+            if(!this.isInProgress()) {
                 this.staff.add(employee);
             }
         } else {

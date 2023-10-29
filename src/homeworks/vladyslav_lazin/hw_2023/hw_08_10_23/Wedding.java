@@ -5,8 +5,10 @@ import java.util.List;
 public class Wedding extends Event {
     private boolean hasWeddingCake;
 
-
     public Wedding() {
         this.hasWeddingCake = true;
+    }
+    public boolean isWeddinngReadyToBegin() {
+        return this.hasWeddingCake;
     }
 }

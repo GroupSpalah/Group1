@@ -2,7 +2,7 @@ package homeworks.vladyslav_lazin.hw_2023.hw_08_10_23;
 
 
 import java.util.ArrayList;
-import java.util.LinkedList;
+import java.util.Collections;
 import java.util.List;
 import java.util.Random;
 import java.util.stream.Collectors;
@@ -11,7 +11,7 @@ public class EventOrganizerCompanySrvice {
     private List<Employee> staff;
 
     public EventOrganizerCompanySrvice() {
-        this.staff = new LinkedList<>();
+        this.staff = new ArrayList<>();
     }
     public void addEmployeeToStaff(Employee employee) {
         this.staff.add(employee);
@@ -25,10 +25,6 @@ public class EventOrganizerCompanySrvice {
                 .sorted((a,b) -> new Random().nextInt(3) - 2)
                 .limit(3)
                 .collect(Collectors.toList());
-        Employee employee = assignMainOrganizer(orgnizers);
-        event.setMainOrganizer(employee);
-        int index = orgnizers.indexOf(employee);
-        orgnizers.set(index, employee);
         List<Employee> assistants = this.staff
                 .stream()
                 .filter(e -> e.getRole() == Role.ASSISTENT)
@@ -40,18 +36,34 @@ public class EventOrganizerCompanySrvice {
         event.setOrganizers(eventOrganizers);
         return event;
     }
-        private Employee assignMainOrganizer(List<Employee> oganizers) {
-        Employee mainOrganizer = oganizers.get(new Random().nextInt(2));
-        mainOrganizer.setRole(Role.MAIN_ORGANIZER);
-        int index = this.staff.indexOf(mainOrganizer);
-        Employee employee = this.staff.get(index);
-        int newMainOrganizerCount = employee.getMainOrganizerEventsCount() + 1;
-        employee.setMainOrganizerEventsCount(newMainOrganizerCount);
-        this.staff.set(index, employee);
-        return employee;
+        private Event assignMainOrganizer(Event event) {
+            List<Employee> organizers = event.getOrganizers().stream()
+                .filter(element -> element.getRole() == Role.ORGANIZER)
+                .collect(Collectors.toList());
+            Collections.shuffle(organizers);
+            Employee mainOrganizer = organizers.get(0);
+            int index = event.getOrganizers().indexOf(mainOrganizer);
+            mainOrganizer = event.getOrganizers().get(index);
+            incrementMainOrganizerCount(mainOrganizer);
+            mainOrganizer.setRole(Role.MAIN_ORGANIZER);
+            event.getOrganizers().set(index, mainOrganizer);
+
+        return event;
     }
-    public Event createEvent(Event event) {
-        return assignStaffToEvent(event);
+
+    private void incrementMainOrganizerCount(Employee mainOrganizer) {
+        int index = this.staff.indexOf(mainOrganizer);
+        int mainOrganizerEventsCount = this.staff.get(index).mainOrganizerEventsCount;
+        Employee organizer = this.staff.get(index);
+        organizer.setMainOrganizerEventsCount(++mainOrganizerEventsCount);
+        this.staff.set(index, organizer);
+    }
+
+    public Event organizeEvent(Event event) {
+        event = assignStaffToEvent(event);
+        event = assignMainOrganizer(event);
+        return event;
+
     }
 
     public Employee getTheBestOrganizer() {
