@@ -39,41 +39,9 @@ public class Employee {
     }
 
     public void setSupervisorSalary() {
-
-/*        if (employeeType.equals(EmployeeType.SUPERVISOR)) {
-            salary +=
-        }*/
-    }
-
-    public EmployeeType getEmployeeType() {
-        return employeeType;
-    }
-
-    public void setEmployeeType(EmployeeType employeeType) {
-        this.employeeType = employeeType;
-    }
-
-    public float getSalary() {
-        return salary;
-    }
-
-    public void setSalary(float salary) {
-        this.salary = salary;
-    }
-
-    public boolean isFullTimeWork() {
-        return fullTimeWork;
-    }
-
-    public void setFullTimeWork(boolean fullTimeWork) {
-        this.fullTimeWork = fullTimeWork;
-    }
-
-    public double getHoursWorked() {
-        return hoursWorked;
-    }
-
-    public void setHoursWorked(double hoursWorked) {
-        this.hoursWorked = hoursWorked;
+        EmployeeService employeeService = new EmployeeService();
+        if (employeeType.equals(EmployeeType.SUPERVISOR)) {
+            salary += employeeService.employeesCount() * 0.5;
+        }
     }
 }
