@@ -36,6 +36,7 @@ public class Employee {
         } else {
             this.salary = employeeType.getHourSalary() * 2;
         }
+        setSupervisorSalary();
     }
 
     public void setSupervisorSalary() {
