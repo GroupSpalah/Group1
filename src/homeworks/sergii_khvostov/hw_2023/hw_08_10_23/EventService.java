@@ -7,32 +7,22 @@ package homeworks.sergii_khvostov.hw_2023.hw_08_10_23;
     Компания организует следующие мероприятия:
 
    коктейльные вечеринки
-
    свадьбы
-
    конференции
 
    На коктейльных вечеринках гости могут заказать коктейли из ограниченного количества.
    Свадьба может начаться только со свадебного торта.
    На конференциях гости могут попросить подарочную сумку, но только одну на каждого гостя.
 
-   Мы хотим знать имя организатора, который был главным организатором
-   больше всего событий.*/
+   Мы хотим знать имя организатора, который был главным организатором больше всего событий.*/
 
 import java.util.*;
-import java.util.function.Predicate;
 import java.util.stream.Collectors;
 
 public class EventService {
-    private List<Event> events = new ArrayList<>();
-    private List<Employee> employees;
-
-    public void setEmployees(List<Employee> employees) {
-        this.employees = employees;
-    }
 
     public void manageEvents() {
-        Map<String, Long> organizerCount = events.stream()
+        Map<String, Long> organizerCount = Event.events.stream()
                 .flatMap(event -> event.getEmployees().stream())
                 .filter(employee -> employee.role() == EmployeeRole.ORGANIZER)
                 .collect(Collectors.groupingBy(Employee::name, Collectors.counting()));
@@ -41,34 +31,6 @@ public class EventService {
                 .max(Comparator.comparingLong(Map.Entry::getValue));
 
         topOrganizer.ifPresent(entry -> System.out.println("Top Organizer: " + entry.getKey()));
-    }
-
-    private boolean canEventStart(Event event) {
-        EventType eventType = event.getType();
-        long helperCount = event.getEmployees().stream()
-                .filter(employee -> employee.role().equals(EmployeeRole.HELPER))
-                .count();
-        long organizerCount = event.getEmployees().stream()
-                .filter(employee -> employee.role().equals(EmployeeRole.ORGANIZER))
-                .count();
-
-        Map<EventType, Predicate<Event>> eventRules = Map.of(
-                EventType.COCKTAIL_PARTY, e -> helperCount >= 10 && organizerCount >= 3,
-                EventType.WEDDING, e -> helperCount >= 10 && organizerCount >= 3 &&
-                        ((Wedding) e).hasCake(),
-                EventType.CONFERENCE, e -> helperCount >= 10 && organizerCount >= 3 &&
-                        ((Conference) e).hasBag());
-
-        return eventRules.get(eventType).test(event);
-    }
-
-    public void addEvent(Event event) {
-        if (canEventStart(event)) {
-            events.add(event);
-        } else {
-            System.out.println("Event cannot be added: " + event.getType());
-        }
-
     }
 }
 

@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class ListEmployees {
-    public List<Employee> createEmployees() {
+    public static List<Employee> createEmployees() {
         List<Employee> employees = new ArrayList<>();
         employees.add(new Employee("John", 1, EmployeePosition.WORKER, 40));
         employees.add(new Employee("Bill", 2, EmployeePosition.SUPERVISOR, 30));

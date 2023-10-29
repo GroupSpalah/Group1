@@ -1,43 +1,28 @@
 package homeworks.sergii_khvostov.hw_2023.hw_15_10_23;
 
 import java.math.BigDecimal;
+import java.util.ArrayList;
 import java.util.List;
 
 public class ConstructionService {
 
+    static List<ConstructionSite> sites = new ArrayList<>();
+    private List<Employee> employees = new ArrayList<>();
+
     public BigDecimal calculateSalary(Employee employee) {
-        BigDecimal baseSalary;
-        BigDecimal hourlyRate;
+        BigDecimal baseSalary = employee.getPosition().getBaseSalary();
+        BigDecimal hourlyRate = employee.getPosition().getHourlyRate();
 
-        switch (employee.position()) {
-            case WORKER -> {
-                baseSalary = new BigDecimal(408);
-                hourlyRate = new BigDecimal(6);
-            }
-            case SUPERVISOR -> {
-                baseSalary = new BigDecimal(788);
-                hourlyRate = new BigDecimal(5);
-            }
-            case ENGINEER -> {
-                baseSalary = new BigDecimal(700);
-                hourlyRate = new BigDecimal(40);
-            }
-            default -> {
-                baseSalary = BigDecimal.ZERO;
-                hourlyRate = BigDecimal.ZERO;
-            }
-        }
-
-        return baseSalary.add(hourlyRate.multiply(new BigDecimal(employee.hoursWorked())));
+        return baseSalary.add(hourlyRate.multiply(new BigDecimal(employee.getHoursWorked())));
     }
 
-    public BigDecimal calculateTotalSalary(List<Employee> employees) {
+    public BigDecimal calculateTotalSalary() {
         return employees.stream()
                 .map(this::calculateSalary)
                 .reduce(BigDecimal.ZERO, BigDecimal::add);
     }
 
-    public double averageOfficeWorkers(List<ConstructionSite> sites) {
+    public double averageOfficeWorkers() {
 
         boolean hasEngineer = sites.stream()
                 .anyMatch(ConstructionSite::hasEngineer);
@@ -51,10 +36,15 @@ public class ConstructionService {
                 .filter(site -> site.type() == ConstructionType.OFFICE)
                 .toList();
 
-        long totalOfficeWorkers = officeSites.stream()
+        double totalOfficeWorkers = officeSites.stream()
                 .mapToLong(site -> site.employees().size())
                 .sum();
 
-        return totalOfficeWorkers * 1.0 / officeSites.size();
+        return totalOfficeWorkers / officeSites.size();
+    }
+
+    public void fillEmployees() {
+        List<Employee> employeesList = ListEmployees.createEmployees();
+        employees.addAll(employeesList);
     }
 }

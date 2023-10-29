@@ -1,10 +1,14 @@
 package homeworks.sergii_khvostov.hw_2023.hw_08_10_23;
 
+import java.util.ArrayList;
 import java.util.List;
 
-public class Event {
+public abstract class Event {
     private EventType type;
     private List<Employee> employees;
+
+    static List<Event> events = new ArrayList<>();
+
 
     public Event(EventType type, List<Employee> employees) {
         this.type = type;
@@ -17,5 +21,15 @@ public class Event {
 
     public List<Employee> getEmployees() {
         return employees;
+    }
+
+    public abstract boolean canEventStart();
+
+    public void addEvent() {
+        if (canEventStart()) {
+            events.add(this);
+        } else {
+            System.out.println("Event cannot be added: " + type);
+        }
     }
 }

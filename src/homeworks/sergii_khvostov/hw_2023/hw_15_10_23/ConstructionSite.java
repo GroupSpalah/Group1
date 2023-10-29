@@ -5,6 +5,6 @@ import java.util.List;
 public record ConstructionSite(ConstructionType type, List<Employee> employees) {
     public boolean hasEngineer() {
         return employees.stream()
-                .anyMatch(employee -> employee.position() == EmployeePosition.ENGINEER);
+                .anyMatch(employee -> employee.getPosition() == EmployeePosition.ENGINEER);
     }
 }
