@@ -2,8 +2,6 @@ package homeworks.sergii_khvostov.hw_2023.hw_15_10_23;
 
 import java.math.BigDecimal;
 
-import static homeworks.sergii_khvostov.hw_2023.hw_15_10_23.ConstructionService.sites;
-
 public class ConstructionTest {
     public static void main(String[] args) {
 
@@ -14,11 +12,11 @@ public class ConstructionTest {
         ConstructionSite constructionSite3 =
                 new ConstructionSite(ConstructionType.APARTMENT, ListEmployees.createEmployees());
 
-        sites.add(constructionSite1);
-        sites.add(constructionSite2);
-        sites.add(constructionSite3);
 
         ConstructionService cs = new ConstructionService();
+        cs.addSites(constructionSite1);
+        cs.addSites(constructionSite2);
+        cs.addSites(constructionSite3);
         cs.fillEmployees();
         BigDecimal totalSalary = cs.calculateTotalSalary();
         System.out.println("Total salary employees: " + totalSalary);

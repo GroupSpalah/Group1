@@ -6,7 +6,7 @@ import java.util.List;
 
 public class ConstructionService {
 
-    static List<ConstructionSite> sites = new ArrayList<>();
+    private List<ConstructionSite> sites = new ArrayList<>();
     private List<Employee> employees = new ArrayList<>();
 
     public BigDecimal calculateSalary(Employee employee) {
@@ -46,5 +46,10 @@ public class ConstructionService {
     public void fillEmployees() {
         List<Employee> employeesList = ListEmployees.createEmployees();
         employees.addAll(employeesList);
+    }
+
+    public void addSites(ConstructionSite site) {
+        sites.add(site);
+
     }
 }
