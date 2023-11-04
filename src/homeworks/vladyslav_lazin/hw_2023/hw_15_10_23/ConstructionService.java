@@ -1,8 +1,18 @@
 package homeworks.vladyslav_lazin.hw_2023.hw_15_10_23;
 
 import java.math.BigDecimal;
+import java.util.ArrayList;
+import java.util.List;
 
 public class ConstructionService {
+    private List<ConstructionSite> constructionSites;
+
+    public ConstructionService() {
+        this.constructionSites = new ArrayList<>();
+    }
+    public void addConstruction(ConstructionSite constructionSite) {
+        this.constructionSites.add(constructionSite);
+    }
     public long getWorkersNumber(ConstructionSite constructionSite) {
         return constructionSite.getStaff().size();
     }
@@ -17,6 +27,5 @@ public class ConstructionService {
                 })
                 .map(element -> element.calculateSalary(workTime))
                 .reduce(BigDecimal.ZERO, BigDecimal::add);
-
     }
 }

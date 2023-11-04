@@ -6,13 +6,16 @@ public class Employee {
     private static int currentId = 0;
     private int id;
     private String name;
-    private Employment employment;
+
+
+    private int workedTime;
     private Position position;
+    private boolean isPartTime;
     private int subordinaryNumber;
 
     public BigDecimal calculateSalary(int hoursNumber) {
         BigDecimal salary = null;
-        if (this.position == Position.WORKER && this.employment == Employment.PART_TIME) {
+        if (this.position == Position.WORKER && this.isPartTime) {
             salary = new BigDecimal(Position.WORKER.getHourRate() * hoursNumber * 2);
         } else {
             salary = new BigDecimal(this.getPosition().getBaseSalary()
@@ -21,13 +24,13 @@ public class Employee {
         return salary;
     }
 
-    public Employee(String name, Position position, Employment employment) {
+    public Employee(String name, Position position, boolean isPartTime) {
         this.id = currentId;
         currentId++;
         this.name = name;
         this.position = position;
-        this.employment = employment;
         this.subordinaryNumber = 0;
+        this.isPartTime = isPartTime;
     }
 
     public Position getPosition() {
@@ -42,5 +45,8 @@ public class Employee {
         if (this.position == Position.SUPERVISOR) {
             this.subordinaryNumber = subordinaryNumber;
         }
+    }
+    public void setWorkedTime(int workedTime) {
+        this.workedTime = workedTime;
     }
 }
