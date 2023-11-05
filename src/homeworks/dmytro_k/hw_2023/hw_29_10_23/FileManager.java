@@ -7,15 +7,10 @@ import java.util.List;
 
 public class FileManager {
 
-    private FigureService figureService;
-    private final String FILENAME = "Figure.fig";
-    private final Path FILE_PATH = Paths.get("src/homeworks/dmytro_k/hw_2023/hw_29_10_23/figure_files/" + FILENAME);
+    private final String FILE_NAME = "Figure.fig";
+    private final Path FILE_PATH = Paths.get("src/homeworks/dmytro_k/hw_2023/hw_29_10_23/figure_files/" + FILE_NAME);
 
-    public FileManager() {
-        this.figureService = new FigureService();
-    }
-
-    public void writeToFile() {
+    public void writeToFile(FigureService figureService) {
         try {
             FileOutputStream fileOutputStream = new FileOutputStream(FILE_PATH.toFile());
             ObjectOutputStream objectOutputStream = new ObjectOutputStream(fileOutputStream);
@@ -25,7 +20,7 @@ public class FileManager {
         }
     }
 
-    public void readFile() {
+    public void readFile(FigureService figureService) {
         try {
             FileInputStream fileInputStream = new FileInputStream(FILE_PATH.toFile());
             ObjectInputStream objectInputStream = new ObjectInputStream(fileInputStream);

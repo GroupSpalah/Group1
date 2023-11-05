@@ -1,17 +1,16 @@
 package homeworks.dmytro_k.hw_2023.hw_29_10_23;
 
 /**
- * Напишите код для чтения и записи коллекций этих объектов из(в) файла.
- * Найдите объект максимальной площади. взять из файла
- * Найти объект с максимальным периметром. взять из файла фигура
+ * ++ Напишите код для чтения и записи коллекций этих объектов из(в) файла.
+ * ++ Найдите объект максимальной площади. взять из файла
+ * ++ Найти объект с максимальным периметром. взять из файла фигура
  */
 
-import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
 
-public class FigureService implements Serializable {
+public class FigureService {
 
     private List<Figure> figureList;
 
@@ -33,7 +32,8 @@ public class FigureService implements Serializable {
 
     public void maxPerimeter() {
         System.out.println("Max. perimeter: ");
-        Comparator<Figure> comparatorPerimeter = (f1, f2) -> Double.compare(f1.calculatePerimeter(), f2.calculatePerimeter());
+        Comparator<Figure> comparatorPerimeter = (f1, f2) ->
+                Double.compare(f1.calculatePerimeter(), f2.calculatePerimeter());
         figureList
                 .stream()
                 .max(comparatorPerimeter)

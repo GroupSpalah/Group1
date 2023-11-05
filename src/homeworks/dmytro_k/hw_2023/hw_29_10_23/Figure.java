@@ -1,6 +1,8 @@
 package homeworks.dmytro_k.hw_2023.hw_29_10_23;
 
-public class Figure implements Comparable<Figure> {
+import java.io.Serializable;
+
+public class Figure implements Comparable<Figure>, Serializable {
 
     private double sideA;
     private double sideB;
