@@ -16,7 +16,7 @@ public class ConstructionService {
     public long getWorkersNumber(ConstructionSite constructionSite) {
         return constructionSite.getStaff().size();
     }
-    public BigDecimal calculateStaffSalary(ConstructionSite constructionSite, int workTime) {
+    public BigDecimal calculateStaffSalary(ConstructionSite constructionSite) {
         int subordinaryNumber = constructionSite.getStaff().size() - 1;
         return constructionSite.getStaff()
                 .stream()
@@ -25,7 +25,7 @@ public class ConstructionService {
                         element.setSubordinaryNumber(subordinaryNumber);
                     }
                 })
-                .map(element -> element.calculateSalary(workTime))
+                .map(Employee::calculateSalary)
                 .reduce(BigDecimal.ZERO, BigDecimal::add);
     }
 }

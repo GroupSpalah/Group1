@@ -7,10 +7,10 @@ import java.util.List;
 import java.util.Random;
 import java.util.stream.Collectors;
 
-public class EventOrganizerCompanySrvice {
+public class EventOrganizerCompanyService {
     private List<Employee> staff;
 
-    public EventOrganizerCompanySrvice() {
+    public EventOrganizerCompanyService() {
         this.staff = new ArrayList<>();
     }
     public void addEmployeeToStaff(Employee employee) {
