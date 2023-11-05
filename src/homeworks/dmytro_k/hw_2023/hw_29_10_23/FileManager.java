@@ -1,5 +1,8 @@
 package homeworks.dmytro_k.hw_2023.hw_29_10_23;
 
+/**
+ * ++ Напишите код для чтения и записи коллекций этих объектов из(в) файла.*/
+
 import java.io.*;
 import java.nio.file.Path;
 import java.nio.file.Paths;
@@ -7,8 +10,8 @@ import java.util.List;
 
 public class FileManager {
 
-    private final String FILE_NAME = "Figure.fig";
-    private final Path FILE_PATH = Paths.get("src/homeworks/dmytro_k/hw_2023/hw_29_10_23/figure_files/" + FILE_NAME);
+    private final String FILE_NAME = "Figures.fig";
+    private final Path FILE_PATH = Paths.get("src/homeworks/dmytro_k/hw_2023/hw_29_10_23/figure_file/" + FILE_NAME);
 
     public void writeToFile(FigureService figureService) {
         try {
