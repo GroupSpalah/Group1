@@ -20,7 +20,5 @@ public class ConstractionTest {
         System.out.println(constructionService.getWorkersNumber(constructionSite));
 
         System.out.println(constructionService.calculateStaffSalary(constructionSite));
-
-
     }
 }
