@@ -5,16 +5,21 @@ package homeworks.dmytro_k.hw_2023.hw_08_10_23.task2;
  */
 
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.Map;
 import java.util.Set;
 
 public class CocktailParty extends Event {
 
-    private Map<Visitor, Set<Cocktail>> visitorCocktails;//мапа, где ключ - юзер, значение - сет коктейлей++
+    private Map<Visitor, Set<Cocktail>> visitorCocktails;
 
     public CocktailParty() {
         super(EventType.COCKTAIL_PARTIES);
         this.visitorCocktails = new HashMap<>();
+    }
+
+    public Map<Visitor, Set<Cocktail>> getVisitorCocktails() {
+        return visitorCocktails;
     }
 
     public void addCocktails(Visitor visitor, Cocktail cocktail) {
@@ -23,7 +28,7 @@ public class CocktailParty extends Event {
                     .get(visitor)
                     .add(cocktail);
         } else {
-            Set<Cocktail> cocktails = visitor.getCocktails();
+            Set<Cocktail> cocktails = new HashSet<>();
             cocktails.add(cocktail);
             visitorCocktails.put(visitor, cocktails);
         }

@@ -45,7 +45,7 @@ public class EventManagementTest {
         wedding1.addEmployee(employee14);
         wedding1.addEmployee(employee15);
         wedding1.addEmployee(employee17);
-        wedding1.addEmployee(employee18);//second, test
+        wedding1.addEmployee(employee18);
 
         wedding3.addEmployee(employee1);
         wedding3.addEmployee(employee2);
@@ -101,5 +101,9 @@ public class EventManagementTest {
         eventManagement.add(cocktailParties2);
 
         eventManagement.topOrganizer();
+
+        Visitor visitor = new Visitor("Ben");
+        cocktailParties2.addCocktails(visitor, Cocktail.COCKTAIL_1);
+        cocktailParties2.addCocktails(visitor, Cocktail.COCKTAIL_2);
     }
 }

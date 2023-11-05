@@ -17,7 +17,7 @@ public class EventManagement {
     }
 
 
-    public void add(Event event) {//если старт, то эдд
+    public void add(Event event) {
         if (event.isStart()) {
             events.add(event);
         }
