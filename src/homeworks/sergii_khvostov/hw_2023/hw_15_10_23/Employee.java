@@ -8,11 +8,12 @@ public class Employee {
 
     private boolean isFullDay;
 
-    public Employee(String name, int id, EmployeePosition position, int hoursWorked) {
+    public Employee(String name, int id, EmployeePosition position, int hoursWorked, boolean isFullDay) {
         this.name = name;
         this.id = id;
         this.position = position;
         this.hoursWorked = hoursWorked;
+        this.isFullDay = isFullDay;
     }
 
     public String getName() {
@@ -29,5 +30,9 @@ public class Employee {
 
     public int getHoursWorked() {
         return hoursWorked;
+    }
+
+    public boolean isFullDay() {
+        return isFullDay;
     }
 }

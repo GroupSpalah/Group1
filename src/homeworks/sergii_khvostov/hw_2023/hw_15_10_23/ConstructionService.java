@@ -7,27 +7,34 @@ import java.util.List;
 public class ConstructionService {
 
     private List<ConstructionSite> sites;
-    private List<Employee> employees;
 
     public ConstructionService() {
         sites = new ArrayList<>();
-        employees = new ArrayList<>();
     }
 
-    public BigDecimal calculateSalary(Employee employee) {
-        BigDecimal baseSalary = employee.getPosition().getBaseSalary();
-        BigDecimal hourlyRate = employee.getPosition().getHourlyRate();
-
-        return baseSalary.add(hourlyRate.multiply(new BigDecimal(employee.getHoursWorked())));
-    }
-
-    public BigDecimal calculateTotalSalary() {
-        return employees.stream()
-                .map(this::calculateSalary)
+    public BigDecimal calculateSalary() {
+        return sites.stream()
+                .flatMap(site -> site.getEmployees().stream())
+                .map(employee -> {
+                    BigDecimal baseSalary = employee.getPosition().getBaseSalary();
+                    BigDecimal hourlyRate = employee.getPosition().getHourlyRate();
+                    if (employee.isFullDay()) {
+                        return baseSalary;
+                    } else {
+                        return hourlyRate.multiply(new BigDecimal(employee.getHoursWorked()));
+                    }
+                })
                 .reduce(BigDecimal.ZERO, BigDecimal::add);
     }
 
-    public double averageOfficeWorkers() {
+    public BigDecimal calculateTotalSalary() {
+        return sites.stream()
+                .flatMap(site -> site.getEmployees().stream())
+                .map(employee -> calculateSalary())
+                .reduce(BigDecimal.ZERO, BigDecimal::add);
+    }
+
+    public double findAverageOfficeWorkers() {
 
         boolean hasEngineer = sites.stream()
                 .anyMatch(ConstructionSite::hasEngineer);
@@ -38,19 +45,19 @@ public class ConstructionService {
         }
 
         List<ConstructionSite> officeSites = sites.stream()
-                .filter(site -> site.type() == ConstructionType.OFFICE)
+                .filter(site -> site.getType() == ConstructionType.OFFICE)
                 .toList();
 
         double totalOfficeWorkers = officeSites.stream()
-                .mapToInt(site -> site.employees().size())
+                .mapToDouble(site -> site.getEmployees().size())
                 .sum();
 
         return totalOfficeWorkers / officeSites.size();
     }
 
-    public void fillEmployees() {
+    public void addEmployees() {
         List<Employee> employeesList = ListEmployees.createEmployees();
-        employees.addAll(employeesList);
+        sites.forEach(site -> site.getEmployees().addAll(employeesList));
     }
 
     public void addSite(ConstructionSite site) {

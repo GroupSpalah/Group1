@@ -4,24 +4,25 @@ import java.math.BigDecimal;
 
 public class ConstructionTest {
     public static void main(String[] args) {
+        ConstructionService cs = new ConstructionService();
 
         ConstructionSite constructionSite1 =
-                new ConstructionSite(ConstructionType.OFFICE, ListEmployees.createEmployees());
+                new ConstructionSite(ConstructionType.OFFICE);
         ConstructionSite constructionSite2 =
-                new ConstructionSite(ConstructionType.RESIDENTIAL, ListEmployees.createEmployees());
+                new ConstructionSite(ConstructionType.RESIDENTIAL);
         ConstructionSite constructionSite3 =
-                new ConstructionSite(ConstructionType.APARTMENT, ListEmployees.createEmployees());
+                new ConstructionSite(ConstructionType.APARTMENT);
 
-
-        ConstructionService cs = new ConstructionService();
         cs.addSite(constructionSite1);
         cs.addSite(constructionSite2);
         cs.addSite(constructionSite3);
-        cs.fillEmployees();
+
+        cs.addEmployees();
+
         BigDecimal totalSalary = cs.calculateTotalSalary();
         System.out.println("Total salary employees: " + totalSalary);
 
-        double totalOfficeWorkers = cs.averageOfficeWorkers();
+        double totalOfficeWorkers = cs.findAverageOfficeWorkers();
         System.out.println("Average number of workers at an office construction site: " +
                 totalOfficeWorkers);
 

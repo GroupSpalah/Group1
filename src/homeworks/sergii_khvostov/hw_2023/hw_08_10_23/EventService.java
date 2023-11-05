@@ -20,9 +20,18 @@ import java.util.*;
 import java.util.stream.Collectors;
 
 public class EventService {
+    private List<Event> events;
+
+    public EventService() {
+        this.events = new ArrayList<>();
+    }
+
+    public List<Event> getEvents() {
+        return events;
+    }
 
     public void manageEvents() {
-        Map<String, Long> organizerCount = Event.events.stream()
+        Map<String, Long> organizerCount = events.stream()
                 .flatMap(event -> event.getEmployees().stream())
                 .filter(employee -> employee.role() == EmployeeRole.ORGANIZER)
                 .collect(Collectors.groupingBy(Employee::name, Collectors.counting()));

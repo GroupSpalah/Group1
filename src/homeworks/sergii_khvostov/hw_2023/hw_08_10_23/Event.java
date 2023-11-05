@@ -1,18 +1,14 @@
 package homeworks.sergii_khvostov.hw_2023.hw_08_10_23;
 
-import java.util.ArrayList;
 import java.util.List;
 
 public abstract class Event {
     private EventType type;
     private List<Employee> employees;
 
-    static List<Event> events = new ArrayList<>();//remove
-
-
-    public Event(EventType type, List<Employee> employees) {
+    public Event(EventType type) {
         this.type = type;
-        this.employees = employees;
+        this.employees = ListEmployees.addEmployee();
     }
 
     public EventType getType() {
@@ -26,8 +22,9 @@ public abstract class Event {
     public abstract boolean canEventStart();
 
     public void addEvent() {
+        EventService eventService = new EventService();
         if (canEventStart()) {
-            events.add(this);
+            eventService.getEvents().add(this);
         } else {
             System.out.println("Event cannot be added: " + type);
         }

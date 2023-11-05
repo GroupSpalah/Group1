@@ -2,28 +2,25 @@ package homeworks.sergii_khvostov.hw_2023.hw_08_10_23;
 
 
 import java.util.HashSet;
-import java.util.List;
 import java.util.Set;
 
 public class Conference extends Event {
 
-    private long helperCount;
-    private long organizerCount;
     private Set<Visitor> visitors;
     private long numBagsTaken;
 
-
-    public Conference(EventType type, List<Employee> employees,
-                      long helperCount, long organizerCount) {
-        super(type, employees);
-        this.helperCount = helperCount;
-        this.organizerCount = organizerCount;
+    public Conference() {
+        super(EventType.CONFERENCE);
         this.visitors = new HashSet<>();
-        addEvent();
     }
 
+    public long getNumBagsTaken() {
+        return numBagsTaken;
+    }
+
+
     public boolean takeBag(Visitor visitor) {
-        if (numBagsTaken < visitors.size() && !visitors.contains(visitor)) {
+        if (getNumBagsTaken() < visitors.size() && !visitors.contains(visitor)) {
             numBagsTaken++;
             visitors.add(visitor);
             return true;
@@ -33,7 +30,13 @@ public class Conference extends Event {
 
     @Override
     public boolean canEventStart() {
-        return helperCount >= 10 && organizerCount >= 3 && numBagsTaken == visitors.size();
+        long helper = getEmployees().stream()
+                .filter(employee -> employee.role() == EmployeeRole.HELPER)
+                .count();
+        long organizer = getEmployees().stream()
+                .filter(employee -> employee.role() == EmployeeRole.ORGANIZER)
+                .count();
+        return helper >= 10 && organizer >= 3 && numBagsTaken >= visitors.size();
     }
 }
 
