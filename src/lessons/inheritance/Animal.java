@@ -76,9 +76,11 @@ class Cat3 extends Animal {
 
 class TestCats {
     public static void main(String[] args) {
-        Cat1 cat1 = new Cat1("John", 23);
+        Animal cat1 = new Cat1("John", 23);
         Cat2 cat2 = new Cat2("John", 23);
         Cat3 cat3 = new Cat3("John", 23);
+
+        System.out.println(cat1 instanceof Animal);
 
         Animal[] animals = new Animal[3];
 

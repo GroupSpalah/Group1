@@ -7,7 +7,7 @@ import java.util.List;
 
 public class ShapeService {
     public static void writeShapesToFile(String fileName, List<Shape> shapes) {
-        File file = Paths.get("/home/oldrobot/JavaProjects/Group1/src/homeworks/vladyslav_lazin/hw_2023/hw_29_10_23/" + fileName).toFile();
+        File file = Paths.get("./src/homeworks/vladyslav_lazin/hw_2023/hw_29_10_23/" + fileName).toFile();
         try(ObjectOutputStream outputStream = new ObjectOutputStream(new FileOutputStream(file))) {
             outputStream.writeObject(shapes);
         } catch (IOException e) {
@@ -16,7 +16,7 @@ public class ShapeService {
     }
     public static List<Shape> readShapesFromFile(String fileName) {
         List<Shape> shapes = new ArrayList<>();
-        File file = Paths.get("/home/oldrobot/JavaProjects/Group1/src/homeworks/vladyslav_lazin/hw_2023/hw_29_10_23/" + fileName).toFile();
+        File file = Paths.get("./src/homeworks/vladyslav_lazin/hw_2023/hw_29_10_23/" + fileName).toFile();
         try(ObjectInputStream inputStream = new ObjectInputStream(new FileInputStream(file))) {
             Object object;
             while ((object = inputStream.readObject()) != null) {

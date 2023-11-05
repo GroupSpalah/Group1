@@ -13,6 +13,10 @@ public class FigureService {
 
     private List<Figure> figureList;
 
+    public FigureService() {
+        this.figureList = new ArrayList<>();
+    }
+
     public List<Figure> getFigureList() {
         return figureList;
     }
@@ -21,18 +25,13 @@ public class FigureService {
         this.figureList = figureList;
     }
 
-    public FigureService() {
-        this.figureList = new ArrayList<>();
-    }
-
     public void addFigure(Figure figure) {
         figureList.add(figure);
     }
 
     public void maxPerimeter() {
         System.out.println("Max. perimeter: ");
-        Comparator<Figure> comparatorPerimeter = (f1, f2) ->
-                Double.compare(f1.calculatePerimeter(), f2.calculatePerimeter());
+        Comparator<Figure> comparatorPerimeter = Comparator.comparingDouble(Figure::calculatePerimeter);
         figureList
                 .stream()
                 .max(comparatorPerimeter)
@@ -41,7 +40,7 @@ public class FigureService {
 
     public void maxArea() {
         System.out.println("Max. area: ");
-        Comparator<Figure> comparatorArea = (f1, f2) -> Double.compare(f1.calculateAreA(), f2.calculateAreA());
+        Comparator<Figure> comparatorArea = Comparator.comparingDouble(Figure::calculateAreA);
         figureList
                 .stream()
                 .max(comparatorArea)

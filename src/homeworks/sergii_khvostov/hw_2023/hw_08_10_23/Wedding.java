@@ -21,6 +21,6 @@ public class Wedding extends Event {
         long organizer = getEmployees().stream()
                 .filter(employee -> employee.role() == EmployeeRole.ORGANIZER)
                 .count();
-        return helper >= 10 && organizer >= 3 && isCake();
+        return helper >= 10 && organizer >= 3 && isCake;
     }
 }

@@ -4,7 +4,7 @@ package lessons.inheritance;
 import java.io.File;
 
 class Car {//super-class, parent-class
-    private String name;
+    private String name;//has-a
     private int age;
 
     public Car(String name, int age) {
@@ -25,7 +25,7 @@ class Car {//super-class, parent-class
     }
 }
 
-public class Bmw extends Car {//sub-class, child-class
+public class Bmw extends Car {//sub-class, child-class, is-a
     private String bmwModel;
 
     public Bmw(String name, int age, String bmwModel) {
