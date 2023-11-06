@@ -10,8 +10,8 @@ public class ShapeTest {
                 new Squere(7.1F),
                 new Rectangle(3.9F, 9.0F),
                 new Rectangle(4.6F, 7.3F));
-    ShapeService.writeShapesToFile("shapes.dat", shapes);
-    List<Shape> shapesFromFile = ShapeService.readShapesFromFile("shapes.dat");
+    ShapeService.writeShapesToFile(shapes);
+    List<Shape> shapesFromFile = ShapeService.readShapesFromFile();
     System.out.println(ShapeService.findMaximalPerimeterShape(shapesFromFile));
     System.out.println(ShapeService.findMaximalSquereShape(shapesFromFile));
     }
