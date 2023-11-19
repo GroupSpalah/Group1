@@ -1,9 +1,6 @@
 package lessons.learn_serialization;
 
-import java.io.FileInputStream;
-import java.io.IOException;
-import java.io.ObjectInputStream;
-import java.io.Serializable;
+import java.io.*;
 
 public class LearnSerialization {
     public static void main(String[] args) {
@@ -39,10 +36,8 @@ class ManSer implements Serializable {
     private String name;
     private int age;
 
-    public ManSer(String name, int age) {
-        this.name = name;
-        this.age = age;
-    }
+    @Serial
+    public static final long serialVersionUID = 1L;
 
     @Override
     public String toString() {
@@ -51,4 +46,10 @@ class ManSer implements Serializable {
                 ", age=" + age +
                 '}';
     }
+
+    public ManSer(String name, int age) {
+        this.name = name;
+        this.age = age;
+    }
+
 }

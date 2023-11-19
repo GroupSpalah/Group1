@@ -21,7 +21,7 @@ public class AdvertisementService {
         addPlaceInfoFiles(path);
     }
 
-    private boolean isFileStructureNotExisists(Path path) {
+    private boolean isFileStructureNotExists(Path path) {
         boolean result = false;
 //        String absolutePath = path.toFile().getAbsolutePath();
 //        Path placesPathObject = FileSystems.getDefault().getPath(absolutePath);
@@ -57,7 +57,7 @@ public class AdvertisementService {
 
     private void createDefaultPlaces(Path path) {
         String absolutePath = path.toFile().getAbsolutePath();
-        if (isFileStructureNotExisists(path)) {
+        if (isFileStructureNotExists(path)) {
             IntStream.rangeClosed(1, 5)
                     .forEach(index -> {
                         Path pathToPlace = Paths.get(absolutePath, "Place_" + index);
@@ -75,7 +75,7 @@ public class AdvertisementService {
         IntStream.rangeClosed(1, 5)
                 .forEach(dirIndex -> {
                     Path pathToPlace = Paths.get(absolutePath, "Place_" + dirIndex + "/");
-                    if (isFileStructureNotExisists(pathToPlace)) {
+                    if (isFileStructureNotExists(pathToPlace)) {
                         createScreens(pathToPlace);
                     }
                 });
@@ -85,7 +85,8 @@ public class AdvertisementService {
         IntStream.rangeClosed(1, 5)
                 .forEach(dirIndex -> {
                     String absolutePath = path.toFile().getAbsolutePath();
-                    Path pathToInfoFile = Paths.get(absolutePath, "Place_" + dirIndex + "/place_info.dat");
+                    Path pathToInfoFile = Paths.get(absolutePath, "Place_",
+                            String.valueOf(dirIndex), "place_info.dat");
                     createPlaceInfoFile(pathToInfoFile, PLACE_INFOS.get(dirIndex - 1));
                 });
     }
@@ -127,7 +128,7 @@ public class AdvertisementService {
     public void replaceAdvertisimentAtPlace(Path path, String placeName, String newAdContent) {
         String absolutePath = path.toFile().getAbsolutePath();
         Path pathToPlace = Paths.get(absolutePath, placeName);
-        if (!isFileStructureNotExisists(pathToPlace)) {
+        if (!isFileStructureNotExists(pathToPlace)) {
             IntStream.rangeClosed(1, 5)
                     .forEach(fileIndex -> {
                         Path pathToFile = Paths.get(pathToPlace.toFile().getAbsolutePath(), "screen_" + fileIndex + ".txt");

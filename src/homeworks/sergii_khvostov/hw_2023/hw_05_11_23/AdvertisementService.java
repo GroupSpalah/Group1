@@ -21,7 +21,7 @@ public class AdvertisementService {
     private final Map<PlaceInfo, Integer> SCREENS_PLACE_MAP = new HashMap<>();
     private final String DIRECTORY = "Advertisement";
     private static final String INFO_FILE = "info.txt";
-    private final String TXT = ".txt";
+    private final String EXTENSION_TXT = ".txt";
     private final String SCREEN_ = "Screen_";
     private final int QUANTITY_PLACE = 5;
     private final String PLACE_ = "Place_";
@@ -57,7 +57,7 @@ public class AdvertisementService {
     private void createScreens(Path placePath) {
         IntStream.rangeClosed(1, 5)
                 .forEach(screenIndex -> {
-                    String screenName = SCREEN_ + screenIndex + TXT;
+                    String screenName = SCREEN_ + screenIndex + EXTENSION_TXT;
                     Path pathToScreen = placePath.resolve(screenName);
 
                     try {
@@ -78,7 +78,14 @@ public class AdvertisementService {
         }
     }
 
-    public void placeAnAdvertisementOnly(Os os, Browser browser, String advertisementContent) {
+    public void placeAnAdvertisementOnly(Os os, Browser browser, String advertisementContent) throws IOException {
+
+        Files
+                .newDirectoryStream(Paths.get(DIRECTORY))
+                .forEach(path -> {
+
+                });
+
         try {
             Files.walk(Paths.get(DIRECTORY))
                     .filter(Files::isRegularFile)
@@ -95,7 +102,7 @@ public class AdvertisementService {
                                 int screenIndex = screensPlaced + 1;
                                 while (screenIndex <= QUANTITY_PLACE) {
                                     Path advertisementPath = file.getParent()
-                                            .resolve(SCREEN_ + screenIndex + TXT);
+                                            .resolve(SCREEN_ + screenIndex + EXTENSION_TXT);
 
                                     String fileContent = "";
                                     if (Files.exists(advertisementPath)) {

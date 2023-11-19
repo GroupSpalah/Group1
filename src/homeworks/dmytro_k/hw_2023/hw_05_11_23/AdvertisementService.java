@@ -96,7 +96,7 @@ public class AdvertisementService {
                 });
     }
 
-    public void writeAdvertising(Path path, String advertising) {
+    private void writeAdvertising(Path path, String advertising) {
         try {
             Files.writeString(path, advertising, StandardOpenOption.WRITE);
         } catch (IOException e) {

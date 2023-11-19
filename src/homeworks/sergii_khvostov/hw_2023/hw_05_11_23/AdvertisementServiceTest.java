@@ -1,10 +1,11 @@
 package homeworks.sergii_khvostov.hw_2023.hw_05_11_23;
 
+import java.io.IOException;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 
 public class AdvertisementServiceTest {
-    public static void main(String[] args) {
+    public static void main(String[] args) throws IOException {
         Path path = Paths.get(".");
         new AdvertisementService(path);
 
