@@ -1,9 +1,9 @@
 package homeworks.vladyslav_lazin.hw_2023.hw_29_10_23;
 
-public class Squere extends Shape {
+public class Square extends Shape {
     private final float side;
 
-    public Squere(float side) {
+    public Square(float side) {
         this.side = side;
     }
 
@@ -19,7 +19,7 @@ public class Squere extends Shape {
 
     @Override
     public String toString() {
-        return "Squere{" +
+        return "Square{" +
                 "side=" + side +
                 '}';
     }
