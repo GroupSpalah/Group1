@@ -1,5 +1,6 @@
 package homeworks.sergii_khvostov.hw_2023.hw_29_10_23;
 
+
 public class FigureTest {
     public static void main(String[] args) {
         FigureService fs = new FigureService();
