@@ -11,7 +11,7 @@ public class ConstructionService {
     public ConstructionService() {
         sites = new ArrayList<>();
     }
-
+//не учтена доплата за подконтрольных рабочих
     public BigDecimal calculateSalary() {
         return sites.stream()
                 .flatMap(site -> site.getEmployees().stream())
@@ -47,7 +47,7 @@ public class ConstructionService {
         List<ConstructionSite> officeSites = sites.stream()
                 .filter(site -> site.getType() == ConstructionType.OFFICE)
                 .toList();
-
+//все, а нужны рабочие
         double totalOfficeWorkers = officeSites.stream()
                 .mapToDouble(site -> site.getEmployees().size())
                 .sum();

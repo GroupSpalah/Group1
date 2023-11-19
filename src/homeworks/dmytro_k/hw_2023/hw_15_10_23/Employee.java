@@ -1,5 +1,7 @@
 package homeworks.dmytro_k.hw_2023.hw_15_10_23;
 
+import java.util.List;
+
 /**
  * Первый модуль приложения — управление сотрудниками.
  * ++У сотрудника есть имя, идентификатор сотрудника,
@@ -18,40 +20,30 @@ package homeworks.dmytro_k.hw_2023.hw_15_10_23;
  */
 
 public class Employee {
-    private String name;
+    private final String name;
     private int id;
     private static final int countId = 1;
     private EmployeeType employeeType;
     private float salary;
     private boolean fullTimeWork;
     private double hoursWorked;
+    private List<Employee> workerList;//?
 
-    public Employee(String name, EmployeeType employeeType, boolean fullTimeWork) {
+    public Employee(String name, EmployeeType employeeType, float hoursWorked, boolean fullTimeWork) {
         this.name = name;
         this.id += countId;
         this.employeeType = employeeType;
+        this.hoursWorked = hoursWorked;
         this.fullTimeWork = fullTimeWork;
         if (fullTimeWork) {
             this.salary = employeeType.getBaseSalary();
         } else {
-            this.salary = employeeType.getHourSalary() * 2;
-        }
-        setSupervisorSalary();
-    }
-
-    public void setSupervisorSalary() {
-        EmployeeService employeeService = new EmployeeService();
-        if (employeeType.equals(EmployeeType.SUPERVISOR)) {
-            salary += employeeService.employeesCount() * 0.5;
+            this.salary = employeeType.getHourSalary() * hoursWorked;
         }
     }
 
     public EmployeeType getEmployeeType() {
         return employeeType;
-    }
-
-    public void setEmployeeType(EmployeeType employeeType) {
-        this.employeeType = employeeType;
     }
 
     public float getSalary() {
@@ -62,19 +54,15 @@ public class Employee {
         this.salary = salary;
     }
 
-    public boolean isFullTimeWork() {
-        return fullTimeWork;
-    }
-
-    public void setFullTimeWork(boolean fullTimeWork) {
-        this.fullTimeWork = fullTimeWork;
-    }
-
-    public double getHoursWorked() {
-        return hoursWorked;
-    }
-
-    public void setHoursWorked(double hoursWorked) {
-        this.hoursWorked = hoursWorked;
+    @Override
+    public String toString() {
+        return "Employee{" +
+                "name = '" + name + '\'' +
+                ", id = " + id +
+                ", employeeType = " + employeeType +
+                ", salary = " + salary +
+                ", fullTimeWork = " + fullTimeWork +
+                ", hoursWorked = " + hoursWorked +
+                '}' + "\n";
     }
 }

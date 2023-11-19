@@ -5,8 +5,8 @@ public enum EmployeeType {
     SUPERVISOR(788, 5),
     ENGINEER(700, 40);
 
-    private float baseSalary;
-    private float hourSalary;
+    private final float baseSalary;
+    private final float hourSalary;
 
     EmployeeType(float baseSalary, float hourSalary) {
         this.baseSalary = baseSalary;
