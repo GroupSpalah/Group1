@@ -162,13 +162,10 @@ public class AdvertisementService {
 
     private int filesOrDirectoryCount(Path path) {
 
-        int packageContent = Objects.requireNonNull(path
+        return Objects.requireNonNull(path
                 .toFile()
                 .listFiles())
                 .length;
-        System.out.println(packageContent);
-
-        return packageContent;
     }
 
     public void deleteFiles(Path path) {
