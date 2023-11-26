@@ -190,6 +190,8 @@ public class AdvertisementService {
             for (Path ignored : directoryStream) {
                 screensCount++;
             }
+
+//            long count = Files.list().count();
         } catch (IOException e) {
             throw new RuntimeException("Failed to count screens", e);
         }

@@ -12,8 +12,6 @@ public class AdvertisementService {
     private static final String PLACE_INFO_FILE_NAME = "place_info.dat";
     private static final String SCREEN_FILE_EXT = ".txt";
 
-
-
     private static final List<PlaceInfo> PLACE_INFOS = List.of(
             new PlaceInfo(Os.GNU_LINUX, Browser.FIREFOX),
             new PlaceInfo(Os.OS_X, Browser.SAFARI),

@@ -166,6 +166,7 @@ public class AdvertisementService {
                 .toFile()
                 .listFiles())
                 .length;
+
         System.out.println(packageContent);
 
         return packageContent;
@@ -182,6 +183,15 @@ public class AdvertisementService {
         Arrays
                 .stream((Objects.requireNonNull(path.toFile().listFiles())))
                 .forEach(File::delete);
+
+       /* Files.newDirectoryStream(path)
+                .forEach(file -> {
+                    try {
+                        Files.deleteIfExists(file);
+                    } catch (IOException e) {
+                        throw new RuntimeException(e);
+                    }
+                });*/
     }
 
     public void deletePlace(Path path) { // как остановить или игнорировать процессы, в которых сейчас задействованы файлы?
