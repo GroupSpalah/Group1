@@ -19,7 +19,7 @@ public class CalculatorTest {
 
     @Test
     public void shouldReturnAddValuesMock() {
-        Calculator mock = Mockito.mock(Calculator.class);
+         mock = Mockito.mock(Calculator.class);
 
         Mockito.when(mock.getOperandOne()).thenReturn(10);
         Mockito.when(mock.getOperandTwo()).thenReturn(20);
