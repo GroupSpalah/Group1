@@ -2,9 +2,11 @@ package homeworks.vladyslav_lazin.hw_2023.hw_05_11_23;
 
 import java.io.*;
 import java.nio.file.*;
+import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
 import java.util.stream.IntStream;
+import java.util.stream.Stream;
 
 public class AdvertisementService {
     private static final String PLACE_DIR_NAME = "Place_";
@@ -12,18 +14,27 @@ public class AdvertisementService {
     private static final String PLACE_INFO_FILE_NAME = "place_info.dat";
     private static final String SCREEN_FILE_EXT = ".txt";
 
-    private static final List<PlaceInfo> PLACE_INFOS = List.of(
-            new PlaceInfo(Os.GNU_LINUX, Browser.FIREFOX),
-            new PlaceInfo(Os.OS_X, Browser.SAFARI),
-            new PlaceInfo(Os.ANDROID, Browser.CHROME),
-            new PlaceInfo(Os.IOS, Browser.SAFARI),
-            new PlaceInfo(Os.MS_WINDOWS, Browser.EDGE)
-    );
+    private static final List<PlaceInfo> PLACE_INFOS = new ArrayList<>(
+            List.of(
+                    new PlaceInfo(Os.GNU_LINUX, Browser.FIREFOX),
+                    new PlaceInfo(Os.OS_X, Browser.SAFARI),
+                    new PlaceInfo(Os.ANDROID, Browser.CHROME),
+                    new PlaceInfo(Os.IOS, Browser.SAFARI),
+                    new PlaceInfo(Os.MS_WINDOWS, Browser.EDGE)
+            ));
 
     public AdvertisementService(Path path) {
         createDefaultPlaces(path);
     }
+
     private void createDefaultPlaces(Path path) {
+        try {
+            if (!Files.exists(path)) {
+                Files.createDirectory(path);
+            }
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
         IntStream.rangeClosed(1, 5)
                 .forEach(index -> {
                     Path pathToPlace = path.resolve(PLACE_DIR_NAME + index);
@@ -37,6 +48,7 @@ public class AdvertisementService {
                 });
         createDefaultScreens(path);
     }
+
     private void createDefaultScreens(Path path) {
         IntStream.rangeClosed(1, 5)
                 .forEach(dirIndex -> {
@@ -59,49 +71,16 @@ public class AdvertisementService {
                     }
                 });
     }
+
     private void addPlaceInfoFiles(Path pathToPlaces) {
-        IntStream.rangeClosed(1, 5)
-                .forEach(dirIndex -> {
-//                    String absolutePath = pathToPlaces.toFile().getAbsolutePath();
-                    Path pathToPlaceInfoFile = pathToPlaces.resolve(PLACE_DIR_NAME + dirIndex);
-//                            Paths.get(absolutePath, PLACE_DIR_NAME,
-//                            String.valueOf(dirIndex), PLACE_INFO_FILE_NAME);
-                    createPlaceInfoFile(pathToPlaceInfoFile.resolve(PLACE_INFO_FILE_NAME), PLACE_INFOS.get(dirIndex - 1));
-                });
-    }
-    private void createPlaceInfoFile(Path pathToPlaceInfoFile, PlaceInfo placeInfo) {
-        try (FileOutputStream fileOutputStream = new FileOutputStream(pathToPlaceInfoFile.toFile());
-             ObjectOutputStream objectOutputStream = new ObjectOutputStream(fileOutputStream)) {
-            if (!Files.exists(pathToPlaceInfoFile)) {
-                objectOutputStream.writeObject(placeInfo);
-            }
-        } catch (IOException e) {
-            throw new RuntimeException(e);
-        }
-    }
-    public void postAdvertisimentOnPlace(Path pathToPlaces, Os os, Browser browser, String adContent) {
-        try {
-            Files.newDirectoryStream(pathToPlaces)
-                    .forEach(path -> {
-                        Path pathToPlaceInfoFile = path.resolve(PLACE_INFO_FILE_NAME);
-                        try(FileInputStream fileInputStream = new FileInputStream(pathToPlaceInfoFile.toFile());
-                            ObjectInputStream objectInputStream = new ObjectInputStream(fileInputStream))  {
-                            PlaceInfo placeInfo = (PlaceInfo) objectInputStream.readObject();
-                            if (placeInfo.getOs() == os && placeInfo.getBrowser() == browser) {
-                                Files.list(path)
-                                        .filter(pathToCurrentPlace -> pathToCurrentPlace.toString().endsWith(SCREEN_FILE_EXT))
-                                        .forEach(pathToCurrentPlace -> {
-                                            try {
-                                                Files.writeString(pathToCurrentPlace, adContent, StandardOpenOption.APPEND);
-                                            } catch (IOException e) {
-                                                throw new RuntimeException(e);
-                                            }
-                                        });
-                            }
-                        } catch (IOException e) {
-                            throw new RuntimeException();
-                        } catch (ClassNotFoundException e) {
-                            throw new RuntimeException(e);
+        try(Stream<Path> places = Files.list(pathToPlaces)) {
+            places
+                    .forEach(element -> {
+                        String absolutePath = element.toFile().getAbsolutePath();
+                        int i = absolutePath.charAt(absolutePath.length() - 1) - '0';
+                        Path pathToFile = element.resolve(PLACE_INFO_FILE_NAME);
+                        if (!Files.exists(pathToFile)) {
+                            createPlaceInfoFile(pathToFile, PLACE_INFOS.get(i - 1));
                         }
                     });
         } catch (IOException e) {
@@ -109,41 +88,80 @@ public class AdvertisementService {
         }
     }
 
-    public void replaceAdvertisimentAtPlace(Path path, String placeName, String newAdContent) {
-        String absolutePath = path.toFile().getAbsolutePath();
-        Path pathToPlace = Paths.get(absolutePath, placeName);
-        IntStream.rangeClosed(1, 5)
-                .forEach(fileIndex -> {
-                    Path pathToFile = Paths.get(pathToPlace.toFile().getAbsolutePath(), "screen_" + fileIndex + ".txt");
-                    try {
-                        Files.writeString(pathToFile, newAdContent, StandardOpenOption.WRITE);
-                    } catch (IOException e) {
-                        throw new RuntimeException(e);
-                    }
-                });
+    private void createPlaceInfoFile(Path pathToPlaceInfoFile, PlaceInfo placeInfo) {
+        try (FileOutputStream fileOutputStream = new FileOutputStream(pathToPlaceInfoFile.toFile());
+             ObjectOutputStream objectOutputStream = new ObjectOutputStream(fileOutputStream)) {
+            objectOutputStream.writeObject(placeInfo);
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
     }
 
-    public void createNewPlace(Path path, Os os, Browser browser) {
-        try {
-            long filesCount = Files.list(path).count();
-            String absolutePath = path.toFile().getAbsolutePath();
-            long placeNumber = filesCount + 1;
-            Path pathToPlace = Paths.get(absolutePath, "Place_" + placeNumber);
+    public void postAdvertisimentOnPlace(Path pathToPlaces, Os os, Browser browser, String adContent) {
+        try(Stream<Path> places = Files.list(pathToPlaces)) {
+            places
+                    .forEach(currentPath -> {
+                        PlaceInfo placeInfo = null;
+                        Path pathToInfoFile = currentPath.resolve(PLACE_INFO_FILE_NAME);
+                        placeInfo = retrievePlaceInfo(pathToInfoFile);
+                        if (placeInfo.getOs() == os && placeInfo.getBrowser() == browser) {
+                            fillScreens(currentPath, adContent);
+                        }
+                    });
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+    }
+    private void fillScreens(Path pathToPlaces, String adContent) {
+        try(Stream<Path> places = Files.list(pathToPlaces)) {
+            places
+                    .filter(file -> file.toString().endsWith(SCREEN_FILE_EXT))
+                    .forEach(currentPath -> {
+                        try {
+                            Files.deleteIfExists(currentPath);
+                        } catch (IOException e) {
+                            throw new RuntimeException(e);
+                        }
+                        try {
+                            Files.writeString(currentPath, adContent, StandardOpenOption.CREATE);
+                        } catch (IOException e) {
+                            throw new RuntimeException(e);
+                        }
+                    });
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+    }
+    private PlaceInfo retrievePlaceInfo(Path pathToInfoFile) {
+        PlaceInfo placeInfo = null;
+        try (FileInputStream fileInputStream = new FileInputStream(pathToInfoFile.toFile());
+             ObjectInputStream objectInputStream = new ObjectInputStream(fileInputStream)) {
+            placeInfo = (PlaceInfo) objectInputStream.readObject();
+        } catch (IOException | ClassNotFoundException e) {
+            throw new RuntimeException(e);
+        }
+        return placeInfo;
+    }
+    public void replaceAdvertisimentAtPlace(Path path, String placeName, String newAdContent) {
+        Path pathToPlace = path.resolve(placeName);
+        fillScreens(pathToPlace, newAdContent);
+    }
+    public void createNewPlace(Path pathToPlaces, Os os, Browser browser) {
+        try(Stream<Path> places = Files.list(pathToPlaces)) {
+            long newPlacesCount = places.count() + 1;
+            Path pathToPlace = pathToPlaces.resolve(PLACE_DIR_NAME + newPlacesCount);
             Files.createDirectory(pathToPlace);
             createScreens(pathToPlace);
-            Path pathToInfoFile = Paths.get(absolutePath, "Place_" + placeNumber + "/place_info.dat");
+            Path pathToInfoFile = pathToPlace.resolve(PLACE_INFO_FILE_NAME);
             createPlaceInfoFile(pathToInfoFile, new PlaceInfo(os, browser));
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
-
     }
-
-    public void deletePlace(String placeName, Path path) {
-        String absolutePath = path.toFile().getAbsolutePath();
-        Path pathToDirToBeDeleteted = Paths.get(absolutePath, "/" + placeName);
-        try {
-            Files.walk(pathToDirToBeDeleteted)
+    public void deletePlace(Path pathToDeletingPlace, String placeName) {
+        Path pathToDirToBeDeleteted = pathToDeletingPlace.resolve(placeName);
+        try(Stream<Path> deletingDirWalk = Files.walk(pathToDirToBeDeleteted)) {
+            deletingDirWalk
                     .sorted(Comparator.reverseOrder())
                     .map(Path::toFile)
                     .forEach(File::delete);
@@ -151,12 +169,31 @@ public class AdvertisementService {
             throw new RuntimeException(e);
         }
     }
-
-    public void changePlaceConfiguration() {
+    public void changePlaceConfiguration(Path pathToPlaces, String placeName, Os newOs, Browser newBrowser) {
+        Path pathToPlace = pathToPlaces.resolve(placeName);
+        Path pathToInfoFile = pathToPlace.resolve(PLACE_INFO_FILE_NAME);
+        try {
+            Files.deleteIfExists(pathToInfoFile);
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+        createPlaceInfoFile(pathToInfoFile, new PlaceInfo(newOs, newBrowser));
 
     }
 
-    public void addScreenToPlace() {
-
+    public void addScreenToPlace(Path pathToPlaces, String placeName) {
+        Path pathToPlace = pathToPlaces.resolve(placeName);
+        long newScreenNumber = 0;
+        try {
+            newScreenNumber = Files.list(pathToPlace).count();
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+        Path pathToNewScreen = pathToPlace.resolve(SCREEN_FILE_NAME + newScreenNumber + SCREEN_FILE_EXT);
+        try {
+            Files.createFile(pathToNewScreen);
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
     }
 }

@@ -16,6 +16,9 @@ public class AdvertisementTest {
                 "occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim " +
                 "id est laborum.");
 //        advertisementService.createNewPlace(path, Os.IOS, Browser.SAFARI);
-//        advertisementService.deletePlace("Place_7", path);
+//        advertisementService.deletePlace("Place_6", path);
+//        advertisementService.replaceAdvertisimentAtPlace(path, "Place_2", "It's a new advertisement text.");
+//        advertisementService.changePlaceConfiguration(path, "Place_3", Os.OS_X, Browser.CHROME);
+//        advertisementService.addScreenToPlace(path, "Place_5");
     }
 }

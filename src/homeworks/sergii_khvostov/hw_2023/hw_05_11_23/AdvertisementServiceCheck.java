@@ -4,26 +4,21 @@ import java.io.IOException;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 
-public class AdvertisementServiceTest {
+public class AdvertisementServiceCheck {
     public static void main(String[] args) throws IOException {
         Path path = Paths.get(".");
-        new AdvertisementService(path);
-
         AdvertisementService as = new AdvertisementService(path);
-        String content1 = "My advertisement_1";
-        String content2 = "My advertisement_2";
+
+        String content1 = "My content";
+        //String content2 = "My advertisement_2";
         as.placeAdvertisement(Os.WINDOWS, Browser.CHROME, content1);
-        as.placeAdvertisement(Os.WINDOWS, Browser.CHROME, content2);
-        as.placeAdvertisement(Os.LINUX, Browser.SAFARI, content2);
+        //as.placeAdvertisement(Os.WINDOWS, Browser.CHROME, content2);
 
         //as.replaceAdvertisement("Place_1", 1, content2);
         //as.createNewPlace(Os.LINUX, Browser.CHROME);
         //as.deletePlace("Place_1");
         //as.addNewScreen("Place_1");
         //as.changePlaceConfiguration("Place_1", new PlaceInfo(Os.UNIX, Browser.SAFARI));
-
-
-
     }
 }
 
