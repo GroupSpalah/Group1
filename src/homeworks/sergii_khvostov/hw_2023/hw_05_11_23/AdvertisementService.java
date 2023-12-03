@@ -15,41 +15,42 @@ public class AdvertisementService {
             new PlaceInfo(Os.UNIX, Browser.EDGE),
             new PlaceInfo(Os.SOLARIS, Browser.OPERA)
     ));
-    private final String DIRECTORY = "Advertisement";
-    private static final String INFO_FILE = "info.txt";
-    private final String EXTENSION_TXT = ".txt";
-    private final String SCREEN_ = "Screen_";
-    private final String PLACE_ = "Place_";
+    public static final String DIRECTORY = "Advertisement";
+    public static final String INFO_FILE = "data.info";
+    public static final String EXTENSION_TXT = ".txt";
+    public static final String SCREEN_ = "Screen_";
+    public static final String PLACE_ = "Place_";
 
     public AdvertisementService(Path path) {
         createDefaultPlaces(path);
     }
 
-    private void createDefaultPlaces(Path path) {
+    public void createDefaultPlaces(Path path) {
         Path advertisementPath = path.resolve(DIRECTORY);
         try {
             if (!Files.exists(advertisementPath)) {
                 Files.createDirectories(advertisementPath);
 
-                PLACES_INFO.forEach(placeInfo -> {
-                    int placeIndex = PLACES_INFO.indexOf(placeInfo) + 1;
-                    Path pathToPlace = advertisementPath.resolve(PLACE_ + placeIndex);
+                PLACES_INFO
+                        .forEach(placeInfo -> {
+                            int placeIndex = PLACES_INFO.indexOf(placeInfo) + 1;
+                            Path pathToPlace = advertisementPath.resolve(PLACE_ + placeIndex);
 
-                    try {
-                        Files.createDirectory(pathToPlace);
-                        savePlaceInfo(pathToPlace, placeInfo);
-                        createScreens(pathToPlace);
-                    } catch (IOException e) {
-                        throw new RuntimeException(e);
-                    }
-                });
+                            try {
+                                Files.createDirectory(pathToPlace);
+                                savePlaceInfo(pathToPlace, placeInfo);
+                                createScreens(pathToPlace);
+                            } catch (IOException e) {
+                                throw new RuntimeException(e);
+                            }
+                        });
             }
         } catch (IOException e) {
             throw new RuntimeException("Failed to create Advertisement directory", e);
         }
     }
 
-    private void createScreens(Path placePath) {
+    public void createScreens(Path placePath) {
         IntStream.rangeClosed(1, 5)
                 .forEach(screenIndex -> {
                     String screenName = SCREEN_ + screenIndex + EXTENSION_TXT;
@@ -63,18 +64,12 @@ public class AdvertisementService {
                 });
     }
 
-    private void savePlaceInfo(Path path, PlaceInfo placeInfo) {
+    public void savePlaceInfo(Path path, PlaceInfo placeInfo) {
         Path infoFilePath = path.resolve(INFO_FILE);
-
-        try (ObjectOutputStream oos = new ObjectOutputStream(new FileOutputStream
-                (infoFilePath.toFile()))) {
-            oos.writeObject(placeInfo);
-        } catch (IOException e) {
-            throw new RuntimeException("Failed to save PlaceInfo", e);
-        }
+        writeInFile(placeInfo, infoFilePath);
     }
 
-    protected void placeAdvertisement(Os os, Browser browser, String advertisementContent) {
+    public void placeAdvertisement(Os os, Browser browser, String advertisementContent) {
         try {
             Path directoryPath = Paths.get(DIRECTORY);
             try (DirectoryStream<Path> directoryStream = Files.newDirectoryStream(directoryPath)) {
@@ -114,7 +109,7 @@ public class AdvertisementService {
         }
     }
 
-    protected void replaceAdvertisement(String placeName, int screenNumber, String newContent) {
+    public void replaceAdvertisement(String placeName, int screenNumber, String newContent) {
         Path advertisementDirectory = Paths.get(DIRECTORY);
         String screenFileName = SCREEN_ + screenNumber + EXTENSION_TXT;
 
@@ -214,12 +209,19 @@ public class AdvertisementService {
             }
 
             Path infoFilePath = placePath.resolve(INFO_FILE);
-            try (ObjectOutputStream oos = new ObjectOutputStream
-                    (new FileOutputStream(infoFilePath.toFile()))) {
-                oos.writeObject(newPlaceInfo);
-            }
+            writeInFile(newPlaceInfo, infoFilePath);
+
         } catch (IOException e) {
             throw new RuntimeException("Failed to change place configuration", e);
+        }
+    }
+
+    public void writeInFile(Object object, Path path) {
+        try (ObjectOutputStream oos = new ObjectOutputStream
+                (new FileOutputStream(path.toFile()))) {
+            oos.writeObject(object);
+        } catch (IOException e) {
+            throw new RuntimeException(e);
         }
     }
 }
