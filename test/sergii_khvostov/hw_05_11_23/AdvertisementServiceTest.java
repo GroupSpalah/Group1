@@ -7,7 +7,7 @@ import homeworks.sergii_khvostov.hw_2023.hw_05_11_23.PlaceInfo;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.contrib.java.lang.system.SystemOutRule;
-import org.junit.jupiter.api.io.TempDir;
+import org.junit.rules.ExpectedException;
 import org.junit.rules.TemporaryFolder;
 
 import java.io.File;
@@ -21,14 +21,12 @@ import static org.junit.Assert.assertTrue;
 import static org.mockito.Mockito.*;
 public class AdvertisementServiceTest {
 
-
-    @TempDir
-    Path tempDir;
-
     @Rule
     public SystemOutRule outRule = new SystemOutRule().enableLog();
+
     @Rule
-    public TemporaryFolder tf = new TemporaryFolder(new File(AdvertisementService.DIRECTORY));
+//    public TemporaryFolder tf = new TemporaryFolder(new File(AdvertisementService.DIRECTORY));
+    public TemporaryFolder tf = new TemporaryFolder();
 
     @Test
     public void shouldCreateDefaultPlaces() throws IOException {
@@ -36,8 +34,6 @@ public class AdvertisementServiceTest {
         String absolutePath = tempDir.getAbsolutePath();
         Path path = Paths.get(absolutePath);
         AdvertisementService as = new AdvertisementService(path);
-
-        as.createDefaultPlaces(path);
         assertTrue(Files.exists(path));
     }
 

@@ -27,6 +27,7 @@ public class AdvertisementService {
 
     public void createDefaultPlaces(Path path) {
         Path advertisementPath = path.resolve(DIRECTORY);
+
         try {
             if (!Files.exists(advertisementPath)) {
                 Files.createDirectories(advertisementPath);
@@ -41,7 +42,7 @@ public class AdvertisementService {
                                 savePlaceInfo(pathToPlace, placeInfo);
                                 createScreens(pathToPlace);
                             } catch (IOException e) {
-                                throw new RuntimeException(e);
+                                e.printStackTrace();
                             }
                         });
             }

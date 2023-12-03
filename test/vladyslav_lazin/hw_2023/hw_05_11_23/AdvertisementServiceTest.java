@@ -120,15 +120,13 @@ public class AdvertisementServiceTest {
     }
 
     @Test
-    public void deletePlace() {
+    public void deletePlace() throws IOException {
         AdvertisementService advertisementService = new AdvertisementService(testDir);
         String placeToBeDeleted = "Place_5";
         advertisementService.deletePlace(testDir, placeToBeDeleted);
         try(Stream<Path> places = Files.list(testDir)) {
             long placesCount = places.count();
             assertEquals(4L, placesCount);
-        } catch (IOException e) {
-            throw new RuntimeException(e);
         }
         Path pathToDeletedPlace = testDir.resolve(placeToBeDeleted);
         assertFalse(Files.exists(pathToDeletedPlace));
