@@ -1,7 +1,7 @@
 package homeworks.dmytro_k.hw_2023.hw_05_11_23;
 
-/*Создать приложение для связи рекламодателя и агенства по размещению рекламы.
-Рекламное агенство имеет 5 площадок с экранами для размещения рекламы, каждая с разным браузером и ОС.
+/*Создать приложение для связи рекламодателя и агентства по размещению рекламы.
+Рекламное агентство имеет 5 площадок с экранами для размещения рекламы, каждая с разным браузером и ОС.
 Каждая площадка - директория с пятью текстовыми файлами("экранами") и одним файлом, в котором сериализована
 информация о данной площадке(ось, браузер).
 Приложение должно позволять:
@@ -13,47 +13,47 @@ package homeworks.dmytro_k.hw_2023.hw_05_11_23;
 ++6) Добавлять экран на определенную площадку.*/
 
 import java.io.*;
+import java.nio.file.DirectoryStream;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.StandardOpenOption;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
-import java.util.Objects;
+import java.util.*;
 import java.util.concurrent.atomic.AtomicBoolean;
 import java.util.stream.IntStream;
+import java.util.stream.Stream;
+import java.util.stream.StreamSupport;
 
 public class AdvertisementService {
 
-    private static final List<PlaceInfo> PLACE_INFO_LIST = new ArrayList<>();
-    private static final int DIFFERENCE = 1; //_BETWEEN_INDEX_AND_ORDINAL
+    private static final List<PlaceInfo> PLACE_INFO_LIST = new ArrayList<>(List.of(
+            new PlaceInfo(Os.I_OS, Browser.SAFARI),
+            new PlaceInfo(Os.LINUX, Browser.FIREFOX),
+            new PlaceInfo(Os.WINDOWS, Browser.MICROSOFT_EDGE),
+            new PlaceInfo(Os.MAC_OS, Browser.OPERA),
+            new PlaceInfo(Os.ANDROID, Browser.GOOGLE_CHROME)
+    ));
+    private static final int DIFFERENCE = 1;
     private static int matchIndex;
-
-    private static final Path PATH = Path.of("src/homeworks/dmytro_k/hw_2023/hw_05_11_23/advertisement");
-
-    PlaceInfo placeInfo1 = new PlaceInfo(Os.I_OS, Browser.SAFARI);
-    PlaceInfo placeInfo2 = new PlaceInfo(Os.LINUX, Browser.FIREFOX);
-    PlaceInfo placeInfo3 = new PlaceInfo(Os.WINDOWS, Browser.MICROSOFT_EDGE);
-    PlaceInfo placeInfo4 = new PlaceInfo(Os.MAC_OS, Browser.OPERA);
-    PlaceInfo placeInfo5 = new PlaceInfo(Os.ANDROID, Browser.GOOGLE_CHROME);
+    private static final String PLACE = "/place_";
+    private static final String TXT = ".txt";
+    private static final String SCREEN = "/Screen_";
+    private static final String SLASH = "/";
+    private static final String INFO_FILE = "/Info.inf";
+    private static final Path PATH_TO_ADVERTISEMENT
+            = Path.of("src/homeworks/dmytro_k/hw_2023/hw_05_11_23/advertisement");
 
     public AdvertisementService() {
-        PLACE_INFO_LIST.add(placeInfo1);
-        PLACE_INFO_LIST.add(placeInfo2);
-        PLACE_INFO_LIST.add(placeInfo3);
-        PLACE_INFO_LIST.add(placeInfo4);
-        PLACE_INFO_LIST.add(placeInfo5);
-
         createDefaultPlaces();
     }
 
     private void createDefaultPlaces() {
 
-        int content = filesOrDirectoryCount(PATH);
+        int content = filesOrDirectoryCount(PATH_TO_ADVERTISEMENT);
         if (content == 0) {
             IntStream.rangeClosed(1, 5)
                     .forEach(index -> {
-                        Path pathToPlace = Path.of(PATH + "/place_" + index);
+
+                        Path pathToPlace = Path.of(PATH_TO_ADVERTISEMENT + PLACE + index);
 
                         try {
                             Files.createDirectory(pathToPlace);
@@ -77,9 +77,9 @@ public class AdvertisementService {
         PlaceInfo inputPlaceInfo = new PlaceInfo(os, browser);
         int indexNewPlace = PLACE_INFO_LIST.size();
         PLACE_INFO_LIST.add(inputPlaceInfo);
-        int index = filesOrDirectoryCount(PATH);
+        int index = filesOrDirectoryCount(PATH_TO_ADVERTISEMENT);
         try {
-            Path pathToPlace = Path.of(PATH + "/place_" + (index + DIFFERENCE));
+            Path pathToPlace = Path.of(PATH_TO_ADVERTISEMENT + PLACE + (index + DIFFERENCE));
 
             Files.createDirectory(pathToPlace);
             createDefaultScreens(pathToPlace);
@@ -94,8 +94,7 @@ public class AdvertisementService {
     private void createDefaultScreens(Path path) {
         IntStream.rangeClosed(1, 5)
                 .forEach(index -> {
-                    Path pathToPlace = Path.of(path + "/Screen_" + index + ".txt");
-
+                    Path pathToPlace = Path.of(path + SCREEN + index + TXT);
                     try {
                         Files.createFile(pathToPlace);
                     } catch (IOException e) {
@@ -106,11 +105,11 @@ public class AdvertisementService {
 
     public void createScreen(String place) {
 
-        Path pathToPlace = Path.of(PATH + "/" + place);
+        Path pathToPlace = Path.of(PATH_TO_ADVERTISEMENT + SLASH + place);
 
         int indexNewScreen = filesOrDirectoryCount(pathToPlace);
 
-        Path pathToScreen = Path.of(pathToPlace + "/Screen_" + indexNewScreen + ".txt");
+        Path pathToScreen = Path.of(pathToPlace + SCREEN + indexNewScreen + TXT);
         try {
             Files.createFile(pathToScreen);
         } catch (IOException e) {
@@ -118,17 +117,15 @@ public class AdvertisementService {
         }
     }
 
-    public void changeScreen(String place, String screen, String advertising) {
+    public void changeAdvertisement(String place, String screen, String advertising) {
 
-        Path pathToScreen = Path.of(PATH + "/" + place + "/" + screen);
+        Path pathToScreen = Path.of(PATH_TO_ADVERTISEMENT + SLASH + place + SLASH + screen);
 
         boolean screenExists = pathToScreen.toFile().exists();
-
         if (!screenExists) {
             System.out.println("Such screen not exist");
             return;
         }
-
         try {
             Files.writeString(pathToScreen, advertising, StandardOpenOption.TRUNCATE_EXISTING);
         } catch (IOException e) {
@@ -138,7 +135,7 @@ public class AdvertisementService {
 
     private void createPlatformInfo(Path path, int index) {
 
-        Path pathToPlatformInfo = Path.of(path + "/Info.inf");
+        Path pathToPlatformInfo = Path.of(path + INFO_FILE);
 
         try {
             FileOutputStream fileOutputStream = new FileOutputStream(pathToPlatformInfo.toFile());
@@ -150,7 +147,7 @@ public class AdvertisementService {
     }
 
     private PlaceInfo readInfoFile(Path path) {
-        Path pathToPlatformInfo = Path.of(path + "/Info.inf");
+        Path pathToPlatformInfo = Path.of(path + INFO_FILE);
         try {
             FileInputStream fileInputStream = new FileInputStream(pathToPlatformInfo.toFile());
             ObjectInputStream objectInputStream = new ObjectInputStream(fileInputStream);
@@ -161,17 +158,13 @@ public class AdvertisementService {
     }
 
     private int filesOrDirectoryCount(Path path) {
-
-        int packageContent = Objects.requireNonNull(path
+        return Objects.requireNonNull(path
                 .toFile()
                 .listFiles())
                 .length;
-        System.out.println(packageContent);
-
-        return packageContent;
     }
 
-    public void deleteFiles(Path path) {
+    private void deleteFiles(Path path) {
 
         boolean availability = Files.exists(path);
 
@@ -179,24 +172,44 @@ public class AdvertisementService {
             System.out.println("Such directory does not exist");
             return;
         }
-        Arrays
-                .stream((Objects.requireNonNull(path.toFile().listFiles())))
-                .forEach(File::delete);
+        try {
+            Files.newDirectoryStream(path)
+                    .forEach(file -> {
+                        try {
+                            Files.deleteIfExists(file);
+                        } catch (IOException e) {
+                            throw new RuntimeException(e);
+                        }
+                    });
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
     }
 
-    public void deletePlace(Path path) { // как остановить или игнорировать процессы, в которых сейчас задействованы файлы?
+    public void deletePlace(Path path) {
         deleteFiles(path);
-        path.toFile().delete();
+        try {
+            Files.delete(path);
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
     }
 
     public void changePlaceConfiguration(String placeName, Os inputOS, Browser inputBrowser) {
 
-        String placeNumber = placeName.substring(placeName.length() - 1);
-        int indexPlace = Integer.parseInt(placeNumber);
+        Path pathToPlace = Path.of(PATH_TO_ADVERTISEMENT + SLASH + placeName);
 
-        Path pathToPlace = Path.of(PATH + "/" + placeName);
+        boolean availability = Files.exists(pathToPlace);
+
+        if (!availability) {
+            System.out.println("Such place does not exist");
+            return;
+        }
 
         deletePlace(pathToPlace);
+
+        String placeNumber = placeName.substring(placeName.length() - 1);
+        int indexPlace = Integer.parseInt(placeNumber);
 
         PlaceInfo inputPlaceInfo = new PlaceInfo(inputOS, inputBrowser);
 
@@ -213,13 +226,13 @@ public class AdvertisementService {
 
     private boolean checkingPlaceInfo(Os os, Browser browser) {
 
-        int placesCount = filesOrDirectoryCount(PATH);
+        int placesCount = filesOrDirectoryCount(PATH_TO_ADVERTISEMENT);
 
         AtomicBoolean resultCheckingPlaceInfo = new AtomicBoolean(false);
 
         IntStream.rangeClosed(1, placesCount)
                 .forEach(index -> {
-                    Path pathToPlace = Path.of(PATH + "/place_" + index);
+                    Path pathToPlace = Path.of(PATH_TO_ADVERTISEMENT + PLACE + index);
                     PlaceInfo defaultPlaceInfo = readInfoFile(pathToPlace);
                     if (defaultPlaceInfo.browser().equals(browser)
                             && defaultPlaceInfo.os().equals(os)) {
@@ -232,12 +245,11 @@ public class AdvertisementService {
     }
 
     public void placeAdvertising(Os os, Browser browser, String advertising) {
-        PlaceInfo inputPlaceInfo = new PlaceInfo(os, browser);
 
         if (checkingPlaceInfo(os, browser)) {
-            Path pathToPlace = Path.of(PATH + "/place_" + matchIndex);
+            Path pathToPlace = Path.of(PATH_TO_ADVERTISEMENT + PLACE + matchIndex);
             try {
-                writeAdvertising(pathToPlace, advertising);
+                writeAdvertising61(pathToPlace, advertising);
             } catch (IOException e) {
                 throw new RuntimeException(e);
             }
@@ -251,7 +263,7 @@ public class AdvertisementService {
         try {
             for (Path pathFile : Files
                     .newDirectoryStream(path)) {
-                if (pathFile.toString().endsWith(".txt")) {
+                if (pathFile.toString().endsWith(TXT)) {
                     boolean empty = Files.readString(pathFile).isEmpty();
                     if (empty) {
                         try {
@@ -264,6 +276,125 @@ public class AdvertisementService {
                 }
             }
 
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    private void writeAdvertising2(Path path, String advertising) throws IOException {
+
+        /*
+        forEach Link icon
+        void forEach(Consumer<? super T> action)
+        Performs an action for each element of this stream.
+        This is a terminal operation.
+        The behavior of this operation is explicitly nondeterministic.
+        For parallel stream pipelines, this operation does not guarantee to respect the encounter order of the stream,
+        as doing so would sacrifice the benefit of parallelism. For any given element, the action may be performed at
+        whatever time and in whatever thread the library chooses. If the action accesses shared state, it is responsible
+        for providing the required synchronization.
+
+        Выполняет действие для каждого элемента этого потока. Это терминальная операция.
+        Поведение этой операции явно НЕДЕТЕРМИНИРОВАНО. Для конвейеров параллельных потоков эта операция не гарантирует
+        соблюдения порядка встреч потока, поскольку это приведет к ухудшению преимуществ параллелизма. Для любого
+        данного элемента действие может быть выполнено в любое время и в любом потоке, выбранном библиотекой.
+        Если действие обращается к общему состоянию, оно отвечает за обеспечение необходимой синхронизации.
+        Parameters:
+            action - a non-interfering action to perform on the elements*/
+
+        DirectoryStream.Filter<Path> txtFilter = p -> p.toString().endsWith(TXT);
+
+        Files
+                .newDirectoryStream(path, txtFilter)
+                .forEach(path1 -> {
+                    try {
+                        boolean empty = Files.readString(path1).isEmpty();
+                        if (empty) {
+                            Files.writeString(path1, advertising, StandardOpenOption.WRITE);
+                            wait(); // не работает, пишет дальше потому что поток 1?,
+                            // return не работает из-за указанных выше свойств метода.
+                        }
+                    } catch (IOException | InterruptedException e) {
+                        throw new RuntimeException(e);
+                    }
+                });
+    }
+
+
+    private void writeAdvertising5(Path path, String advertising) throws IOException {
+
+        DirectoryStream.Filter<Path> txtFilter = p -> p.toString().endsWith(TXT);
+
+        DirectoryStream<Path> files = Files.newDirectoryStream(path, txtFilter);
+
+        Stream<Path> stream = StreamSupport.stream(files.spliterator(), false);
+
+        stream.findFirst()//презаписывает 1-й файл и не идет дальше.
+                .ifPresent(path1 -> {
+                    try {
+                        Files.writeString(path1, advertising, StandardOpenOption.WRITE);
+                    } catch (IOException e) {
+                        throw new RuntimeException(e);
+                    }
+                });
+
+        files.close();
+    }
+
+
+    private void writeAdvertising61(Path path, String advertising) throws IOException {//вариант 6.1
+
+        Stream<Path> files = Files.walk(path);
+        files = files.filter(f -> f.toString().endsWith(TXT));
+        Optional<Path> emptyFile = files.filter(f -> {
+            try {
+                return Files.readString(f).isEmpty();
+            } catch (IOException e) {
+                throw new RuntimeException(e);
+            }
+        }).findAny();
+        emptyFile.ifPresent(f -> {
+            try {
+                Files.write(f, Collections.singletonList(advertising));
+            } catch (IOException e) {
+                throw new RuntimeException(e);
+            }
+        });
+    }
+
+    private void writeAdvertising62(Path path, String advertising) throws IOException {//вариант 6.2
+        Stream<Path> files = Files.walk(path);
+        files = files.filter(f -> f.toString().endsWith(TXT));
+        Optional<Path> emptyFile = files.filter(f -> {
+            try {
+                return Files.readString(f).isEmpty();
+            } catch (IOException e) {
+                throw new RuntimeException(e);
+            }
+        }).findAny();
+
+        emptyFile.ifPresent(f -> {
+            try {
+                Files.writeString(f, advertising, StandardOpenOption.WRITE);//другие параметры для записи(нужен тест)
+            } catch (IOException e) {
+                throw new RuntimeException(e);
+            }
+        });
+    }
+
+    private void writeAdvertising4(Path path, String advertising) throws IOException {//пишет инфу во все пустые файлы
+
+        try {
+            DirectoryStream.Filter<Path> filter = p -> p.toString().endsWith(TXT);
+            DirectoryStream<Path> files = Files.newDirectoryStream(path, filter);
+            files.forEach(f -> {
+                try {
+                    Files.writeString(f, advertising, StandardOpenOption.WRITE);
+                } catch (IOException e) {
+                    throw new RuntimeException(e);
+                }
+            });
+            files.close();
         } catch (IOException e) {
             throw new RuntimeException(e);
         }

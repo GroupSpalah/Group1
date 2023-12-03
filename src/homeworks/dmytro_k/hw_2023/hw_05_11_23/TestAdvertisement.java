@@ -14,14 +14,14 @@ public class TestAdvertisement {
         PlaceInfo placeInfo2 = new PlaceInfo(Os.WINDOWS, Browser.OPERA);
 
         //advertisementService.placeAdvertising(placeInfo, path, "Hello");
-        //advertisementService.placeAdvertising(Os.LINUX, Browser.SAFARI, "123");
+        advertisementService.placeAdvertising(Os.ANDROID, Browser.OPERA, "123");
         //advertisementService.placeAdvertising(placeInfo2, path, "Hello");
 //
-        //advertisementService.createNewPlace(Os.LINUX, Browser.SAFARI);
+        //advertisementService.createNewPlace(Os.ANDROID, Browser.OPERA);
         //advertisementService.createNewPlace(path, Os.MAC_OS, Browser.GOOGLE_CHROME);
         //advertisementService.createNewPlace(path, Os.WINDOWS, Browser.OPERA);
-
-        advertisementService.changePlaceConfiguration("place_1", Os.LINUX, Browser.GOOGLE_CHROME);
+        //advertisementService.deletePlace(Path.of(path + "/place_6"));
+        //advertisementService.changePlaceConfiguration("place_1", Os.LINUX, Browser.GOOGLE_CHROME);
         //advertisementService.createScreen("place_1");
         //advertisementService.changeScreen("place_1", "Screen_2.txt", "bye");
     }
