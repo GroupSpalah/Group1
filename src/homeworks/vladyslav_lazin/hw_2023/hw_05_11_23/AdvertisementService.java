@@ -6,6 +6,7 @@ import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
 import java.util.stream.IntStream;
+import java.util.stream.Stream;
 
 public class AdvertisementService {
     private static final String PLACE_DIR_NAME = "Place_";
@@ -27,6 +28,13 @@ public class AdvertisementService {
     }
 
     private void createDefaultPlaces(Path path) {
+        try {
+            if (!Files.exists(path)) {
+                Files.createDirectory(path);
+            }
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
         IntStream.rangeClosed(1, 5)
                 .forEach(index -> {
                     Path pathToPlace = path.resolve(PLACE_DIR_NAME + index);
@@ -65,8 +73,8 @@ public class AdvertisementService {
     }
 
     private void addPlaceInfoFiles(Path pathToPlaces) {
-        try {
-            Files.list(pathToPlaces)
+        try(Stream<Path> places = Files.list(pathToPlaces)) {
+            places
                     .forEach(element -> {
                         String absolutePath = element.toFile().getAbsolutePath();
                         int i = absolutePath.charAt(absolutePath.length() - 1) - '0';
@@ -89,9 +97,9 @@ public class AdvertisementService {
         }
     }
 
-    public void postAdvertisimentOnPlace(Path path, Os os, Browser browser, String adContent) {
-        try {
-            Files.list(path)
+    public void postAdvertisimentOnPlace(Path pathToPlaces, Os os, Browser browser, String adContent) {
+        try(Stream<Path> places = Files.list(pathToPlaces)) {
+            places
                     .forEach(currentPath -> {
                         PlaceInfo placeInfo = null;
                         Path pathToInfoFile = currentPath.resolve(PLACE_INFO_FILE_NAME);
@@ -104,9 +112,9 @@ public class AdvertisementService {
             throw new RuntimeException(e);
         }
     }
-    private void fillScreens(Path path, String adContent) {
-        try {
-            Files.list(path)
+    private void fillScreens(Path pathToPlaces, String adContent) {
+        try(Stream<Path> places = Files.list(pathToPlaces)) {
+            places
                     .filter(file -> file.toString().endsWith(SCREEN_FILE_EXT))
                     .forEach(currentPath -> {
                         try {
@@ -138,10 +146,10 @@ public class AdvertisementService {
         Path pathToPlace = path.resolve(placeName);
         fillScreens(pathToPlace, newAdContent);
     }
-    public void createNewPlace(Path path, Os os, Browser browser) {
-        try {
-            long newPlacesCount = Files.list(path).count() + 1;
-            Path pathToPlace = path.resolve(PLACE_DIR_NAME + newPlacesCount);
+    public void createNewPlace(Path pathToPlaces, Os os, Browser browser) {
+        try(Stream<Path> places = Files.list(pathToPlaces)) {
+            long newPlacesCount = places.count() + 1;
+            Path pathToPlace = pathToPlaces.resolve(PLACE_DIR_NAME + newPlacesCount);
             Files.createDirectory(pathToPlace);
             createScreens(pathToPlace);
             Path pathToInfoFile = pathToPlace.resolve(PLACE_INFO_FILE_NAME);
@@ -150,10 +158,10 @@ public class AdvertisementService {
             throw new RuntimeException(e);
         }
     }
-    public void deletePlace(String placeName, Path path) {
-        Path pathToDirToBeDeleteted = path.resolve(placeName);
-        try {
-            Files.walk(pathToDirToBeDeleteted)
+    public void deletePlace(Path pathToDeletingPlace, String placeName) {
+        Path pathToDirToBeDeleteted = pathToDeletingPlace.resolve(placeName);
+        try(Stream<Path> deletingDirWalk = Files.walk(pathToDirToBeDeleteted)) {
+            deletingDirWalk
                     .sorted(Comparator.reverseOrder())
                     .map(Path::toFile)
                     .forEach(File::delete);
