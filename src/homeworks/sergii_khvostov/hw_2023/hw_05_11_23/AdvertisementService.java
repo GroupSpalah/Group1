@@ -25,7 +25,7 @@ public class AdvertisementService {
         createDefaultPlaces(path);
     }
 
-    public void createDefaultPlaces(Path path) {
+    private void createDefaultPlaces(Path path) {
         Path advertisementPath = path.resolve(DIRECTORY);
 
         try {
@@ -47,11 +47,11 @@ public class AdvertisementService {
                         });
             }
         } catch (IOException e) {
-            throw new RuntimeException("Failed to create Advertisement directory", e);
+            throw new RuntimeException(e);
         }
     }
 
-    public void createScreens(Path placePath) {
+    private void createScreens(Path placePath) {
         IntStream.rangeClosed(1, 5)
                 .forEach(screenIndex -> {
                     String screenName = SCREEN_ + screenIndex + EXTENSION_TXT;
@@ -65,7 +65,7 @@ public class AdvertisementService {
                 });
     }
 
-    public void savePlaceInfo(Path path, PlaceInfo placeInfo) {
+    private void savePlaceInfo(Path path, PlaceInfo placeInfo) {
         Path infoFilePath = path.resolve(INFO_FILE);
         writeInFile(placeInfo, infoFilePath);
     }
@@ -80,7 +80,7 @@ public class AdvertisementService {
 
                         PlaceInfo placeInfo = (PlaceInfo) ois.readObject();
 
-                        if (placeInfo.getOs() == os && placeInfo.getBrowser() == browser) {
+                        if (placeInfo.getOs().equals(os) && placeInfo.getBrowser().equals(browser)) {
                             for (int screenIndex = 1; ; screenIndex++) {
                                 Path advertisementPath = placePath.resolve(SCREEN_ +
                                         screenIndex + EXTENSION_TXT);
@@ -101,12 +101,12 @@ public class AdvertisementService {
                             }
                         }
                     } catch (IOException | ClassNotFoundException e) {
-                        throw new RuntimeException("Failed to process files or place advertisement", e);
+                        throw new RuntimeException(e);
                     }
                 }
             }
         } catch (IOException e) {
-            throw new RuntimeException("Failed to walk through directories", e);
+            throw new RuntimeException(e);
         }
     }
 
@@ -133,11 +133,11 @@ public class AdvertisementService {
             }
             System.out.println("Place " + placeName + " not found.");
         } catch (IOException e) {
-            throw new RuntimeException("Failed to replace advertisement", e);
+            throw new RuntimeException(e);
         }
     }
 
-    protected void createNewPlace(Os os, Browser browser) {
+    public void createNewPlace(Os os, Browser browser) {
         PlaceInfo newPlaceInfo = new PlaceInfo(os, browser);
         PLACES_INFO.add(newPlaceInfo);
 
@@ -152,11 +152,11 @@ public class AdvertisementService {
             savePlaceInfo(newPlacePath, newPlaceInfo);
             System.out.println("New place " + newPlaceName + " with 5 screens created.");
         } catch (IOException e) {
-            throw new RuntimeException("Failed to create a new place", e);
+            throw new RuntimeException(e);
         }
     }
 
-    protected void deletePlace(String placeName) {
+    public void deletePlace(String placeName) {
         Path placePath = Paths.get(DIRECTORY, placeName);
         try {
             Files.walkFileTree(placePath, new SimpleFileVisitor<>() {
@@ -175,21 +175,19 @@ public class AdvertisementService {
                 }
             });
         } catch (IOException e) {
-            throw new RuntimeException("Failed to delete place", e);
+            throw new RuntimeException(e);
         }
     }
 
-    protected void addNewScreen(String placeName) {
+    public void addNewScreen(String placeName) {
         Path placePath = Paths.get(DIRECTORY, placeName);
         int screensCount = 0;
         try (DirectoryStream<Path> directoryStream = Files.newDirectoryStream(placePath)) {
             for (Path ignored : directoryStream) {
                 screensCount++;
             }
-
-//            long count = Files.list().count();
         } catch (IOException e) {
-            throw new RuntimeException("Failed to count screens", e);
+            throw new RuntimeException(e);
         }
         String screenName = SCREEN_ + screensCount + EXTENSION_TXT;
         Path pathToScreen = placePath.resolve(screenName);
@@ -198,11 +196,11 @@ public class AdvertisementService {
             Files.createFile(pathToScreen);
             System.out.println("Screen " + screensCount + " added to " + placeName);
         } catch (IOException e) {
-            throw new RuntimeException("Failed to add screen", e);
+            throw new RuntimeException(e);
         }
     }
 
-    protected void changePlaceConfiguration(String placeName, PlaceInfo newPlaceInfo) {
+    public void changePlaceConfiguration(String placeName, PlaceInfo newPlaceInfo) {
         Path placePath = Paths.get(DIRECTORY, placeName);
         try (DirectoryStream<Path> stream = Files.newDirectoryStream(placePath)) {
             for (Path screen : stream) {
@@ -213,11 +211,11 @@ public class AdvertisementService {
             writeInFile(newPlaceInfo, infoFilePath);
 
         } catch (IOException e) {
-            throw new RuntimeException("Failed to change place configuration", e);
+            throw new RuntimeException(e);
         }
     }
 
-    public void writeInFile(Object object, Path path) {
+    private void writeInFile(Object object, Path path) {
         try (ObjectOutputStream oos = new ObjectOutputStream
                 (new FileOutputStream(path.toFile()))) {
             oos.writeObject(object);

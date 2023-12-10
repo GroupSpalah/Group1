@@ -9,9 +9,9 @@ public class AdvertisementServiceCheck {
         Path path = Paths.get(".");
         AdvertisementService as = new AdvertisementService(path);
 
-        String content1 = "My content";
+       // String content1 = "My content";
         //String content2 = "My advertisement_2";
-        as.placeAdvertisement(Os.WINDOWS, Browser.CHROME, content1);
+        //as.placeAdvertisement(Os.WINDOWS, Browser.CHROME, content1);
         //as.placeAdvertisement(Os.WINDOWS, Browser.CHROME, content2);
 
         //as.replaceAdvertisement("Place_1", 1, content2);
