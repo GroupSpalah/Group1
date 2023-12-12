@@ -18,7 +18,6 @@ public class AdvertisementServiceTest {
 
     @Rule
     public SystemOutRule outRule = new SystemOutRule().enableLog();
-
     @Rule
     public TemporaryFolder tf = new TemporaryFolder();
 

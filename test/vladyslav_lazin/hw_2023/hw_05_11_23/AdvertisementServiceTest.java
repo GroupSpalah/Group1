@@ -4,9 +4,9 @@ import homeworks.vladyslav_lazin.hw_2023.hw_05_11_23.AdvertisementService;
 import homeworks.vladyslav_lazin.hw_2023.hw_05_11_23.Browser;
 import homeworks.vladyslav_lazin.hw_2023.hw_05_11_23.Os;
 import homeworks.vladyslav_lazin.hw_2023.hw_05_11_23.PlaceInfo;
-import org.junit.After;
+import org.junit.Before;
+import org.junit.Rule;
 import org.junit.Test;
-import org.junit.contrib.java.lang.system.SystemOutRule;
 import org.junit.rules.TemporaryFolder;
 
 import java.io.File;
@@ -16,27 +16,24 @@ import java.io.ObjectInputStream;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
-import java.util.Comparator;
 import java.util.stream.Stream;
 
 import static org.junit.Assert.*;
 
 public class AdvertisementServiceTest {
-    public final SystemOutRule systemOutRule = new SystemOutRule().enableLog();
-    private static final Path testDir = Paths.get("./test/vladyslav_lazin/hw_2023/hw_05_11_23/places");
-    public TemporaryFolder temporaryFolder = new TemporaryFolder();
+    public final File parentDir = Paths.get("./test/vladyslav_lazin/hw_2023/hw_05_11_23").toFile();
+    @Rule
+    public TemporaryFolder temporaryFolder = new TemporaryFolder(parentDir);
 
-    @After
-    public void deleteFileStructure() throws IOException {
-        Files.walk(testDir)
-                .sorted(Comparator.reverseOrder())
-                .map(Path::toFile)
-                .forEach(File::delete);
+    public Path testDir;
+    AdvertisementService advertisementService;
+    @Before
+    public void setUp() {
+        testDir = temporaryFolder.getRoot().toPath();
+        advertisementService = new AdvertisementService(testDir);
     }
-
     @Test
     public void fileStructureCreatedAndShouldBeGotTrueNumbersOfDirectoriesAndFiles() throws IOException {
-        AdvertisementService advertisementService = new AdvertisementService(testDir);
             assertEquals(5L, Files.list(testDir).count());
             Files.list(testDir)
                     .forEach(innerDir -> {
@@ -50,7 +47,6 @@ public class AdvertisementServiceTest {
 
     @Test
     public void postAdvertisimentOnPlaceAndThenShouldBeRead() throws IOException {
-        AdvertisementService advertisementService = new AdvertisementService(testDir);
         String content = "This is new advertisement";
         advertisementService.postAdvertisimentOnPlace(testDir, Os.GNU_LINUX, Browser.FIREFOX, content);
         Files.list(testDir)
@@ -74,7 +70,6 @@ public class AdvertisementServiceTest {
 
     @Test
     public void replaceAdvertisimentAtPlaceThenSouldBeReadNewContent() throws IOException {
-        AdvertisementService advertisementService = new AdvertisementService(testDir);
         String content = "This is the replaced content";
         String placeName = "Place_1";
         advertisementService.replaceAdvertisimentAtPlace(testDir, placeName, content);
@@ -93,7 +88,6 @@ public class AdvertisementServiceTest {
 
     @Test
     public void createNewPlaceAndThenShoulBeFoundNewPlaceAndFiles() throws IOException {
-        AdvertisementService advertisementService = new AdvertisementService(testDir);
         advertisementService.createNewPlace(testDir, Os.OS_X, Browser.CHROME);
         Path pathToNewPlace = testDir.resolve("Place_6");
         long filesCount = Files.list(pathToNewPlace).count();
@@ -103,7 +97,6 @@ public class AdvertisementServiceTest {
 
     @Test
     public void placePlaceShouldBeDeletedAndThenNotFound() throws IOException {
-        AdvertisementService advertisementService = new AdvertisementService(testDir);
         String placeToBeDeleted = "Place_5";
         advertisementService.deletePlace(testDir, placeToBeDeleted);
         long placesCount = Files.list(testDir).count();
@@ -114,7 +107,6 @@ public class AdvertisementServiceTest {
 
     @Test
     public void placeConfigurationSouldBeChangedAndNewConfigurationRead() {
-        AdvertisementService advertisementService = new AdvertisementService(testDir);
         String placeName = "Place_1";
         advertisementService.changePlaceConfiguration(testDir, placeName, Os.ANDROID, Browser.SAFARI);
         Path pathToChanedPlace = testDir.resolve(placeName);
@@ -130,7 +122,6 @@ public class AdvertisementServiceTest {
 
     @Test
     public void newScreenSouldBeAddedAndThenFound() throws IOException {
-        AdvertisementService advertisementService = new AdvertisementService(testDir);
         String placeName = "Place_1";
         Path pathToPlace = testDir.resolve(placeName);
         advertisementService.addScreenToPlace(testDir, placeName);
