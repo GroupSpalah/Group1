@@ -9,12 +9,10 @@ import org.junit.Test;
 import org.junit.contrib.java.lang.system.SystemOutRule;
 import org.junit.rules.TemporaryFolder;
 
-import java.io.File;
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.nio.file.*;
 import java.util.Objects;
-import java.util.stream.IntStream;
 
 import static org.junit.Assert.*;
 
