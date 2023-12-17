@@ -8,13 +8,13 @@ public class TestAdvertisement {
 
         Path path = Path.of("src/homeworks/dmytro_k/hw_2023/hw_05_11_23/advertisement");
 
-        AdvertisementService advertisementService = new AdvertisementService();
+        AdvertisementService advertisementService = new AdvertisementService(path);
 
         PlaceInfo placeInfo = new PlaceInfo(Os.LINUX, Browser.SAFARI);
         PlaceInfo placeInfo2 = new PlaceInfo(Os.WINDOWS, Browser.OPERA);
 
         //advertisementService.placeAdvertising(placeInfo, path, "Hello");
-        advertisementService.placeAdvertising(Os.ANDROID, Browser.OPERA, "123");
+        advertisementService.placeAdvertising(path, Os.ANDROID, Browser.OPERA, "123");
         //advertisementService.placeAdvertising(placeInfo2, path, "Hello");
 //
         //advertisementService.createNewPlace(Os.ANDROID, Browser.OPERA);

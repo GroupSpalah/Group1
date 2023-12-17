@@ -12,6 +12,7 @@ package homeworks.dmytro_k.hw_2023.hw_05_11_23;
 ++5) Менять конфигурацию площадки с удалением всей рекламы.
 ++6) Добавлять экран на определенную площадку.*/
 
+import javax.swing.*;
 import java.io.*;
 import java.nio.file.DirectoryStream;
 import java.nio.file.Files;
@@ -40,20 +41,20 @@ public class AdvertisementService {
     private static final String SLASH = "/";
     private static final String INFO_FILE = "/Info.inf";
     private static final Path PATH_TO_ADVERTISEMENT
-            = Path.of("src/homeworks/dmytro_k/hw_2023/hw_05_11_23/advertisement");
+            = Path.of("src/homeworks/dmytro_k/hw_2023/hw_05_11_23/advertisement");//передавать в метод
 
-    public AdvertisementService() {
-        createDefaultPlaces();
+    public AdvertisementService(Path path) {
+        createDefaultPlaces(path);
     }
 
-    private void createDefaultPlaces() {
+    private void createDefaultPlaces(Path pathToAdvertisement) {
 
-        int content = filesOrDirectoryCount(PATH_TO_ADVERTISEMENT);
+        int content = filesOrDirectoryCount(pathToAdvertisement);
         if (content == 0) {
             IntStream.rangeClosed(1, 5)
                     .forEach(index -> {
 
-                        Path pathToPlace = Path.of(PATH_TO_ADVERTISEMENT + PLACE + index);
+                        Path pathToPlace = Path.of(pathToAdvertisement + PLACE + index);
 
                         try {
                             Files.createDirectory(pathToPlace);
@@ -67,9 +68,10 @@ public class AdvertisementService {
         }
     }
 
-    public void createNewPlace(Os os, Browser browser) {
 
-        if (checkingPlaceInfo(os, browser)) {
+    public void createNewPlace(Path pathToAdvertisement, Os os, Browser browser) {
+
+        if (checkingPlaceInfo(pathToAdvertisement, os, browser)) {
             System.out.println("Such place already exist");
             return;
         }
@@ -77,9 +79,9 @@ public class AdvertisementService {
         PlaceInfo inputPlaceInfo = new PlaceInfo(os, browser);
         int indexNewPlace = PLACE_INFO_LIST.size();
         PLACE_INFO_LIST.add(inputPlaceInfo);
-        int index = filesOrDirectoryCount(PATH_TO_ADVERTISEMENT);
+        int index = filesOrDirectoryCount(pathToAdvertisement);
         try {
-            Path pathToPlace = Path.of(PATH_TO_ADVERTISEMENT + PLACE + (index + DIFFERENCE));
+            Path pathToPlace = Path.of(pathToAdvertisement + PLACE + (index + DIFFERENCE));
 
             Files.createDirectory(pathToPlace);
             createDefaultScreens(pathToPlace);
@@ -91,10 +93,10 @@ public class AdvertisementService {
 
     }
 
-    private void createDefaultScreens(Path path) {
+    private void createDefaultScreens(Path pathToAdvertisement) {
         IntStream.rangeClosed(1, 5)
                 .forEach(index -> {
-                    Path pathToPlace = Path.of(path + SCREEN + index + TXT);
+                    Path pathToPlace = Path.of(pathToAdvertisement + SCREEN + index + TXT);
                     try {
                         Files.createFile(pathToPlace);
                     } catch (IOException e) {
@@ -103,9 +105,7 @@ public class AdvertisementService {
                 });
     }
 
-    public void createScreen(String place) {
-
-        Path pathToPlace = Path.of(PATH_TO_ADVERTISEMENT + SLASH + place);
+    public void createScreen(Path pathToPlace) {
 
         int indexNewScreen = filesOrDirectoryCount(pathToPlace);
 
@@ -117,9 +117,7 @@ public class AdvertisementService {
         }
     }
 
-    public void changeAdvertisement(String place, String screen, String advertising) {
-
-        Path pathToScreen = Path.of(PATH_TO_ADVERTISEMENT + SLASH + place + SLASH + screen);
+    public void changeAdvertisement(Path pathToScreen, String advertising) {
 
         boolean screenExists = pathToScreen.toFile().exists();
         if (!screenExists) {
@@ -164,16 +162,16 @@ public class AdvertisementService {
                 .length;
     }
 
-    private void deleteFiles(Path path) {
+    private void deleteFiles(Path pathToDirectory) {
 
-        boolean availability = Files.exists(path);
+        boolean availability = Files.exists(pathToDirectory);
 
         if (!availability) {
             System.out.println("Such directory does not exist");
             return;
         }
         try {
-            Files.newDirectoryStream(path)
+            Files.newDirectoryStream(pathToDirectory)
                     .forEach(file -> {
                         try {
                             Files.deleteIfExists(file);
@@ -186,18 +184,18 @@ public class AdvertisementService {
         }
     }
 
-    public void deletePlace(Path path) {
-        deleteFiles(path);
+    public void deletePlace(Path pathToDirectory) {
+        deleteFiles(pathToDirectory);
         try {
-            Files.delete(path);
+            Files.delete(pathToDirectory);
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
     }
 
-    public void changePlaceConfiguration(String placeName, Os inputOS, Browser inputBrowser) {
+    public void changePlaceConfiguration(Path pathToPlace, Os inputOS, Browser inputBrowser) {
 
-        Path pathToPlace = Path.of(PATH_TO_ADVERTISEMENT + SLASH + placeName);
+        String placeName = pathToPlace.getFileName().toString();//test
 
         boolean availability = Files.exists(pathToPlace);
 
@@ -224,15 +222,15 @@ public class AdvertisementService {
         }
     }
 
-    private boolean checkingPlaceInfo(Os os, Browser browser) {
+    private boolean checkingPlaceInfo(Path pathToAdvertisement, Os os, Browser browser) {
 
-        int placesCount = filesOrDirectoryCount(PATH_TO_ADVERTISEMENT);
+        int placesCount = filesOrDirectoryCount(pathToAdvertisement);
 
         AtomicBoolean resultCheckingPlaceInfo = new AtomicBoolean(false);
 
         IntStream.rangeClosed(1, placesCount)
                 .forEach(index -> {
-                    Path pathToPlace = Path.of(PATH_TO_ADVERTISEMENT + PLACE + index);
+                    Path pathToPlace = Path.of(pathToAdvertisement + PLACE + index);
                     PlaceInfo defaultPlaceInfo = readInfoFile(pathToPlace);
                     if (defaultPlaceInfo.browser().equals(browser)
                             && defaultPlaceInfo.os().equals(os)) {
@@ -244,10 +242,10 @@ public class AdvertisementService {
         return resultCheckingPlaceInfo.get();
     }
 
-    public void placeAdvertising(Os os, Browser browser, String advertising) {
+    public void placeAdvertising(Path pathToAdvertisement, Os os, Browser browser, String advertising) {
 
-        if (checkingPlaceInfo(os, browser)) {
-            Path pathToPlace = Path.of(PATH_TO_ADVERTISEMENT + PLACE + matchIndex);
+        if (checkingPlaceInfo(pathToAdvertisement, os, browser)) {//test
+            Path pathToPlace = Path.of(pathToAdvertisement + PLACE + matchIndex);
             try {
                 writeAdvertising61(pathToPlace, advertising);
             } catch (IOException e) {
@@ -311,8 +309,8 @@ public class AdvertisementService {
                         boolean empty = Files.readString(path1).isEmpty();
                         if (empty) {
                             Files.writeString(path1, advertising, StandardOpenOption.WRITE);
-                            wait(); // не работает, пишет дальше потому что поток 1?,
-                            // return не работает из-за указанных выше свойств метода.
+                            //return;// return не работает из-за указанных выше свойств метода.
+                            wait(); // не работает, пишет дальше потому что поток 1?
                         }
                     } catch (IOException | InterruptedException e) {
                         throw new RuntimeException(e);
