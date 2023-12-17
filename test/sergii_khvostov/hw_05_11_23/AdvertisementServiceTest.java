@@ -3,128 +3,129 @@ package sergii_khvostov.hw_05_11_23;
 import homeworks.sergii_khvostov.hw_2023.hw_05_11_23.AdvertisementService;
 import homeworks.sergii_khvostov.hw_2023.hw_05_11_23.Browser;
 import homeworks.sergii_khvostov.hw_2023.hw_05_11_23.Os;
+import homeworks.sergii_khvostov.hw_2023.hw_05_11_23.PlaceInfo;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.contrib.java.lang.system.SystemOutRule;
 import org.junit.rules.TemporaryFolder;
 
-import java.io.File;
 import java.io.IOException;
+import java.io.ObjectInputStream;
 import java.nio.file.*;
+import java.util.Objects;
 
 import static org.junit.Assert.*;
-import static org.mockito.Mockito.*;
+
 public class AdvertisementServiceTest {
 
     @Rule
     public SystemOutRule outRule = new SystemOutRule().enableLog();
-
     @Rule
     public TemporaryFolder tf = new TemporaryFolder();
 
-    @Test
-    public void shouldCreateDefaultPlaces() throws IOException {
-        File tempDir = tf.newFolder("test");
-        String absolutePath = tempDir.getAbsolutePath();
-        Path path = Paths.get(absolutePath);
-        assertTrue(Files.exists(path));
-    }
 
     @Test
     public void shouldPlaceAdvertisement() throws IOException {
-        File tempDir = tf.newFolder("test");
-        String absolutePath = tempDir.getAbsolutePath();
-        Path path = Paths.get(absolutePath);
+        AdvertisementService as = new AdvertisementService();
 
         Os os = Os.WINDOWS;
         Browser browser = Browser.CHROME;
         String content = "My content";
+        String placeName = AdvertisementService.PLACE_ + 1;
+        String screenNumber = AdvertisementService.SCREEN_ + 1 + AdvertisementService.EXTENSION_TXT;
+        String dir = AdvertisementService.DIRECTORY;
 
-        AdvertisementService as = new AdvertisementService(path);
+        Path placePath = Paths.get(dir)
+                .resolve(placeName).resolve(screenNumber);
+
         as.placeAdvertisement(os, browser, content);
 
-        assertTrue(Files.exists(path));
+        String actualContent = Files.readString(placePath);
+        assertEquals(content, actualContent);
+
     }
 
     @Test
     public void shouldReplaceAdvertisement() throws IOException {
+        AdvertisementService as = new AdvertisementService();
+
         String placeName = AdvertisementService.PLACE_ + 1;
         int screenNumber = 1;
-        String newContent  = "New content";
+        String newContent = "New content";
+        String dir = AdvertisementService.DIRECTORY;
 
-        File tempDir = tf.newFolder("test");
-        String absolutePath = tempDir.getAbsolutePath();
-        Path path = Paths.get(absolutePath);
-        AdvertisementService as = new AdvertisementService(path);
-        AdvertisementService asSpy = spy(as);
 
-        asSpy.replaceAdvertisement(placeName, screenNumber, newContent);
+        Path screenFile = Paths.get(dir)
+                .resolve(placeName).resolve("Screen_1.txt");
 
-        verify(asSpy, times(1))
-                .replaceAdvertisement(placeName, screenNumber, newContent);
 
-        String log = outRule.getLog();
+        as.replaceAdvertisement(placeName, screenNumber, newContent);
 
-        assertTrue(log.contains("Advertisement successfully replaced at " +
-                placeName + " on screen " + screenNumber));
+        String actualContent = Files.readString(screenFile);
+        assertEquals(newContent, actualContent);
     }
 
     @Test
     public void shouldCheckIfNoPlaceInfoForReplaced() {
+        AdvertisementService as = new AdvertisementService();
         String placeName = AdvertisementService.PLACE_ + 6;
         int screenNumber = 1;
-        String newContent  = "New content";
+        String newContent = "New content";
 
-        Path tempDir = tf.getRoot().toPath();
-        AdvertisementService as = new AdvertisementService(tempDir);
-        AdvertisementService asSpy = spy(as);
-
-        asSpy.replaceAdvertisement(placeName, screenNumber, newContent);
-
-        verify(asSpy, times(1))
-                .replaceAdvertisement(placeName, screenNumber, newContent);
+        as.replaceAdvertisement(placeName, screenNumber, newContent);
 
         String log = outRule.getLog();
-
         assertTrue(log.contains("Place " + placeName + " not found."));
-
     }
 
     @Test
-    public void shouldCreateNewPlace() throws IOException {
-        File tempDir = tf.newFolder("test");
-        String absolutePath = tempDir.getAbsolutePath();
-        Path path = Paths.get(absolutePath);
+    public void shouldCreateNewPlace() {
+        AdvertisementService as = new AdvertisementService();
 
         Os os = Os.LINUX;
         Browser browser = Browser.CHROME;
+        String dir = AdvertisementService.DIRECTORY;
+        String newPlaceName = AdvertisementService.PLACE_ + 6;
 
-        AdvertisementService as = new AdvertisementService(path);
+        Path newPlacePath = Paths.get(dir).resolve(newPlaceName);
+
         as.createNewPlace(os, browser);
 
-        assertTrue(Files.exists(path));
+        int txtCount = Objects.requireNonNull((newPlacePath)
+                .toFile()
+                .listFiles(f -> f.getName().endsWith("txt")))
+                .length;
+        int infoCount = Objects.requireNonNull(((newPlacePath))
+                .toFile()
+                .listFiles(f -> f.getName().endsWith("info")))
+                .length;
+
+        assertTrue(Files.exists(newPlacePath));
+        assertEquals(5, txtCount);
+        assertEquals(1, infoCount);
+
+        String log = outRule.getLog();
+        assertTrue(log.contains("New place " + newPlaceName + " with 5 screens created."));
+
+        as.deletePlace(newPlaceName);
     }
 
     @Test
-    public void shouldDeletePlace() throws IOException {
-        File tempDir = tf.newFolder("test");
-        String absolutePath = tempDir.getAbsolutePath();
-        Path path = Paths.get(absolutePath);
+    public void shouldDeletePlace() {
+        AdvertisementService as = new AdvertisementService();
+        String placeName = AdvertisementService.PLACE_ + 1;
+        String dir = AdvertisementService.DIRECTORY;
 
-        String placeName = AdvertisementService.PLACE_ + 5;
+        Path placeDelPath = Paths.get(dir).resolve(placeName);
 
-        AdvertisementService as = new AdvertisementService(path);
         as.deletePlace(placeName);
 
-        Path deletedPlacePath = path.resolve(placeName);
-
-        assertFalse(Files.exists(deletedPlacePath));
+        assertFalse(Files.exists(placeDelPath));
     }
 
     @Test
     public void shouldAddNewScreen() throws IOException {
-        Path tempDir = tf.newFolder(AdvertisementService.DIRECTORY).toPath();
-        AdvertisementService as = new AdvertisementService(tempDir);
+        AdvertisementService as = new AdvertisementService();
 
         String placeName = AdvertisementService.PLACE_ + 1;
 
@@ -148,23 +149,27 @@ public class AdvertisementServiceTest {
         assertTrue(log.contains("Screen " + screenCount + " added to " + placeName));
     }
 
-   /* @Test
-    public void shouldChangePlaceConfiguration() throws IOException {
-        Path tempDir = tf.newFolder(AdvertisementService.DIRECTORY).toPath();
-        AdvertisementService as = new AdvertisementService(tempDir);
-
+    @Test
+    public void shouldChangePlaceConfiguration() throws IOException, ClassNotFoundException {
+        AdvertisementService as = new AdvertisementService();
         String placeName = AdvertisementService.PLACE_ + 1;
         PlaceInfo newPlaceInfo = new PlaceInfo(Os.WINDOWS, Browser.SAFARI);
 
         as.changePlaceConfiguration(placeName, newPlaceInfo);
 
-        Path placePath = tempDir.resolve(placeName);
-        Path infoFilePath = placePath.resolve("info.txt");
+        Path placePath = Paths.get(AdvertisementService.DIRECTORY)
+                .resolve(placeName)
+                .resolve(AdvertisementService.INFO_FILE);
 
         assertTrue(Files.exists(placePath));
-        assertTrue(Files.exists(infoFilePath));
+
+        PlaceInfo savedPlaceInfo;
+        try (ObjectInputStream ois = new ObjectInputStream(Files.newInputStream(placePath))) {
+            savedPlaceInfo = (PlaceInfo) ois.readObject();
+        }
+        assertEquals(newPlaceInfo.getOs(), savedPlaceInfo.getOs());
+        assertEquals(newPlaceInfo.getBrowser(), savedPlaceInfo.getBrowser());
     }
-*/
 }
 
 

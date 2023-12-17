@@ -1,6 +1,7 @@
 package homeworks.sergii_khvostov.hw_2023.hw_05_11_23;
 
 import java.io.*;
+import java.nio.charset.StandardCharsets;
 import java.nio.file.*;
 import java.nio.file.attribute.BasicFileAttributes;
 import java.util.ArrayList;
@@ -24,6 +25,7 @@ public class AdvertisementService {
     public AdvertisementService(Path path) {
         createDefaultPlaces(path);
     }
+    public AdvertisementService() {}
 
     private void createDefaultPlaces(Path path) {
         Path advertisementPath = path.resolve(DIRECTORY);
@@ -46,6 +48,7 @@ public class AdvertisementService {
                             }
                         });
             }
+
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
@@ -204,7 +207,7 @@ public class AdvertisementService {
         Path placePath = Paths.get(DIRECTORY, placeName);
         try (DirectoryStream<Path> stream = Files.newDirectoryStream(placePath)) {
             for (Path screen : stream) {
-                Files.writeString(screen, "");
+                Files.writeString(screen, "", StandardCharsets.UTF_8);
             }
 
             Path infoFilePath = placePath.resolve(INFO_FILE);
