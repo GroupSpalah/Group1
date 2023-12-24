@@ -22,5 +22,6 @@ public class Task2 {
         }
         return (value % 10) * product(value / 10);
     }
+
 }
 
