@@ -6,7 +6,6 @@ import homeworks.dmytro_k.hw_2023.hw_05_11_23.Os;
 import homeworks.dmytro_k.hw_2023.hw_05_11_23.PlaceInfo;
 import org.junit.*;
 import org.junit.contrib.java.lang.system.SystemOutRule;
-import org.junit.rules.TemporaryFolder;
 
 import java.io.*;
 import java.nio.file.*;
@@ -146,13 +145,17 @@ public class AdvertisementTest {
     @Test
     public void shouldNotCreateNewPlace() {
 
-        Path pathToDirTest2 = Path.of(PATH + "/test_2");
+        Path pathToDirTest6 = Path.of(PATH + "/test_2");
 
-        //new dir?
+        try {
+            testDir = Files.createDirectory(pathToDirTest6).toFile();
+        } catch (IOException e) {
+            System.out.println(e.getMessage());
+        }
 
-        AdvertisementService as = new AdvertisementService(pathToDirTest2);
+        AdvertisementService as = new AdvertisementService(pathToDirTest6);
 
-        as.createNewPlace(pathToDirTest2, Os.WINDOWS, Browser.SAFARI);
+        as.createNewPlace(pathToDirTest6, Os.I_OS, Browser.SAFARI);
 
         String log = outRule.getLog();
 
@@ -231,50 +234,33 @@ public class AdvertisementTest {
         assertTrue(log.contains("Such screen not exist"));
     }
 
-    //@Test
-    /*public void shouldChangePlaceConfiguration() {
+    @Test
+    public void shouldChangePlaceConfiguration() throws IOException, ClassNotFoundException {
 
         Path pathToDirTest5 = Path.of(PATH + "/test_5");
-        Path pathToDirTest2 = Path.of(PATH + "/test_5");
 
         try {
             testDir = Files.createDirectory(pathToDirTest5).toFile();
         } catch (IOException e) {
             System.out.println(e.getMessage());
-        }
+        } //вынести это все в бифор и передавать имя папки?
 
-        AdvertisementService as1 = new AdvertisementService(tfPath);
         AdvertisementService as = new AdvertisementService(pathToDirTest5);
 
         Path pathToPlace1 = Path.of(pathToDirTest5 + PLACE + "1");
-        Path pathToPlace6 = Path.of(tfPath + PLACE + "6");
 
         Path pathToPlatformInfo1 = Path.of(pathToPlace1 + "/Info.inf");
-        Path pathToPlatformInfo6 = Path.of(pathToPlace6 + "/Info.inf");
 
-        PlaceInfo PlaceInfo1;
-        try {
-            FileInputStream fileInputStream = new FileInputStream(pathToPlatformInfo1.toFile());
-            ObjectInputStream objectInputStream = new ObjectInputStream(fileInputStream);
-            PlaceInfo1 = (PlaceInfo) objectInputStream.readObject();
-        } catch (ClassNotFoundException | IOException e) {
-            throw new RuntimeException(e);
-        }
-
-        as1.createNewPlace(pathToPlace6, Os.WINDOWS, Browser.SAFARI);
-
+        PlaceInfo placeInfoTest = new PlaceInfo(Os.WINDOWS, Browser.SAFARI);
         as.changePlaceConfiguration(pathToPlace1, Os.WINDOWS, Browser.SAFARI);
 
-        PlaceInfo tfPlaceInfo;
-        try {
-            FileInputStream fileInputStream = new FileInputStream(pathToPlatformInfo6.toFile());
-            ObjectInputStream objectInputStream = new ObjectInputStream(fileInputStream);
-            tfPlaceInfo = (PlaceInfo) objectInputStream.readObject();
-        } catch (ClassNotFoundException | IOException e) {
-            throw new RuntimeException(e);
+        PlaceInfo PlaceInfo1;
+
+        try (ObjectInputStream ois = new ObjectInputStream(Files.newInputStream(pathToPlatformInfo1))) {
+            PlaceInfo1 = (PlaceInfo) ois.readObject();
         }
 
-        assertEquals(PlaceInfo1, tfPlaceInfo);
+        assertEquals(PlaceInfo1.browser(), placeInfoTest.browser());
+        assertEquals(PlaceInfo1.os(), placeInfoTest.os());
     }
-*/
 }

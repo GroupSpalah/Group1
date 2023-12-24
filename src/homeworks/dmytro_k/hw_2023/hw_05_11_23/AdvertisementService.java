@@ -46,6 +46,10 @@ public class AdvertisementService {
     public AdvertisementService(Path path) {
         createDefaultPlaces(path);
     }
+    public AdvertisementService() {
+
+    }
+
 
     private void createDefaultPlaces(Path pathToAdvertisement) {
 
