@@ -9,12 +9,12 @@ public class BuggerTaskTest {
     @Test
     public void buggerGets39AndShouldReturn4() {
         int result = BuggerTask.bugger(39);
-        assertEquals(4, result);
+        assertEquals(3, result);
     }
     @Test
     public void buggerGets999AndShouldReturn4() {
         int result = BuggerTask.bugger(999);
-        assertEquals(2, result);
+        assertEquals(4, result);
     }
     @Test
     public void buggerGets4AndShouldReturn0() {
