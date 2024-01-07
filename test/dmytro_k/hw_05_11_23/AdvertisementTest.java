@@ -122,10 +122,9 @@ public class AdvertisementTest {
                 .toFile()
                 .listFiles())
                 .length;
+        as.createNewPlace(pathToDirTest2, Os.WINDOWS, Browser.SAFARI);
 
         Path newPlacePath = Path.of(String.valueOf(pathToDirTest2), PLACE + (placeCount + DIFFERENCE));
-
-        as.createNewPlace(pathToDirTest2, Os.WINDOWS, Browser.SAFARI);
 
         int txtCount = Objects.requireNonNull(newPlacePath
                 .toFile()

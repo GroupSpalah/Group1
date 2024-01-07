@@ -2,7 +2,7 @@ package homeworks.dmytro_k.hw_2023.hw_17_12_23;
 
 public class Task2 {
     public static void main(String[] args) {
-        int value = 999;
+        int value = 939;
         int count = 0;
         int result = calculateIterations(value, count);
         System.out.println("Iteration count: " + result);
