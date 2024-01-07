@@ -1,0 +1,8 @@
+1) Добавить функционал добавления к строке # и {} к шаблону Декоратор, чтобы получить строку #{Hello}#
+2) Самостоятельно рассмотреть шаблон.
+
+Serega: https://www.oodesign.com/proxy-pattern
+Dimon: https://www.oodesign.com/object-pool-pattern
+Vlad: https://www.oodesign.com/bridge-pattern
+
+3) Iterator

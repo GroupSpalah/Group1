@@ -64,7 +64,7 @@ public class Pizza {
         return result.toString();
     }
 
-    public static class PizzaBuilder {
+    private static class PizzaBuilder {
         private Pizza pizza;
 
         public PizzaBuilder() {
