@@ -1,6 +1,7 @@
 package homeworks.dmytro_k.hw_2023.hw_24_12_23.task_1;
 
 public class PizzaBuilderTest {
+
     public static void main(String[] args) {
         Pizza pizza = new PizzaBuilder()
                 .addCheese("cheese")
