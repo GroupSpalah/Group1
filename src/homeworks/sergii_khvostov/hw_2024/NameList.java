@@ -34,9 +34,7 @@ public class NameList {
         }
 
         public String next() {
-            if (hasNext()) {
-                return names[counter++];
-            } else return null;
+            return names[counter++];
         }
     }
 
