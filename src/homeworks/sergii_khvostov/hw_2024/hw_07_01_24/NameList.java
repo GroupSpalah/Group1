@@ -1,4 +1,4 @@
-package homeworks.sergii_khvostov.hw_2024;
+package homeworks.sergii_khvostov.hw_2024.hw_07_01_24;
 
 /*Suppose we have the next class:
 
