@@ -1,0 +1,13 @@
+1. PRIMARY KEY - СУБД следит за ункикальностью занчений и не допускает NULL;
+2. NOT NULL - СУБД следит чтоб не было NULL;
+3. UNIQUE - обеспечивает уникальность значений;
+4. FOREIGN KEY - id кот. ссылается на PRIMARY KEY в другой таблице;
+5. DEFAULT
+CREATE TABLE bank_clients (
+    id INT PRIMARY KEY,
+    name VARCHAR(50),
+    citezenship VARCHAR(30) DEFAULT('ukrainin');
+)
+6. CHECK - проверяет значение поля на соответствие какому-то условию.
+age INT CHECK(age >= 18)
+
