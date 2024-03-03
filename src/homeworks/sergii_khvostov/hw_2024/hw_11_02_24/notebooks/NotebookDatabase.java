@@ -14,7 +14,7 @@ public class NotebookDatabase {
             Class.forName("com.mysql.cj.jdbc.Driver");
         } catch (ClassNotFoundException e) {
             e.printStackTrace();
-            throw new SQLException("Драйвер JDBC для MySQL не найден");
+            throw new SQLException("MySQL JDBC driver not found");
         }
         return DriverManager.getConnection(JDBC_URL, USERNAME, PASSWORD);
     }
