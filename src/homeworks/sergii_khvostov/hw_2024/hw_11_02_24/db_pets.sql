@@ -2,57 +2,58 @@
 use pets;
 
 create table breeds(
-id int,
-type varchar(20)
+id int AUTO_INCREMENT PRIMARY KEY,
+typo varchar(20)
 );
 
-insert into breeds (id,`type`)
+insert into breeds (typo)
 values
-(1, 'collie'),
-(2, 'bulldog'),
-(3, 'poodle'),
-(4, 'mongrel'),
-(5, 'terrier'),
-(6, 'saint bernard'),
-(7, 'akita'),
-(8, 'german shepherd');
-
-create table dogs(
-id int,
-name varchar(20),
-breeds_id int,
-masters_id int
-);
-
-insert into dogs (id, name, breeds_id, masters_id)
-values
-(1, 'sharik', 4, 3),
-(2, 'artemon', 3, 5),
-(3, 'rex', 8, 7),
-(4, 'snowy', 5, 1),
-(5, 'bethowen', 6, 6),
-(6, 'lassie', 1, 8),
-(7, 'hachico', 7, 4),
-(8, 'spike', 2, 2);
-
+('collie'),
+('bulldog'),
+('poodle'),
+('mongrel'),
+('terrier'),
+('saint bernard'),
+('akita'),
+('german shepherd');
 
 create table masters(
-id int,a
+id int AUTO_INCREMENT PRIMARY KEY,
 name varchar(20)
 );
 
-insert into masters (id, name)
+insert into masters (name)
 values
-(1, 'Tintin'),
-(2, 'Willian'),
-(3, 'Fedor'),
-(4, 'Hidesaburo'),
-(5, 'Malvina'),
-(6, 'Emily'),
-(7, 'Richard'),
-(8, 'Gregory');
+('Tintin'),
+('Willian'),
+('Fedor'),
+('Hidesaburo'),
+('Malvina'),
+('Emily'),
+('Richard'),
+('Gregory');
 
-select dogs.id as dogs_id, dogs.name as dogs_name, breeds.type as breeds_type, masters.name as masters_name
+create table dogs(
+id int AUTO_INCREMENT PRIMARY KEY,
+name varchar(20),
+breeds_id int,
+FOREIGN KEY (breeds_id) REFERENCES breeds(id),
+masters_id int,
+FOREIGN KEY (masters_id) REFERENCES masters(id) ON delete CASCADE
+);
+
+insert into dogs (name, breeds_id, masters_id)
+values
+('sharik', 4, 3),
+('artemon', 3, 5),
+('rex', 8, 7),
+('snowy', 5, 1),
+('bethowen', 6, 6),
+('lassie', 1, 8),
+('hachico', 7, 4),
+('spike', 2, 2);
+
+select dogs.id as dogs_id, dogs.name as dogs_name, breeds.typo as breeds_type, masters.name as masters_name
 from dogs
 inner join breeds on dogs.breeds_id  = breeds.id
 inner join masters on dogs.masters_id = masters.id
