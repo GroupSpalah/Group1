@@ -42,13 +42,13 @@ foreign key (breeds_id) references breeds(id),
 foreign key (masters_id) references masters(id)
 );
 
-insert into dogs(name)
+insert into dogs(name, breeds_id, masters_id)
 values
-('Sharik'),
-('Artemon'),
-('Rex'),
-('Snowy'),
-('Bethowen'),
-('Lassie'),
-('Hachico'),
-('Spike');
+('Sharik', 4, 3),
+('Artemon', 3, 5),
+('Rex', 8, 7),
+('Snowy', 5, 1),
+('Bethowen', 6, 6),
+('Lassie', 1, 8),
+('Hachico', 7, 4),
+('Spike', 2, 2);

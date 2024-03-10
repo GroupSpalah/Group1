@@ -12,7 +12,7 @@ public class ConnectionTest {
 
     //private static final String URL = "jdbc:mysql://localhost:3306/bank_clients; INIT=RUNSCRIPT FROM 'classpath:init.sql'"; // for test
     public static void main(String[] args) {
-        try (Connection connection = DriverManager.getConnection(URL, USERNAME, "af66s60dk29l97j;");
+        try (Connection connection = DriverManager.getConnection(URL, USERNAME, PASSWORD);
              Statement statement = connection.createStatement()) {
             statement.addBatch("INSERT INTO clients(name) VALUES('Oleksandr')");
             statement.executeBatch();

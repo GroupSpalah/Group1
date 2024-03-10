@@ -15,61 +15,7 @@ public class ConnectionPets {
     public static void main(String[] args) {
         try (Connection connection = DriverManager.getConnection(URL, USERNAME, PASSWORD);
              Statement statement = connection.createStatement()) {
-            //statement.addBatch("INSERT INTO breeds(type) VALUES('collie', 'bulldog', 'poodle', 'mongrel', " +
-            //        "'terrier', 'saint bernard', 'akita', 'german shepherd')");
-//
-            //statement.addBatch("INSERT INTO dogs(name) VALUES('Sharik', 'Artemon', 'Rex', 'Snowy', 'Beethoven', " +
-            //        "'Lassie', 'Hachiko', 'Spike', 'german shepherd')");
-//
-            //statement.addBatch("INSERT INTO pets(type) VALUES('Sharik', 'Artemon', 'Rex', 'Snowy', 'Beethoven', " +
-            //        "'Lassie', 'Hachiko', 'Spike', 'german shepherd')");
-/*
-            ('collie',
-            'bulldog',
-            'poodle',
-            'mongrel',
-            'terrier',
-            'saint bernard',
-            'akita',
-            'german shepherd');
 
-            ('collie'),
-            ('bulldog'),
-            ('poodle'),
-            ('mongrel'),
-            ('terrier'),
-            ('saint bernard'),
-            ('akita'),
-            ('german shepherd'));
-
-            (('Sharik'),
-            ('Artemon'),
-            ('Rex'),
-            ('Snowy'),
-            ('Bethowen'),
-            ('Lassie'),
-            ('Hachico'),
-            ('Spike')
-            );
-
-            ('Sharik',
-            'Artemon',
-            'Rex',
-            'Snowy',
-            'Bethowen',
-            'Lassie',
-            'Hachico',
-            'Spike');
-
-            ('Tintin'),
-            ('Willian'),
-            ('Fedor'),
-            ('Hidesaburo'),
-            ('Malvina'),
-            ('Emily'),
-            ('Richard'),
-            ('Gregory'));
-*/
             statement.executeBatch();
             statement.clearBatch();
         } catch (SQLException e) {
