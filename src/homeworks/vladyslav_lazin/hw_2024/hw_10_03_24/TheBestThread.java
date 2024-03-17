@@ -26,7 +26,6 @@ public class TheBestThread {
         } catch (IOException e) {
             e.printStackTrace();
         }
-
         return line;
     }
 
@@ -47,7 +46,6 @@ class MyThread implements Runnable {
         try {
             t.join();
         } catch (InterruptedException e) {
-            // TODO Auto-generated catch block
             e.printStackTrace();
         }
     }
@@ -59,6 +57,6 @@ class MyThread implements Runnable {
         long count = TheBestThread.wordCount(countedWord, line);
         long time = System.currentTimeMillis() - startTime;
 
-        System.out.println(String.format("Counted word: %s   count: %s time: %s", countedWord, count, time));
+        System.out.printf("Counted word: %s   count: %s times: %s ms%n", countedWord, count, time);
     }
 }
