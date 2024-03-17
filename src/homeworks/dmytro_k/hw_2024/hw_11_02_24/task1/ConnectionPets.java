@@ -11,7 +11,6 @@ public class ConnectionPets {
     private static final String USERNAME = "root";
     private static final String PASSWORD = "af66s60dk29l97j;";
 
-    //private static final String URL = "jdbc:mysql://localhost:3306/bank_clients; INIT=RUNSCRIPT FROM 'classpath:init.sql'"; // for test
     public static void main(String[] args) {
         try (Connection connection = DriverManager.getConnection(URL, USERNAME, PASSWORD);
              Statement statement = connection.createStatement()) {
