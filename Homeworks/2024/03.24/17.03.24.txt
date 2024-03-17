@@ -1,0 +1,20 @@
+1) Write a program that create 2 threads. The first thread must generate
+random number from 10 to 30 and print to the console. The second thread
+must generate random number from 50 to 100 and print to the console.
+All thread must be run in the same time. Only need 3 numbers from each
+thread, sleep time between generation is 3 seconds.
+
+2)  Write a program that check when an array will be filled fully:
+   • create an empty array with 10 elements.
+   • create two threads (one for filling values and one for checking if arrays
+   is filled fully).
+   • run all two threads.
+   • first thread must put new random value into array and sleep for 2
+   seconds.
+   • second thread must check if all array is filled than print all values, if
+   not than sleep for 3 seconds and check again
+
+3) Write a program that make operation with a bank account. Create a
+   bank account class, place default money amount (1000 US dollars). Than
+   make 10 sequent deposit operations and 5 withdrawal sequent operations.
+   All operations must be run in separated threads.

@@ -31,7 +31,10 @@ public class TheBestThread {
 
     public static long wordCount(String countedWord, String line) {
         String[] words = line.split("\\s+");
-        return Arrays.stream(words).map(String::toLowerCase).filter(word -> word.equals(countedWord)).count();
+        return Arrays.stream(words)
+                .map(String::toLowerCase)
+                .filter(word -> word.equals(countedWord))
+                .count();
     }
 }
 
