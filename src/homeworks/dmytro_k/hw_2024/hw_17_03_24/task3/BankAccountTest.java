@@ -10,8 +10,13 @@ public class BankAccountTest {
 
         ExecutorService service = Executors.newFixedThreadPool(2);
 
-        IntStream.range(0, 10).forEach(i -> service.submit(() -> bankAccount.deposit(100)));
-        IntStream.range(0, 5).forEach(i -> service.submit(() -> bankAccount.withdrawal(50)));
+        IntStream
+                .range(0, 10)
+                .forEach(i -> service.submit(() -> bankAccount.deposit(100)));
+
+        IntStream
+                .range(0, 5)
+                .forEach(i -> service.submit(() -> bankAccount.withdrawal(50)));
 
         service.shutdown();
     }

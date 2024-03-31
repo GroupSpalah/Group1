@@ -8,19 +8,22 @@ public class Checker implements Runnable {
     private static final int[] arrayInput = ArrayService.getArrayInput();
 
     private void checkingZeros() {
-        while (!Thread.currentThread().isInterrupted()) {
+        while (true) {
+            Thread thread = Thread.currentThread();
+
+            if (!thread.isInterrupted()) break;
             if (Arrays.stream(arrayInput).anyMatch(i -> i == 0)) {
-                System.out.println(Thread.currentThread().getName() +
+                System.out.println(thread.getName() +
                         " - The array is not yet completely filled. Current state: " +
                         Arrays.toString(arrayInput));
                 try {
                     TimeUnit.SECONDS.sleep(3);
                 } catch (InterruptedException e) {
-                    Thread.currentThread().interrupt();
+                    thread.interrupt();
                 }
             } else {
                 System.out.println("The array is full: " + Arrays.toString(arrayInput));
-                Thread.currentThread().interrupt();
+                thread.interrupt();
                 return;//?
             }
         }

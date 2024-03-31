@@ -11,6 +11,7 @@ import java.util.concurrent.TimeUnit;
 import java.util.stream.IntStream;
 
 public class RandomNumThread implements Runnable {
+    public static final Random RANDOM = new Random();
     private int min;
     private int max;
     private int count;
@@ -23,10 +24,9 @@ public class RandomNumThread implements Runnable {
 
     @Override
     public void run() {
-        Random random = new Random();
         IntStream.range(0, count)
                 .forEach(i -> {
-                    int randomNum = random.nextInt(max - min + 1) + min;
+                    int randomNum = RANDOM.nextInt(min, max);
                     System.out.println(Thread.currentThread().getName() +
                             " - random number: " + randomNum);
                     try {

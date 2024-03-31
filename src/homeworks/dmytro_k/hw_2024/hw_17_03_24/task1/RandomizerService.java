@@ -13,10 +13,11 @@ public class RandomizerService {
 
         IntStream.range(0, numberOfRandomizers)
                 .forEach(i -> {
-                    int from = randomizers.get(i).from();
-                    int upTo = randomizers.get(i).upTo();
-                    long streamSize = randomizers.get(i).streamSize();
-                    int sleepTime = randomizers.get(i).sleepTime();
+                    Randomizer randomizer1 = randomizers.get(i);
+                    int from = randomizer1.from();
+                    int upTo = randomizer1.upTo();
+                    long streamSize = randomizer1.streamSize();
+                    int sleepTime = randomizer1.sleepTime();
 
                     Randomizer randomizer = new Randomizer(from, upTo, streamSize, sleepTime);
                     threads[i] = new Thread(randomizer, "Thread " + (i + INDEX_OFFSET));

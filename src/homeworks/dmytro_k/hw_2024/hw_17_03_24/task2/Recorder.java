@@ -6,6 +6,7 @@ import java.util.stream.IntStream;
 
 public class Recorder implements Runnable {
 
+    public static final Random RANDOM = new Random();
     private static final int[] arrayInput = ArrayService.getArrayInput();
 
     private void writeRandomNumbers() {
@@ -14,8 +15,7 @@ public class Recorder implements Runnable {
                     .filter(i -> arrayInput[i] == 0)
                     .findFirst()
                     .ifPresent(i -> {
-                        Random random = new Random();
-                        arrayInput[i] = random.nextInt();
+                        arrayInput[i] = RANDOM.nextInt();
                         System.out.println(Thread.currentThread().getName() +
                                 " - index: " + i + ": input element: " + arrayInput[i]);
                         try {

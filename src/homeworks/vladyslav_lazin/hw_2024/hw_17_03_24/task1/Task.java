@@ -7,7 +7,7 @@ public class Task {
     public static void main(String[] args) {
         Random random = new Random();
         new Thread(() -> {
-            for (int i = 0; i <=2; i++) {
+            for (int i = 0; i <= 2; i++) {
                 System.out.println(random.nextInt(21) + 10);
                 try {
                     TimeUnit.SECONDS.sleep(3);
