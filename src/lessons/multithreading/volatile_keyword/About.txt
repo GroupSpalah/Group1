@@ -1,0 +1,5 @@
+http://tutorials.jenkov.com/java-concurrency/volatile.html
+http://javarevisited.blogspot.com/2011/06/volatile-keyword-java-example-tutorial.html -
+good picture of CPU and main memory
+https://examples.javacodegeeks.com/core-java/java-volatile-keyword-example/ -
+another good exmaple
