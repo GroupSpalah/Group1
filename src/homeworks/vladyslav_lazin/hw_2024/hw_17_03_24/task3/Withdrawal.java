@@ -13,8 +13,7 @@ public class Withdrawal implements Runnable {
     @Override
     public void run() {
         synchronized (bankAccount) {
-            float amountOnAccount = bankAccount.getAmount();
-            bankAccount.setAmount(amountOnAccount -= amount);
+            bankAccount.setAmount(bankAccount.getAmount() - amount);
             System.out.printf("Taken %s$, amount in bank - %s$%n", amount, bankAccount.getAmount());
         }
     }

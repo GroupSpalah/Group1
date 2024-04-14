@@ -13,8 +13,7 @@ public class Deposit implements Runnable {
     @Override
     public void run() {
         synchronized (bankAccount) {
-            float amountOnAccount = bankAccount.getAmount() + amount;
-            bankAccount.setAmount(amountOnAccount);
+            bankAccount.setAmount(bankAccount.getAmount() + amount);
             System.out.printf("Added %s$, amount in bank - %s$%n", amount, bankAccount.getAmount());
         }
     }

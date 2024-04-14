@@ -7,23 +7,23 @@ import java.util.concurrent.TimeUnit;
 public class Task {
     private static final int[] array = new int[10];
     public static void main(String[] args) {
-        new Thread(() -> {
+        Thread fillThread = new Thread(() -> {
             Random random = new Random();
-            for (int i = 0; i < array.length; i++) {
+            Arrays.setAll(array, i -> {
                 System.out.println("Fill " + i);
-                array[i] = random.nextInt();
                 try {
                     TimeUnit.SECONDS.sleep(2);
                 } catch (InterruptedException e) {
                     throw new RuntimeException(e);
                 }
-            }
-        }).start();
+                return random.nextInt();
+            });
+        });
 
-        new Thread(() -> {
+        Thread checkThread = new Thread(() -> {
             while (true) {
                 System.out.println("checking array");
-                if (array[array.length - 1] != 0) {
+                if (Arrays.stream(array).noneMatch(num -> num == 0)) {
                     Arrays.stream(array).forEach(System.out::println);
                     break;
                 } else {
@@ -35,6 +35,8 @@ public class Task {
                     }
                 }
             }
-        }).start();
+        });
+        fillThread.start();
+        checkThread.start();
     }
 }
