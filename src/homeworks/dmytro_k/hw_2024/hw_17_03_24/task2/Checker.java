@@ -11,7 +11,7 @@ public class Checker implements Runnable {
         while (true) {
             Thread thread = Thread.currentThread();
 
-            if (!thread.isInterrupted()) break;
+            //if (!thread.isInterrupted()) break; ??
             if (Arrays.stream(arrayInput).anyMatch(i -> i == 0)) {
                 System.out.println(thread.getName() +
                         " - The array is not yet completely filled. Current state: " +

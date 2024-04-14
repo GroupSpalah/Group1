@@ -30,6 +30,8 @@ public class ArrayService {
 
         Thread thread1 = new Thread(recorder, "Thread 1");
         Thread thread2 = new Thread(checker, "Thread 2");
+        //thread1.isDaemon();
+        //thread2.isDaemon();//не работает
         thread1.start();
         thread2.start();
     }

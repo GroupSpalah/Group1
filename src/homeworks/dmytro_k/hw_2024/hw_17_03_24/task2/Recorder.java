@@ -21,7 +21,7 @@ public class Recorder implements Runnable {
                         try {
                             TimeUnit.SECONDS.sleep(2);
                         } catch (InterruptedException e) {
-                            Thread.currentThread().interrupt();
+                            throw new RuntimeException(e);
                         }
                     });
 
