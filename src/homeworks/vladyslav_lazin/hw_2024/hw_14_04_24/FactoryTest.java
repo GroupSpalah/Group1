@@ -9,7 +9,7 @@ public class FactoryTest {
                 new Stage[]{new Stage("Stage_1", 30),
                         new Stage("Stage_2", 12)});
         TimeUnit.SECONDS.sleep(1);
-        System.out.println(customer.getOraderInfo());
+        System.out.println(customer.getOrderInfo());
         TimeUnit.SECONDS.sleep(1);
         customer.cancelOrder("It's so boring!");
     }

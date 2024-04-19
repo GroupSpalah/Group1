@@ -52,7 +52,7 @@ public final class Worker implements Runnable {
             }
         }
         try {
-            Files.writeString(path, "Production has been finidhed", StandardOpenOption.APPEND);
+            Files.writeString(path, "Production has been finished", StandardOpenOption.APPEND);
         } catch (IOException e) {
             throw new RuntimeException(e);
         }

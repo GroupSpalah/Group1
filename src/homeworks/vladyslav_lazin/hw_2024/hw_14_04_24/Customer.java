@@ -18,11 +18,11 @@ public final class Customer {
         this.product = new Product(prodName, stages);
         this.worker = new Worker(workerName, product);
     }
-    public String getOraderInfo() {
+    public String getOrderInfo() {
         String status;
         try {
-            List<String> enties = Files.readAllLines(getPath());
-            status = enties.get(enties.size() - 1);
+            List<String> entries = Files.readAllLines(getPath());
+            status = entries.get(entries.size() - 1);
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
