@@ -5,7 +5,6 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.nio.file.StandardOpenOption;
-import java.util.Arrays;
 import java.util.concurrent.TimeUnit;
 
 public final class Worker implements Runnable {
@@ -39,21 +38,19 @@ public final class Worker implements Runnable {
                 throw new RuntimeException(e);
             }
         }
-        Arrays.stream(product.stages())
-                .forEach(element -> {
-                    try {
-                        Files.writeString(path, element.stageName(), StandardOpenOption.APPEND);
-                        Files.writeString(path, "\n", StandardOpenOption.APPEND);
-
-                        TimeUnit.SECONDS.sleep(5);
-                        if (isInterrupted) {
-                            Thread.currentThread().stop();
-                        }
-
-                    } catch (IOException | InterruptedException e) {
-                        throw new RuntimeException(e);
-                    }
-                });
+        for (Stage stage : product.stages()) {
+            try {
+                Files.writeString(path, stage.stageName(), StandardOpenOption.APPEND);
+                Files.writeString(path, "\n", StandardOpenOption.APPEND);
+                TimeUnit.SECONDS.sleep(5);
+                if (isInterrupted) {
+                    Thread.currentThread().interrupt();
+                    return;
+                }
+            } catch (IOException | InterruptedException e) {
+                return;
+            }
+        }
         try {
             Files.writeString(path, "Production has been finidhed", StandardOpenOption.APPEND);
         } catch (IOException e) {
@@ -61,3 +58,4 @@ public final class Worker implements Runnable {
         }
     }
 }
+

@@ -2,7 +2,7 @@ package homeworks.vladyslav_lazin.hw_2024.hw_14_04_24;
 
 import java.util.concurrent.TimeUnit;
 
-public class Factory {
+public class FactoryTest {
     public static void main(String[] args) throws InterruptedException {
         Customer customer = new Customer();
         customer.createOrder("Article_1", "John",

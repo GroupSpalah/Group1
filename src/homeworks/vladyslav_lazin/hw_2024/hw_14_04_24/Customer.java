@@ -37,6 +37,4 @@ public final class Customer {
             throw new RuntimeException(e);
         }
     }
-
-
 }
