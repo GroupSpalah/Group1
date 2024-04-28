@@ -1,5 +1,24 @@
 package homeworks.sergii_khvostov.hw_2024.hw_31_03_24;
 
+/*Касса ж/д вокзала.
+Создать приложение Касса ж/д вокзала.
+Каждый билет имеет название(в кассе всего билетов может быть 15).
+"Город отправления - Город прибытия"(String("Kiev-Lviv")). Одинаковых билетов нет(Set).
+Некоторые пассажиры(потоки threads) хотят купить билеты с определенными названиями,
+а некоторые сдать билеты.
+Покупатели и сдатчики имеют имена(потоки имеют имена).
+Если билета с определенным названием нет в наличии покупатель ждет пока сдадут билет.
+Выводить текст - "Билет (название билета) продан".
+Если билет сдается необходимо опевещать покупателей и
+выводить текст "Билет (название билета) сдан + имя сдатчика"
+Если билет куплен - выводить текст "Билет (название билета) куплен + имя покупателя".
+Работу организовать из консоли(Scanner).
+
+1 Сдать -> имя
+2 Купить -> имя*/
+
+import org.jetbrains.annotations.NotNull;
+
 import java.util.HashSet;
 import java.util.Scanner;
 import java.util.Set;
@@ -11,7 +30,7 @@ public class TicketOffice {
         availableTickets = new HashSet<>(15);
     }
 
-    public synchronized void buyTicket(String buyerName, String ticketName) {
+    public synchronized void buyTicket(String buyerName, @NotNull String ticketName) {
         while (!availableTickets.contains(ticketName.toLowerCase())) {
             try {
                 System.out.println("Ticket " + ticketName + " sold");
@@ -25,9 +44,9 @@ public class TicketOffice {
         System.out.println("Ticket " + ticketName + " purchased " + buyerName + ".");
     }
 
-    public synchronized void returnTicket(String salesmanName, String ticketName) {
+    public synchronized void returnTicket(String returnedName, @NotNull String ticketName) {
         availableTickets.add(ticketName.toLowerCase());
-        System.out.println("Ticket " + ticketName + " returned " + salesmanName + ".");
+        System.out.println("Ticket " + ticketName + " returned " + returnedName + ".");
         notify();
     }
 
