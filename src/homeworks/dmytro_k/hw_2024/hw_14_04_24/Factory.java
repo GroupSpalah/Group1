@@ -33,6 +33,7 @@ public class Factory {
     public void startProduction(String name, int amount) {
 
         Worker rundomWorker = workers.get(RANDOM.nextInt(workers.size()));
+
         while ((products.size() + INDEX_OFFSET) <= amount) {
             Product product = new Product(name, rundomWorker.name());
             products.add(product);

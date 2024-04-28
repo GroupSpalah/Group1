@@ -1,5 +1,5 @@
 CREATE TABLE bank_clients.account_number (
-	id BIGINT  AUTO_INCREMENT PRIMARY KEY,
+	id BIGINT AUTO_INCREMENT PRIMARY KEY,
 	amount BIGINT NOT NULL,
 	account_number BIGINT NOT NULL
 	);
