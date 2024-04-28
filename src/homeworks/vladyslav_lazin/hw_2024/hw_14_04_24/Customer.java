@@ -2,7 +2,6 @@ package homeworks.vladyslav_lazin.hw_2024.hw_14_04_24;
 
 import java.io.IOException;
 import java.nio.file.Files;
-import java.nio.file.Path;
 import java.nio.file.StandardOpenOption;
 import java.util.List;
 
@@ -10,9 +9,12 @@ public final class Customer {
     private Product product;
     private Worker worker;
 
-    private Path getPath() {
-        String fileName = product.prodName() + "-" + worker.getName() + ".txt";
-        return Worker.PATH.resolve(fileName);
+    public Product getProduct() {
+        return product;
+    }
+
+    public Worker getWorker() {
+        return worker;
     }
     public void createOrder(String prodName, String workerName, Stage[] stages) {
         this.product = new Product(prodName, stages);
@@ -21,7 +23,7 @@ public final class Customer {
     public String getOrderInfo() {
         String status;
         try {
-            List<String> entries = Files.readAllLines(getPath());
+            List<String> entries = Files.readAllLines(worker.getPath());
             status = entries.get(entries.size() - 1);
         } catch (IOException e) {
             throw new RuntimeException(e);
@@ -32,7 +34,8 @@ public final class Customer {
     public void cancelOrder(String reason) {
         worker.stopProduction();
         try {
-            Files.writeString(getPath(), reason, StandardOpenOption.APPEND);
+            Files.writeString(worker.getPath(), "\nInterrupted by customer. \nReason: ", StandardOpenOption.APPEND);
+            Files.writeString(worker.getPath(), reason, StandardOpenOption.APPEND);
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
