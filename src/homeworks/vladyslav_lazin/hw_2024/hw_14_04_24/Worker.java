@@ -8,7 +8,7 @@ import java.nio.file.StandardOpenOption;
 import java.util.concurrent.TimeUnit;
 
 public final class Worker implements Runnable {
-    public static final Path PATH = Paths.get("./src/homeworks/vladyslav_lazin/hw_2024/hw_14_04_24/");
+    private final Path path;
     private final String name;
     private final Product product;
     private boolean isInterrupted = false;
@@ -16,6 +16,8 @@ public final class Worker implements Runnable {
     public Worker(String name, Product product) {
         this.name = name;
         this.product = product;
+        this.path = Paths.get("./src/homeworks/vladyslav_lazin/hw_2024/hw_14_04_24/" +
+                product.prodName() + "-" + name + ".txt");
         new Thread(this).start();
     }
 
@@ -27,10 +29,12 @@ public final class Worker implements Runnable {
         return name;
     }
 
+    public Path getPath() {
+        return path;
+    }
+
     @Override
     public void run() {
-        String fileName = product.prodName() + "-" + name + ".txt";
-        Path path = PATH.resolve(fileName);
         if (!Files.exists(path)) {
             try {
                 Files.createFile(path);
@@ -41,11 +45,12 @@ public final class Worker implements Runnable {
         for (Stage stage : product.stages()) {
             try {
                 Files.writeString(path, stage.stageName(), StandardOpenOption.APPEND);
-                Files.writeString(path, "\n", StandardOpenOption.APPEND);
-                TimeUnit.SECONDS.sleep(5);
+                TimeUnit.SECONDS.sleep(stage.duration());
                 if (isInterrupted) {
                     Thread.currentThread().interrupt();
                     return;
+                } else {
+                    Files.writeString(path, " complete\n", StandardOpenOption.APPEND);
                 }
             } catch (IOException | InterruptedException e) {
                 return;
