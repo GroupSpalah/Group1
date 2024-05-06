@@ -63,7 +63,7 @@ group by country_id
 having count(distinct country_id) > 1;
 
 /*4*/
-select * from Item
+SELECT * FROM Item
 where producer_id in (
     select producer_id from Producer
     where country_id in (

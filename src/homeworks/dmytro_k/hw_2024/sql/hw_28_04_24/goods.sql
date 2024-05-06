@@ -18,18 +18,19 @@ USE goods;
  'Nokia', 'Sony','Huawei', 'Xiaomi', 'Oppo', 'Realme', 'Asus', 'ZTE', 'Vivo',
  'TCL', 'Lenovo', 'Black Shark', 'Nubia', 'Meizu', 'Honor'),
  country_of_production VARCHAR(50),
+-- FK_Producer_Country
  FOREIGN KEY (country_of_production) REFERENCES Country(name)
  );
 
  INSERT INTO producer (Product_producer, country_of_production) VALUES
- ('Apple', 'USA'),
- ('Samsung', 'South Korea'),
- ('Google', 'USA'),
- ('OnePlus', 'China'),
+ ('Apple',    'USA'),
+ ('Samsung',  'South Korea'),
+ ('Google',   'USA'),
+ ('OnePlus',  'China'),
  ('Motorola', 'USA'),
- ('Nokia', 'Finland'),
- ('Sony', 'Japan'),
- ('Huawei', 'China'),
+ ('Nokia',    'Finland'),
+ ('Sony',     'Japan'),
+ ('Huawei',   'China'),
  ('Xiaomi', 'China'),
  ('Oppo', 'China'),
  ('Realme', 'China'),

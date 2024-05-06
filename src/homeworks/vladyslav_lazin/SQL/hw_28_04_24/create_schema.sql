@@ -1,5 +1,6 @@
 CREATE DATABASE warehouse;
 USE warehouse;
+
 CREATE TABLE country(
 	country_id INT AUTO_INCREMENT PRIMARY KEY,
 	country_name VARCHAR(20)
@@ -7,8 +8,8 @@ CREATE TABLE country(
 
 CREATE TABLE producer(
 	producer_id INT AUTO_INCREMENT PRIMARY KEY,
-	producer_name VARCHAR(20) NOT NULL,
-	country_id INT,
+	producer_name VARCHAR(20) NOT NULL,// Lenovo, Lenovo
+	country_id INT,//1,2
 	FOREIGN KEY(country_id) REFERENCES country(country_id)
 );
 CREATE TABLE item(

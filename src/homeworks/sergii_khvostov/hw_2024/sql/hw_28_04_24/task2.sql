@@ -71,8 +71,10 @@ MODIFY COLUMN item_name VARCHAR(100);
 /*4*/
 SELECT COUNT(*)
 FROM Item
-INNER JOIN Producer ON Item.producer_id = Producer.producer_id
-INNER JOIN Country ON Producer.country_id = Country.country_id
+INNER JOIN Producer
+ON Item.producer_id = Producer.producer_id
+INNER JOIN Country
+ON Producer.country_id = Country.country_id
 WHERE Country.country_name LIKE 'C%';
 
 
