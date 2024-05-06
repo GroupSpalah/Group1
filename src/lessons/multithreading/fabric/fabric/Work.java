@@ -6,8 +6,8 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.nio.file.StandardOpenOption;
 
-import static task_from_other_people.threads.homeworks.fabric.Cycle.EXTENSION_TXT;
-import static task_from_other_people.threads.homeworks.fabric.Cycle.NAME_DIRECTORY;
+//import static task_from_other_people.threads.homeworks.fabric.Cycle.EXTENSION_TXT;
+//import static task_from_other_people.threads.homeworks.fabric.Cycle.NAME_DIRECTORY;
 
 public class Work implements Runnable {
 
@@ -25,7 +25,7 @@ public class Work implements Runnable {
 
     @Override
     public void run() {
-        try {
+       /* try {
             cycle.build();
         } catch (InterruptedException | IOException e) {
             thread.interrupt();
@@ -37,7 +37,7 @@ public class Work implements Runnable {
             } catch (IOException e1) {
                 e1.printStackTrace();
             }
-        }
+        }*/
     }
 
     public void stopWork() {

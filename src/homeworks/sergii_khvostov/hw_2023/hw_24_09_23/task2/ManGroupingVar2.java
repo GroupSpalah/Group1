@@ -1,6 +1,6 @@
 package homeworks.sergii_khvostov.hw_2023.hw_24_09_23.task2;
 
-import org.apache.commons.lang3.tuple.Pair;
+/*import org.apache.commons.lang3.tuple.Pair;
 
 import java.util.LinkedList;
 import java.util.List;
@@ -60,4 +60,4 @@ public class ManGroupingVar2 {
             }
         });
     }
-}
+}*/

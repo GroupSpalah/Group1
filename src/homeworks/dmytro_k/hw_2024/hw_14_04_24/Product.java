@@ -7,6 +7,7 @@ import java.util.concurrent.TimeUnit;
 class Product implements Runnable {
     private final String name;
     private final String workerName;
+    //использовать не ENUM. Переделать без него.
     private final List<ProductionStages> PRODUCTION_CYCLE = Arrays.asList(ProductionStages.values());
     private int currentStageIndex = 0;
     private static final int INDEX_OFFSET = 1;

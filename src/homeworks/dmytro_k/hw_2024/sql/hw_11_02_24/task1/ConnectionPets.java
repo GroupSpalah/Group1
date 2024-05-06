@@ -1,23 +1,20 @@
-package homeworks.dmytro_k.hw_2024.hw_28_01_24;
+package homeworks.dmytro_k.hw_2024.sql.hw_11_02_24.task1;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
 import java.sql.Statement;
 
-public class ConnectionTest {
-    private static final String URL = "jdbc:mysql://localhost:3306/bank_clients";
+public class ConnectionPets {
+
+    private static final String URL = "jdbc:mysql://localhost:3306/pets";
     private static final String USERNAME = "root";
     private static final String PASSWORD = "af66s60dk29l97j;";
 
-    //private static final String URL = "jdbc:mysql://localhost:3306/bank_clients; INIT=RUNSCRIPT FROM 'classpath:init.sql'"; // for test
     public static void main(String[] args) {
         try (Connection connection = DriverManager.getConnection(URL, USERNAME, PASSWORD);
              Statement statement = connection.createStatement()) {
-            statement.addBatch("INSERT INTO clients(name) VALUES('Oleksandr')");
-            statement.executeBatch();
-            statement.clearBatch();
-            statement.addBatch("INSERT INTO clients(name) VALUES('Mykola')");
+
             statement.executeBatch();
             statement.clearBatch();
         } catch (SQLException e) {
@@ -25,5 +22,4 @@ public class ConnectionTest {
             throw new RuntimeException(e);
         }
     }
-    //test ok
 }

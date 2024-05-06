@@ -1,4 +1,4 @@
-package homeworks.dmytro_k.hw_2024.hw_11_02_24.task2;
+package homeworks.dmytro_k.hw_2024.sql.hw_11_02_24.task2;
 
 public class NotepadsDataBaseAppTest {
     public static void main(String[] args) {
