@@ -1,9 +1,10 @@
 use goods;
 
 /*1*/
-SELECT * FROM item
-JOIN producer ON item.FK_item_producer = producer.manufacturer_id
-WHERE producer.product_producer = 'Samsung' AND item.fragility = 1;
+SELECT * FROM item i
+JOIN producer p
+ON i.FK_item_producer = p.manufacturer_id
+WHERE p.product_producer = 'Samsung' AND i.fragility = 1;
 
 /*1.2.1*/
 ALTER TABLE producer 
@@ -26,29 +27,37 @@ ON p.FK_producer_country = c.id
 WHERE p.product_producer = 'Samsung';
 
 /*1.3*/
-SELECT * FROM item
-JOIN producer ON item.FK_item_producer = producer.manufacturer_id
-JOIN country ON producer.FK_producer_country = country.id
-WHERE item.fragility = 1;
+SELECT * FROM item i
+JOIN producer p
+ON item.FK_item_producer = p.manufacturer_id
+JOIN country c
+ON p.FK_producer_country = c.id
+WHERE i.fragility = 1;
 
 /*4*/
-SELECT * FROM item
-JOIN producer ON item.FK_item_producer = producer.manufacturer_id
-JOIN country ON producer.FK_producer_country = country.id
-WHERE country.name LIKE 'C%';
+SELECT * FROM item i
+JOIN producer p
+ON i.FK_item_producer = p.manufacturer_id
+JOIN country c
+ON p.FK_producer_country = country.id
+WHERE c.name LIKE 'C%';
 
 
 /*5*/
-SELECT * FROM item
-JOIN producer ON item.FK_item_producer = producer.manufacturer_id
-JOIN country ON producer.FK_producer_country = country.id
-ORDER BY country.name ASC
+SELECT * FROM item i
+JOIN producer p
+ON i.FK_item_producer = p.manufacturer_id
+JOIN country c
+ON p.FK_producer_country = c.id
+ORDER BY c.name ASC
 LIMIT 5;
 
-SELECT * FROM item
-JOIN producer ON item.FK_item_producer = producer.manufacturer_id
-JOIN country ON producer.FK_producer_country = country.id
-ORDER BY country.name DESC
+SELECT * FROM item i
+JOIN producer p
+ON i.FK_item_producer = p.manufacturer_id
+JOIN country c
+ON p.FK_producer_country = country.id
+ORDER BY c.name DESC
 LIMIT 5;
 
 /*6*/
@@ -90,15 +99,18 @@ ALTER TABLE item MODIFY name VARCHAR(100);
 
 /*2.5*/
 SELECT COUNT(*) 
-FROM item
-JOIN producer ON item.FK_item_producer = producer.manufacturer_id
-JOIN country ON producer.FK_producer_country = country.id
-WHERE country.name LIKE 'C%';
+FROM item i
+JOIN producer p
+ON i.FK_item_producer = p.manufacturer_id
+JOIN country c
+ON p.FK_producer_country = c.id
+WHERE c.name LIKE 'C%';
 
 INSERT INTO producer (product_producer, FK_producer_country) VALUES 
 ('Samsung', (SELECT id FROM country WHERE name = 'Canada'));
 INSERT INTO item (name, production_date, FK_item_producer, fragility, price) VALUES 
 ('New Samsung Product 2', '2024-10-12', 22, 1, 500);
+
 
 /*не работает*/
 /*ALTER TABLE producer CHANGE manufacturer_id id INT AUTO_INCREMENT PRIMARY KEY;*/
