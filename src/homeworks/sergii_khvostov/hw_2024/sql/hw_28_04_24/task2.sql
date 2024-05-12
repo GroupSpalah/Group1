@@ -22,10 +22,10 @@ USE Producer_item_country;
 
 /*1*/
 INSERT INTO Item (item_name, production_date, producer_id, fragile, price)
-VALUES ('Item1', '2024-04-15', 1, FALSE, 10.99);
+VALUES ('iphone_15', '2024-05-12', 1, TRUE, 150.00);
 
 INSERT INTO Item (item_name, production_date, producer_id, fragile, price)
-VALUES ('Item2', '2024-04-15', 2, FALSE, 15.99);
+VALUES ('Sony PS5', '2024-05-12', 2, TRUE, 800.00);
 
 /*2*/
 UPDATE Item
@@ -70,12 +70,10 @@ MODIFY COLUMN item_name VARCHAR(100);
 
 /*4*/
 SELECT COUNT(*)
-FROM Item
-INNER JOIN Producer
-ON Item.producer_id = Producer.producer_id
-INNER JOIN Country
-ON Producer.country_id = Country.country_id
-WHERE Country.country_name LIKE 'C%';
+FROM Item i
+INNER JOIN Producer p ON i.producer_id = p.producer_id
+INNER JOIN Country c ON p.country_id = c.country_id
+WHERE c.country_name LIKE 'C%';
 
 
 
