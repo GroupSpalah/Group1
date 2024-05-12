@@ -1,23 +1,22 @@
 CREATE DATABASE warehouse;
-USE warehouse;
 
-CREATE TABLE country(
+CREATE TABLE countries(
 	country_id INT AUTO_INCREMENT PRIMARY KEY,
-	country_name VARCHAR(20)
+	name VARCHAR(25)
 );
 
-CREATE TABLE producer(
+CREATE TABLE producers(
 	producer_id INT AUTO_INCREMENT PRIMARY KEY,
-	producer_name VARCHAR(20) NOT NULL,// Lenovo, Lenovo
-	country_id INT,//1,2
-	FOREIGN KEY(country_id) REFERENCES country(country_id)
+	name VARCHAR(25) NOT NULL,
+	fk_country_id INT,
+	FOREIGN KEY(fk_country_id) REFERENCES countries(country_id)
 );
-CREATE TABLE item(
+CREATE TABLE items(
 	item_id INT AUTO_INCREMENT PRIMARY KEY,
-	item_name VARCHAR(20) NOT NULL,
+	name VARCHAR(50) NOT NULL,
 	manufacture_date DATE NOT NULL,
-	producer_id INT,
+	fk_producer_id INT,
 	fragility BOOLEAN NOT NULL,
-	price DECIMAL(8,2) NOT NULL,
-	FOREIGN KEY(producer_id) REFERENCES producer(producer_id)
+	price DECIMAL(12,2) NOT NULL,
+	FOREIGN KEY(fk_producer_id) REFERENCES producers(producer_id)
 );
