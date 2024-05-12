@@ -31,7 +31,7 @@ INSERT INTO Country (country_name) VALUES
 
 CREATE TABLE Producer(
     producer_id INT AUTO_INCREMENT PRIMARY KEY,
-    producer_name ENUM,
+    producer_name VARCHAR(50) UNIQUE,
     country_id INT,
     FOREIGN KEY (country_id) REFERENCES Country(country_id)
 );
