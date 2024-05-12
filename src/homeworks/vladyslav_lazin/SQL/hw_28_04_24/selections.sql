@@ -7,7 +7,11 @@ WHERE i.fragility = TRUE
 AND p.name = 'Samsung Electronics';
 
 --1.2
-SELECT i.name item, i.manufacture_date manufatured, i.price price, p.name producer, c.name country
+SELECT i.name item,
+        i.manufacture_date manufatured,
+        i.price price,
+    p.name producer,
+    c.name country
 FROM items i
 INNER JOIN producers p
 ON i.fk_producer_id = p.producer_id

@@ -36,7 +36,11 @@ CREATE TABLE Producer(
     FOREIGN KEY (country_id) REFERENCES Country(country_id)
 );
 INSERT INTO Producer (producer_name, country_id) VALUES
-('Apple', 1),('Samsung', 2),('Sony', 3),('Microsoft', 4),('LG', 5),('Huawei', 6),('Lenovo', 7),
+('Apple', 1),
+('Samsung', 2),
+('Sony', 3),
+('Microsoft', 4),
+('LG', 5),('Huawei', 6),('Lenovo', 7),
 ('Dell', 8),('HP', 9),('Asus', 10),('Acer', 11),('Canon', 12),('Nikon', 13),('Panasonic', 14),
 ('Philips', 15),('Toshiba', 16),('Hitachi', 17),('Siemens', 18),('Bosch', 19),('Whirlpool', 20),
 ('Nokia', 21);
@@ -77,14 +81,17 @@ INSERT INTO Item (item_name, production_date, producer_id, fragile, price) VALUE
 
 /*1*/
 SELECT * FROM Item i
-INNER JOIN Producer p ON i.producer_id = p.producer_id
+INNER JOIN Producer p
+ON i.producer_id = p.producer_id
 WHERE p.producer_name = 'Producer1' AND i.fragile = TRUE;
 
 
 /*2*/
 SELECT * FROM Item i
-INNER JOIN Producer p ON i.producer_id = p.producer_id
-INNER JOIN Country c ON p.country_id = c.country_id
+INNER JOIN Producer p
+ON i.producer_id = p.producer_id
+INNER JOIN Country c
+ON p.country_id = c.country_id
 WHERE  c.country_name IN ('Canada', 'Ukraine');
 
 /*3*/
