@@ -1,7 +1,8 @@
 USE goods;
 
  CREATE TABLE country(
- name VARCHAR(50) PRIMARY KEY
+ id INT AUTO_INCREMENT PRIMARY KEY,
+ name VARCHAR(50)
  );
 
  INSERT INTO country (name) VALUES
@@ -14,46 +15,46 @@ USE goods;
 
  CREATE TABLE producer(
  manufacturer_id INT AUTO_INCREMENT PRIMARY KEY,
- Product_producer ENUM('Apple', 'Samsung', 'Google', 'OnePlus', 'Motorola',
+ product_producer ENUM('Apple', 'Samsung', 'Google', 'OnePlus', 'Motorola',
  'Nokia', 'Sony','Huawei', 'Xiaomi', 'Oppo', 'Realme', 'Asus', 'ZTE', 'Vivo',
  'TCL', 'Lenovo', 'Black Shark', 'Nubia', 'Meizu', 'Honor'),
- country_of_production VARCHAR(50),
--- FK_Producer_Country
- FOREIGN KEY (country_of_production) REFERENCES Country(name)
+ FK_producer_country INT,
+ FOREIGN KEY (FK_producer_country) REFERENCES country(id)
  );
 
- INSERT INTO producer (Product_producer, country_of_production) VALUES
- ('Apple',        'USA'),
-('Samsung',      'South Korea'),
-('Google',       'USA'),
-('OnePlus',      'China'),
-('Motorola',     'USA'),
-('Nokia',        'Finland'),
-('Sony',         'Japan'),
-('Huawei',       'China'),
-('Xiaomi',       'China'),
-('Oppo',         'China'),
-('Realme',       'China'),
-('Asus',         'Taiwan'),
-('ZTE',          'China'),
-('Vivo',         'China'),
-('TCL',          'China'),
-('Lenovo',       'China'),
-('Black Shark',  'China'),
-('Nubia',        'China'),
-('Meizu',        'China'),
-('Honor',        'China');
+ INSERT INTO producer (product_producer, FK_producer_country) VALUES
+('Apple',        1),
+('Samsung',      2),
+('Google',       1),
+('OnePlus',      3),
+('Motorola',     1),
+('Nokia',        4),
+('Sony',         5),
+('Huawei',       3),
+('Xiaomi',       3),
+('Oppo',         3),
+('Realme',       3),
+('Asus',         6),
+('ZTE',          3),
+('Vivo',         3),
+('TCL',          3),
+('Lenovo',       3),
+('Black Shark',  3),
+('Nubia',        3),
+('Meizu',        3),
+('Honor',        3);
 
  CREATE TABLE item(
+ id INT AUTO_INCREMENT PRIMARY KEY,
  name VARCHAR(30),
  production_date DATE,
- manufacturer_id INT,
+ FK_item_producer INT,
  fragility TINYINT(1),
  price INT,
- FOREIGN KEY (manufacturer_id) REFERENCES Producer(manufacturer_id)
+ FOREIGN KEY (FK_item_producer) REFERENCES producer(manufacturer_id)
  );
 
-INSERT INTO item (name, production_date, manufacturer_id, fragility, price) VALUES
+INSERT INTO item (name, production_date, FK_item_producer, fragility, price) VALUES 
 ('iPhone 13',                  '2022-05-23', 1 , 0, 600 ),
 ('Samsung Galaxy S21',         '2022-10-25', 2 , 1, 268 ),
 ('Google Pixel 6',             '2022-02-28', 3 , 0, 100 ),
