@@ -39,7 +39,7 @@ SELECT * FROM item i
 JOIN producer p
 ON i.FK_item_producer = p.manufacturer_id
 JOIN country c
-ON p.FK_producer_country = country.id
+ON p.FK_producer_country = c.id
 WHERE c.name LIKE 'C%';
 
 
