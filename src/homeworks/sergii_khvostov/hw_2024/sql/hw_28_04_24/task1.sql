@@ -42,8 +42,7 @@ INSERT INTO Producer (producer_name, country_id) VALUES
 ('Microsoft', 4),
 ('LG', 5),('Huawei', 6),('Lenovo', 7),
 ('Dell', 8),('HP', 9),('Asus', 10),('Acer', 11),('Canon', 12),('Nikon', 13),('Panasonic', 14),
-('Philips', 15),('Toshiba', 16),('Hitachi', 17),('Siemens', 18),('Bosch', 19),('Whirlpool', 20),
-('Nokia', 21);
+('Philips', 15),('Toshiba', 16),('Hitachi', 17),('Siemens', 18),('Bosch', 19);
 
 
 CREATE TABLE Item (
@@ -74,9 +73,8 @@ INSERT INTO Item (item_name, production_date, producer_id, fragile, price) VALUE
 ('Toshiba Canvio Basics', '2023-05-14', 16, 0, 79.99),
 ('Hitachi Deskstar', '2023-04-20', 17, 0, 129.99),
 ('Siemens iQ500', '2023-11-30', 18, 0, 799.99),
-('Bosch Serie 8', '2023-12-10', 19, 0, 899.99),
-('Whirlpool WRS325SDHZ', '2023-06-08', 20, 0, 1499.99),
-('Nokia 8.3', '2023-03-18', 21, 0, 599.99);
+('Bosch Serie 8', '2023-12-10', 19, 0, 899.99);
+
 
 
 /*1*/
@@ -95,12 +93,12 @@ ON p.country_id = c.country_id
 WHERE  c.country_name IN ('Canada', 'Ukraine');
 
 /*3*/
-SELECT * FROM Item i
+SELECT i.item_id, c.country_id, c.country_name
+FROM Item i
 INNER JOIN Producer p ON i.producer_id = p.producer_id
 INNER JOIN Country c ON p.country_id = c.country_id
 WHERE fragile = TRUE
-GROUP BY c.country_id
-HAVING count(DISTINCT c.country_id) > 1;
+GROUP BY i.item_id, c.country_id, c.country_name;
 
 
 /*4*/
