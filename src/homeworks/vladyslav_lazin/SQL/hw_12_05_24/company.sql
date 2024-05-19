@@ -51,3 +51,22 @@ INSERT INTO depts (city) VALUES
 INSERT INTO empls (first_name, last_name, fk_dept_id)
 VALUES
 ('John', 'Doe', 3);
+
+--7.
+SELECT city, COUNT(e.first_name)
+FROM empls e
+INNER JOIN depts d
+ON e.fk_dept_id = d.dept_id
+GROUP BY e.fk_dept_id
+HAVING LOWER(city) LIKE '%l%';
+
+--8.
+SELECT * FROM empls
+WHERE last_name
+IN(
+SELECT last_name
+FROM empls
+GROUP BY last_name
+HAVING count(*) > 1)
+ORDER BY last_name;
+
