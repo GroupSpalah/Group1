@@ -29,8 +29,8 @@ VALUES ('Sony PS5', '2024-05-12', 2, TRUE, 800.00);
 
 /*2*/
 UPDATE Item
-SET price = 20.00, item_name = 'New_name'
-WHERE item_id IN (1, 2, 3);
+SET price = 20.00, item_name = 'Item22'
+WHERE item_id IN (1);
 
 
 SELECT price, COUNT(*)
