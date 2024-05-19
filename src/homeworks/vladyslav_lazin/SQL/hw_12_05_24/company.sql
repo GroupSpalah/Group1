@@ -45,7 +45,10 @@ FROM depts
 WHERE city LIKE 'S%';
 
 INSERT INTO depts (city) VALUES
-('New York'), ('Los Angeles'), ('Chicago'), ('Houston'), ('Phoenix'),
+('New York'),
+('Los Angeles'),
+('Chicago'),
+('Houston'), ('Phoenix'),
 ('Philadelphia'), ('San Antonio'), ('San Diego'), ('Dallas'), ('San Jose');
 
 INSERT INTO empls (first_name, last_name, fk_dept_id)
@@ -59,6 +62,16 @@ INNER JOIN depts d
 ON e.fk_dept_id = d.dept_id
 GROUP BY e.fk_dept_id
 HAVING LOWER(city) LIKE '%l%';
+
+--8.
+SELECT * FROM empls
+WHERE last_name
+IN(
+SELECT last_name
+FROM empls
+GROUP BY last_name
+HAVING count(*) > 1)
+ORDER BY last_name;
 
 --8.
 SELECT * FROM empls

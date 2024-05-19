@@ -14,7 +14,7 @@ INSERT INTO dept (city) VALUES
 ('West Kathleenport');
 
 CREATE TABLE workers(
-workers_id int AUTO_INCREMENT PRIMARY KEY,
+worker_id int AUTO_INCREMENT PRIMARY KEY,
 first_name varchar(30),
 last_name varchar(30),
 FK_workers_dept int,

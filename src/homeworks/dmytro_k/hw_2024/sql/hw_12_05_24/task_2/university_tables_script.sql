@@ -92,7 +92,7 @@ CREATE TABLE Group (
     FOREIGN KEY (FK_group_faculty) REFERENCES Faculty(id)
 );
 
-INSERT INTO Group (name, foundation_date, head_student_id, faculty_id) 
+INSERT INTO `Group` (name, foundation_date, head_student_id, faculty_id)
 VALUES 
 ('Group A', '2000-01-01', 1, 1),
 ('Group B', '2001-02-02', 2, 2),
