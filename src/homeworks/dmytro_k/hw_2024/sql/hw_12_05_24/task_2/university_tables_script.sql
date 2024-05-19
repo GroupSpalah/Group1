@@ -70,10 +70,17 @@ CREATE TABLE University_Faculty (
 INSERT INTO University_Faculty (university_id, faculty_id) 
 VALUES 
 (1, 1),
-(2, 2),
+(2, 1),
+(3, 2),
+(4, 2),
+(5, 3),
+(5, 2),
+(5, 1),
+(4, 3),
 (3, 3),
-(4, 4),
-(5, 5);
+(3, 1),
+(1, 4),
+(1, 5);
 
 CREATE TABLE Group (
     id INT AUTO_INCREMENT PRIMARY KEY,
@@ -112,21 +119,21 @@ VALUES
 ('Jim',    'Smith',  21,  'M', '2001-03-03', 3,   3),
 ('Jill',   'Smith',  22,  'F', '2000-04-04', 4,   4),
 ('Joe',    'Johnson',23,  'M', '1999-05-05', 5,   5),
-('Jenny',  'Johnson',24,  'F', '1998-06-06', 6,   1),
-('Jack',   'Brown',  25,  'M', '1997-07-07', 7,   2),
+('Jenny',  'Johnson',24,  'F', '1998-06-06', 1,   1),
+('Jack',   'Brown',  25,  'M', '1997-07-07', 2,   2),
 ('Jill',   'Brown',  26,  'F', '1996-08-08', 8,   3),
 ('Jerry',  'Davis',  27,  'M', '1995-09-09', 9,   4),
 ('Jessica','Davis',  28,  'F', '1994-10-10', 10,  5),
 ('Jeff',   'Miller', 29,  'M', '1993-11-11', 11,  1),
 ('Jennifer','Miller',30,  'F', '1992-12-12', 12,  2),
-('Jake',   'Wilson', 31,  'M', '1991-01-13', 13,  3),
+('Jake',   'Wilson', 31,  'M', '1991-01-13', 5,   3),
 ('Julia',  'Wilson', 32,  'F', '1990-02-14', 14,  4),
-('Jason',  'Moore',  33,  'M', '1989-03-15', 15,  5),
+('Jason',  'Moore',  33,  'M', '1989-03-15', 11,  5),
 ('Julie',  'Moore',  34,  'F', '1988-04-16', 16,  1),
 ('Justin', 'Taylor', 35,  'M', '1987-05-17', 17,  2),
-('June',   'Taylor', 36,  'F', '1986-06-18', 18,  3),
+('June',   'Taylor', 36,  'F', '1986-06-18', 6,   3),
 ('Jeremy', 'Anderson',37, 'M', '1985-07-19', 19,  4),
-('Joy',    'Anderson',38, 'F', '1984-08-20', 20,  5);
+('Joy',    'Anderson',38, 'F', '1984-08-20', 6,   5);
     
    
    
