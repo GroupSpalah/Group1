@@ -1,139 +1,138 @@
-use university;
+use university_db;
 
-CREATE TABLE Address (
-    id INT AUTO_INCREMENT PRIMARY KEY ,
+CREATE TABLE address (
+    address_id INT AUTO_INCREMENT PRIMARY KEY,
     city VARCHAR(50),
     street VARCHAR(50),
     house_number INT,
     apartment_number INT
 );
 
-INSERT INTO Address (city, street, house_number, apartment_number) 
+INSERT INTO address (city, street, house_number, apartment_number) 
 VALUES 
-('City A', 'Street A', 1,  1),
-('City B', 'Street B', 2,  2),
-('City C', 'Street C', 3,  3),
-('City D', 'Street D', 4,  4),
-('City E', 'Street E', 5,  5),
-('City F', 'Street F', 6,  6),
-('City G', 'Street G', 7,  7),
-('City H', 'Street H', 8,  8),
-('City I', 'Street I', 9,  9),
-('City J', 'Street J', 10, 10),
-('City K', 'Street K', 11, 11),
-('City L', 'Street L', 12, 12),
-('City M', 'Street M', 13, 13),
-('City N', 'Street N', 14, 14),
-('City O', 'Street O', 15, 15),
-('City P', 'Street P', 16, 16),
-('City Q', 'Street Q', 17, 17),
-('City R', 'Street R', 18, 18),
-('City S', 'Street S', 19, 19),
-('City T', 'Street T', 20, 20);
+ ('City A', 'Street A', 1,  1),
+ ('City B', 'Street B', 2,  2),
+ ('City C', 'Street E', 3,  3),
+ ('City D', 'Street F', 4,  4),
+ ('City E', 'Street G', 5,  5),
+ ('City A', 'Street H', 6,  6),
+ ('City B', 'Street I', 7,  7),
+ ('City C', 'Street J', 8,  8),
+ ('City D', 'Street A', 9,  9),
+ ('City E', 'Street B', 2, 10),
+ ('City A', 'Street C', 1, 11),
+ ('City B', 'Street D', 2, 12),
+ ('City C', 'Street E', 3, 13),
+ ('City D', 'Street D', 4, 14),
+ ('City E', 'Street E', 5, 15),
+ ('City A', 'Street F', 6, 16),
+ ('City B', 'Street G', 7, 17),
+ ('City C', 'Street H', 8, 18),
+ ('City D', 'Street I', 9, 19),
+ ('City E', 'Street J', 8, 20);
    
-CREATE TABLE University (
-    id INT AUTO_INCREMENT PRIMARY KEY,
+CREATE TABLE university (
+    university_id INT AUTO_INCREMENT PRIMARY KEY,
     name VARCHAR(100),
     foundation_date DATE
 );   
 
-INSERT INTO University (name, foundation_date) 
+INSERT INTO university (name, foundation_date) 
 VALUES 
-('University A', '1900-01-01'),
-('University B', '1901-02-02'),
-('University C', '1902-03-03'),
-('University D', '1903-04-04'),
-('University E', '1904-05-05');
+('University A', '1904-05-05');
 
-CREATE TABLE Faculty (
-    id INT AUTO_INCREMENT PRIMARY KEY,
+CREATE TABLE faculty (
+    faculty_id INT AUTO_INCREMENT PRIMARY KEY,
     name VARCHAR(50),
     foundation_date DATE
 );  
 
-INSERT INTO Faculty (name, foundation_date) 
+INSERT INTO faculty (name, foundation_date) 
 VALUES 
 ('Faculty A', '1910-01-01'),
 ('Faculty B', '1911-02-02'),
-('Faculty C', '1912-03-03'),
-('Faculty D', '1913-04-04'),
-('Faculty E', '1914-05-05');
+('Faculty C', '1912-03-03');
 
-CREATE TABLE University_Faculty (
-    id INT AUTO_INCREMENT PRIMARY KEY,
-    university_id INT,
-    faculty_id INT,
-    FOREIGN KEY (university_id) REFERENCES University(id),
-    FOREIGN KEY (faculty_id) REFERENCES Faculty(id)
+CREATE TABLE university_faculty (
+    university_faculty_id INT AUTO_INCREMENT PRIMARY KEY,
+    FK_university_id INT,
+    FK_faculty_id INT,
+    FOREIGN KEY (FK_university_id) REFERENCES university(university_id),
+    FOREIGN KEY (FK_faculty_id) REFERENCES faculty(faculty_id)
 );  
 
-INSERT INTO University_Faculty (university_id, faculty_id) 
+INSERT INTO university_faculty (FK_university_id, FK_faculty_id) 
 VALUES 
-(1, 1),
-(2, 1),
-(3, 2),
-(4, 2),
-(5, 3),
-(5, 2),
-(5, 1),
-(4, 3),
-(3, 3),
-(3, 1),
-(1, 4),
-(1, 5);
+ (1, 1),
+ (1, 2),
+ (1, 3);
 
-CREATE TABLE Group (
-    id INT AUTO_INCREMENT PRIMARY KEY,
-    name VARCHAR(50),
+CREATE TABLE students_group (
+    students_group_id INT AUTO_INCREMENT PRIMARY KEY,
+    name VARCHAR(20),
     foundation_date DATE,
-    FK_group_student INT,
     FK_group_faculty INT,
-    FOREIGN KEY (FK_group_student) REFERENCES Student(id),
-    FOREIGN KEY (FK_group_faculty) REFERENCES Faculty(id)
+    /*UNIQUE (name, FK_group_faculty),??*/
+    FK_group_leader INT,
+    FOREIGN KEY (FK_group_faculty) REFERENCES faculty(faculty_id)
 );
 
-INSERT INTO `Group` (name, foundation_date, head_student_id, faculty_id)
+INSERT INTO students_group (name, foundation_date, FK_group_faculty) 
 VALUES 
-('Group A', '2000-01-01', 1, 1),
-('Group B', '2001-02-02', 2, 2),
-('Group C', '2002-03-03', 3, 3),
-('Group D', '2003-04-04', 4, 4),
-('Group E', '2004-05-05', 5, 5);
+('Group A', '2000-01-01', 1),
+('Group B', '2001-02-02', 1),
+('Group C', '2002-03-03', 1),
+('Group A', '2000-01-01', 2),
+('Group B', '2001-02-02', 2),
+('Group C', '2002-03-03', 2),
+('Group A', '2000-01-01', 3),
+('Group B', '2001-02-02', 3),
+('Group C', '2002-03-03', 3);
 
-CREATE TABLE Student (
-    id INT AUTO_INCREMENT PRIMARY KEY,
+CREATE TABLE student (
+    student_id INT AUTO_INCREMENT PRIMARY KEY,
     name VARCHAR(30),
     surname VARCHAR(30),    
     gender CHAR(1),
     birth_date DATE,
     FK_student_address INT,
     FK_student_group INT,
-    FOREIGN KEY (FK_student_address) REFERENCES Address(id),
-    FOREIGN KEY (FK_student_group) REFERENCES Group(id)
+    FOREIGN KEY (FK_student_address) REFERENCES address(address_id),
+    FOREIGN KEY (FK_student_group) REFERENCES students_group(students_group_id)
 );
 
-INSERT INTO Student (name, surname,  age, gender, birth_date, address_id, group_id) 
+INSERT INTO student (name, surname, gender, birth_date, FK_student_address, FK_student_group) 
 VALUES 
-('John',   'Doe',    20,  'M', '2002-01-01', 1,   1),
-('Jane',   'Doe',    19,  'F', '2003-02-02', 2,   2),
-('Jim',    'Smith',  21,  'M', '2001-03-03', 3,   3),
-('Jill',   'Smith',  22,  'F', '2000-04-04', 4,   4),
-('Joe',    'Johnson',23,  'M', '1999-05-05', 5,   5),
-('Jenny',  'Johnson',24,  'F', '1998-06-06', 1,   1),
-('Jack',   'Brown',  25,  'M', '1997-07-07', 2,   2),
-('Jill',   'Brown',  26,  'F', '1996-08-08', 8,   3),
-('Jerry',  'Davis',  27,  'M', '1995-09-09', 9,   4),
-('Jessica','Davis',  28,  'F', '1994-10-10', 10,  5),
-('Jeff',   'Miller', 29,  'M', '1993-11-11', 11,  1),
-('Jennifer','Miller',30,  'F', '1992-12-12', 12,  2),
-('Jake',   'Wilson', 31,  'M', '1991-01-13', 5,   3),
-('Julia',  'Wilson', 32,  'F', '1990-02-14', 14,  4),
-('Jason',  'Moore',  33,  'M', '1989-03-15', 11,  5),
-('Julie',  'Moore',  34,  'F', '1988-04-16', 16,  1),
-('Justin', 'Taylor', 35,  'M', '1987-05-17', 17,  2),
-('June',   'Taylor', 36,  'F', '1986-06-18', 6,   3),
-('Jeremy', 'Anderson',37, 'M', '1985-07-19', 19,  4),
-('Joy',    'Anderson',38, 'F', '1984-08-20', 6,   5);
+ ('John',   'Doe',      'M', '2002-01-01', 1,   1),
+ ('Jane',   'Doe',      'F', '2003-02-02', 2,   2),
+ ('Jim',    'Smith',    'M', '2001-03-03', 3,   3),
+ ('Jill',   'Smith',    'F', '2000-04-04', 4,   4),
+ ('Joe',    'Johnson',  'M', '1999-05-05', 5,   5),
+ ('Jenny',  'Johnson',  'F', '1998-06-06', 1,   6),
+ ('Jack',   'Brown',    'M', '1997-07-07', 2,   7),
+ ('Jill',   'Brown',    'F', '1996-08-08', 8,   8),
+ ('Jerry',  'Davis',    'M', '1995-09-09', 9,   9),
+ ('Jessica','Davis',    'F', '1994-10-10', 10,  1),
+ ('Jeff',   'Miller',   'M', '1993-11-11', 11,  2),
+ ('Jennifer','Miller',  'F', '1992-12-12', 12,  3),
+ ('Jake',   'Wilson',   'M', '1991-01-13', 5,   4),
+ ('Julia',  'Wilson',   'F', '1990-02-14', 14,  5),
+ ('Jason',  'Moore',    'M', '1989-03-15', 11,  6),
+ ('Julie',  'Moore',    'F', '1988-04-16', 16,  7),
+ ('Justin', 'Taylor',   'M', '1987-05-17', 17,  8),
+ ('June',   'Taylor',   'F', '1986-06-18', 6,   9),
+ ('Jeremy', 'Anderson', 'M', '1985-07-19', 19,  1),
+ ('Joy',    'Anderson', 'F', '1984-08-20', 6,   2);
+
+
+ALTER TABLE students_group ADD FOREIGN KEY (FK_group_leader) REFERENCES student(student_id);
     
-   
-   
+UPDATE students_group SET FK_group_leader = 1 WHERE students_group_id = 1;
+UPDATE students_group SET FK_group_leader = 2 WHERE students_group_id = 2;
+UPDATE students_group SET FK_group_leader = 3 WHERE students_group_id = 3;
+UPDATE students_group SET FK_group_leader = 6 WHERE students_group_id = 4;
+UPDATE students_group SET FK_group_leader = 7 WHERE students_group_id = 5;
+UPDATE students_group SET FK_group_leader = 8 WHERE students_group_id = 6;
+UPDATE students_group SET FK_group_leader = 11 WHERE students_group_id = 7;
+UPDATE students_group SET FK_group_leader = 12 WHERE students_group_id = 8;
+UPDATE students_group SET FK_group_leader = 13 WHERE students_group_id = 9;
