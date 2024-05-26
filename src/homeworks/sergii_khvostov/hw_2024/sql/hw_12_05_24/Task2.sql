@@ -175,7 +175,8 @@ GROUP BY u.name, f.name, sg.name;
 -- MAX
 SELECT sg.name AS group_name, COUNT(s.student_id) AS student_count
 FROM Student s
-INNER JOIN StudentGroup sg ON s.group_number = sg.group_id
+INNER JOIN StudentGroup sg
+ON s.group_number = sg.group_id
 GROUP BY sg.name
 ORDER BY student_count DESC
 LIMIT 1;

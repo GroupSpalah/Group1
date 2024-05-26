@@ -4,8 +4,10 @@ use university_db;
   всех студентов учащихся в одном университете(по названию университета).*/
 SELECT s.*
 FROM student s
-JOIN students_group sg ON s.FK_student_group = sg.students_group_id
-JOIN faculty f ON sg.FK_group_faculty = f.faculty_id
+JOIN students_group sg
+ON s.FK_student_group = sg.students_group_id
+JOIN faculty f
+ON sg.FK_group_faculty = f.faculty_id
 JOIN university_faculty uf ON f.faculty_id = uf.FK_faculty_id
 JOIN university u ON uf.FK_university_id = u.university_id
 WHERE u.name = 'University A';
@@ -18,6 +20,7 @@ JOIN faculty f ON sg.FK_group_faculty = f.faculty_id
 JOIN university_faculty uf ON f.faculty_id = uf.FK_faculty_id 
 JOIN university u ON uf.FK_university_id = u.university_id 
 WHERE u.name = 'University A' AND f.name = 'Faculty A';
+
 
 /* количество студентов учащихся в каждом университете, факультете, группе.*/
 SELECT u.name AS university_name, f.name AS faculty_name, sg.name AS students_group_name, COUNT(s.student_id) AS student_amount 
@@ -87,6 +90,18 @@ JOIN faculty f ON sg.FK_group_faculty = f.faculty_id
 JOIN university_faculty uf ON f.faculty_id = uf.FK_faculty_id 
 JOIN university u ON uf.FK_university_id  = u.university_id
 GROUP BY u.name;
+
+----------------------------------------------------
+ SELECT I.Name, AVG(Qty)
+ FROM (SELECT count(s.student_id) Qty, i.name Name
+ FROM Student s
+ RIGHT JOIN Class c ON s.class_id = c.class_id
+ INNER JOIN Faculty f ON c.faculty_fk_id=f.faculty_id
+ INNER JOIN Institute i ON f.institute_fk_id=i.institute_id
+ GROUP BY s.class_id, i.institute_id) I
+ GROUP BY i.Name;
+
+----------------------------------------------------
 
 /*вывести всех старост групп.*/
 
