@@ -29,6 +29,7 @@ CREATE TABLE Student (
     birth_date DATE,
     address_id INT,
     group_number INT,
+    FK_Student_StGroup INT,
     FOREIGN KEY (address_id) REFERENCES Address(address_id)
 );
 
@@ -38,8 +39,10 @@ CREATE TABLE StudentGroup (
     foundation_date DATE,
     head_student_id INT,
     faculty_id INT,
+    FK_Student_StGroup INT,
     FOREIGN KEY (head_student_id) REFERENCES Student(student_id),
-    FOREIGN KEY (faculty_id) REFERENCES Faculty(faculty_id)
+    FOREIGN KEY (faculty_id) REFERENCES Faculty(faculty_id),
+    FOREIGN KEY (FK_Student_StGroup) REFERENCES Student(student_id)
 );
 
 CREATE TABLE UniversityFaculty (
@@ -115,4 +118,133 @@ INSERT INTO StudentGroup (name, foundation_date, head_student_id, faculty_id) VA
 ('Group 108', '2020-09-01', 15, 1),
 ('Group 109', '2020-09-01', 17, 3),
 ('Group 110', '2020-09-01', 19, 2);
+
+/*26_05_24*/
+ALTER TABLE StudentGroup
+ADD FOREIGN KEY (FK_Student_StGroup) REFERENCES Student(student_id);
+
+UPDATE Student SET FK_Student_StGroup = 1  WHERE student_id = 1;
+UPDATE Student SET FK_Student_StGroup = 3  WHERE student_id = 3;
+UPDATE Student SET FK_Student_StGroup = 5  WHERE student_id = 5;
+UPDATE Student SET FK_Student_StGroup = 7  WHERE student_id = 7;
+UPDATE Student SET FK_Student_StGroup = 9  WHERE student_id = 9;
+UPDATE Student SET FK_Student_StGroup = 11 WHERE student_id = 11;
+UPDATE Student SET FK_Student_StGroup = 13 WHERE student_id = 13;
+UPDATE Student SET FK_Student_StGroup = 15 WHERE student_id = 15;
+UPDATE Student SET FK_Student_StGroup = 17 WHERE student_id = 17;
+UPDATE Student SET FK_Student_StGroup = 19 WHERE student_id = 19;
+
+UPDATE StudentGroup SET FK_Student_StGroup = 1  WHERE group_id = 1;
+UPDATE StudentGroup SET FK_Student_StGroup = 3  WHERE group_id = 2;
+UPDATE StudentGroup SET FK_Student_StGroup = 5  WHERE group_id = 3;
+UPDATE StudentGroup SET FK_Student_StGroup = 7  WHERE group_id = 4;
+UPDATE StudentGroup SET FK_Student_StGroup = 9  WHERE group_id = 5;
+UPDATE StudentGroup SET FK_Student_StGroup = 11 WHERE group_id = 6;
+UPDATE StudentGroup SET FK_Student_StGroup = 13 WHERE group_id = 7;
+UPDATE StudentGroup SET FK_Student_StGroup = 15 WHERE group_id = 8;
+UPDATE StudentGroup SET FK_Student_StGroup = 17 WHERE group_id = 9;
+UPDATE StudentGroup SET FK_Student_StGroup = 19 WHERE group_id = 10;
+
+/*26_05_24*/
+SELECT s.first_name, s.last_name, u.name AS university_name
+FROM Student s
+INNER JOIN StudentGroup sg ON s.group_number = sg.group_id
+INNER JOIN Faculty f ON sg.faculty_id = f.faculty_id
+INNER JOIN UniversityFaculty uf ON f.faculty_id = uf.faculty_id
+INNER JOIN University u ON uf.university_id = u.university_id
+WHERE u.name = 'Kharkiv University';
+
+
+SELECT s.first_name, s.last_name, u.name AS university_name, f.name AS faculty_name
+FROM Student s
+INNER JOIN StudentGroup sg ON s.group_number = sg.group_id
+INNER JOIN Faculty f ON sg.faculty_id = f.faculty_id
+INNER JOIN UniversityFaculty uf ON f.faculty_id = uf.faculty_id
+INNER JOIN University u ON uf.university_id = u.university_id
+WHERE u.name = 'Kharkiv University' AND f.name = 'Engineering Faculty';
+
+
+SELECT u.name AS university_name, f.name AS faculty_name, sg.name AS group_name, COUNT(s.student_id) AS student_count
+FROM Student s
+INNER JOIN StudentGroup sg ON s.group_number = sg.group_id
+INNER JOIN Faculty f ON sg.faculty_id = f.faculty_id
+INNER JOIN UniversityFaculty uf ON f.faculty_id = uf.faculty_id
+INNER JOIN University u ON uf.university_id = u.university_id
+GROUP BY u.name, f.name, sg.name;
+
+-- MAX
+SELECT sg.name AS group_name, COUNT(s.student_id) AS student_count
+FROM Student s
+INNER JOIN StudentGroup sg ON s.group_number = sg.group_id
+GROUP BY sg.name
+ORDER BY student_count DESC
+LIMIT 1;
+
+-- MIN
+SELECT sg.name AS group_name, COUNT(s.student_id) AS student_count
+FROM Student s
+INNER JOIN StudentGroup sg ON s.group_number = sg.group_id
+GROUP BY sg.name
+ORDER BY student_count ASC
+LIMIT 1;
+
+
+SELECT a.street, a.house_number, COUNT(s.student_id) AS student_count
+FROM Student s
+INNER JOIN Address a ON s.address_id = a.address_id
+GROUP BY a.street, a.house_number;
+
+
+SELECT s.first_name, s.last_name, DATE_FORMAT(s.birth_date, '%d %b %y') AS formatted_birth_date
+FROM Student s;
+
+
+SELECT university_name, AVG(student_count) AS average_students_per_group
+FROM (
+    SELECT u.name AS university_name, sg.group_id, COUNT(s.student_id) AS student_count
+    FROM Student s
+    INNER JOIN StudentGroup sg ON s.group_number = sg.group_id
+    INNER JOIN Faculty f ON sg.faculty_id = f.faculty_id
+    INNER JOIN UniversityFaculty uf ON f.faculty_id = uf.faculty_id
+    INNER JOIN University u ON uf.university_id = u.university_id
+    GROUP BY u.name, sg.group_id
+) AS group_counts
+GROUP BY university_name;
+
+
+
+SELECT s.first_name, s.last_name, sg.name AS group_name
+FROM StudentGroup sg
+INNER JOIN Student s ON sg.head_student_id = s.student_id;
+
+
+-- Faculty
+SELECT u.name AS university_name, COUNT(uf.faculty_id) AS faculty_count
+FROM University u
+INNER JOIN UniversityFaculty uf ON u.university_id = uf.university_id
+GROUP BY u.name
+ORDER BY faculty_count
+LIMIT 1;
+
+-- Group
+SELECT u.name AS university_name, COUNT(sg.group_id) AS group_count
+FROM University u
+INNER JOIN UniversityFaculty uf ON u.university_id = uf.university_id
+INNER JOIN Faculty f ON uf.faculty_id = f.faculty_id
+INNER JOIN StudentGroup sg ON f.faculty_id = sg.faculty_id
+GROUP BY u.name
+ORDER BY group_count
+LIMIT 1;
+
+
+-- Students
+SELECT u.name AS university_name, COUNT(s.student_id) AS student_count
+FROM University u
+INNER JOIN UniversityFaculty uf ON u.university_id = uf.university_id
+INNER JOIN Faculty f ON uf.faculty_id = f.faculty_id
+INNER JOIN StudentGroup sg ON f.faculty_id = sg.faculty_id
+INNER JOIN Student s ON sg.group_id = s.group_number
+GROUP BY u.name
+ORDER BY student_count DESC
+LIMIT 1;
 

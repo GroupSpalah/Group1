@@ -33,13 +33,18 @@ INSERT INTO Empl (first_name, last_name, dept_id) VALUES
 ('David',    'Rodriguez', 3);
 
 
-SELECT city FROM Dept;
+SELECT city
+FROM Dept;
 
 
-SELECT DISTINCT first_name FROM Empl ORDER BY first_name;
+SELECT DISTINCT first_name
+FROM Empl
+ORDER BY first_name;
 
 
-SELECT COUNT(*) AS EmployeeCount FROM Empl WHERE dept_id = 3;
+SELECT COUNT(*) AS EmployeeCount
+FROM Empl
+WHERE dept_id = 3;
 
 
 SELECT dept_id, COUNT(*) AS EmployeeCount
