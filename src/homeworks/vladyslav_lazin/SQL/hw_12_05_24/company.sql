@@ -58,7 +58,7 @@ VALUES
 --7.
 SELECT city, COUNT(e.first_name)
 FROM empls e
-INNER JOIN depts d
+LEFT JOIN depts d
 ON e.fk_dept_id = d.dept_id
 GROUP BY e.fk_dept_id
 HAVING LOWER(city) LIKE '%l%';
@@ -83,3 +83,23 @@ GROUP BY last_name
 HAVING count(*) > 1)
 ORDER BY last_name;
 
+--9.
+SELECT e.first_name, e.last_name, d.city, COUNT(*)
+FROM empls e
+INNER JOIN depts d
+ON e.fk_dept_id = d.dept_id
+WHERE d.city = 'Chicago'
+GROUP BY e.first_name, e.last_name
+HAVING COUNT(*) > 1
+ORDER BY e.first_name;
+
+--10.
+SELECT city, COUNT(*) name_count
+FROM empls e
+INNER JOIN depts d
+ON e.fk_dept_id = d.dept_id
+WHERE e.first_name = 'Emily'
+GROUP BY city
+HAVING COUNT(e.first_name) > 1
+ORDER BY name_count
+;

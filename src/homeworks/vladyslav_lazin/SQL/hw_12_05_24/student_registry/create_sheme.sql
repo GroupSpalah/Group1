@@ -30,10 +30,13 @@ CREATE TABLE faculty_to_university (
 
 CREATE TABLE st_groups(
 	st_group_id INT AUTO_INCREMENT PRIMARY KEY,
+	name INT NOT NULL,
 	found_date DATE,
 	fk_group_leader INT,
 	fk_faculty_id INT,
+	fk_univercity_id INT,
 	FOREIGN KEY (fk_faculty_id) REFERENCES faculties(faculty_id)
+	FOREIGN KEY (fk_univercity_id) REFERENCES univercity(univercity_id)
 );
 
 CREATE TABLE students (
@@ -42,6 +45,7 @@ CREATE TABLE students (
 	surname VARCHAR(30) NOT NULL,
 	gender ENUM('male', 'female', 'smth else') NOT NULL,
 	birthday DATE NOT NULL,
+	address VARCHAR(100) NOT NULL,
 	fk_address_id INT NOT NULL,
 	fk_st_group_id INT NOT NULL,
 	FOREIGN KEY (fk_address_id)
