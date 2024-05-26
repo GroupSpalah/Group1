@@ -66,3 +66,77 @@ FROM item it
 WHERE it.name LIKE 'N%'
 GROUP BY it.name
 HAVING COUNT(*) > 2;
+
+/*Stored procedures*/
+
+CREATE PROCEDURE get_all_items()
+BEGIN 
+	SELECT * from item;
+END;
+
+CALL get_all_items();
+
+/*Passing params
+ * 
+ * /*Parameters passing in stored procedure
+	An IN parameter passes a value into a procedure. 
+	The procedure might modify the value, but the modification is not visible to the caller 
+	when the procedure returns. 
+	
+	An OUT parameter passes a value from the procedure back to 
+	the caller. Its initial value is NULL within the procedure, and its value is visible to 
+	the caller when the procedure returns.
+
+	An INOUT parameter is initialized by the caller, 
+	can be modified by the procedure, and any change made by the procedure is visible to the 
+	caller when the procedure returns.
+*/
+
+/*IN params*/
+
+CREATE PROCEDURE get_item_by_id(IN id INT)
+BEGIN 
+	SET id = 5;
+	SELECT * from item WHERE item_id = id;
+END;
+
+SET @item_id = 1;
+
+SELECT @item_id;
+
+CALL get_item_by_id(@item_id);
+
+/*OUT params*/
+
+CREATE PROCEDURE get_item_by_id_out(OUT id INT)
+BEGIN 
+	SET id = 2;
+	SELECT * from item WHERE item_id = id;
+END;
+
+SET @item_id = 1;
+
+SELECT @item_id;
+
+CALL get_item_by_id_out(@item_id);
+
+/*INOUT params*/
+
+CREATE PROCEDURE get_item_by_id_in_out(INOUT id INT)
+BEGIN 
+	SET id = 6;
+	SELECT * from item WHERE item_id = id;
+END;
+
+SET @item_id = 1;
+
+SELECT @item_id;
+
+CALL get_item_by_id_in_out(@item_id);
+
+
+
+
+
+
+
