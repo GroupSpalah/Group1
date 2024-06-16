@@ -17,7 +17,7 @@ package homeworks.sergii_khvostov.hw_2024.hw_31_03_24;
 1 Сдать -> имя
 2 Купить -> имя*/
 
-import org.jetbrains.annotations.NotNull;
+//import org.jetbrains.annotations.NotNull;
 
 import java.util.HashSet;
 import java.util.Scanner;
@@ -30,7 +30,7 @@ public class TicketOffice {
         availableTickets = new HashSet<>(15);
     }
 
-    public synchronized void buyTicket(String buyerName, @NotNull String ticketName) {
+    public synchronized void buyTicket(String buyerName,/* @NotNull*/ String ticketName) {
         while (!availableTickets.contains(ticketName.toLowerCase())) {
             try {
                 System.out.println("Ticket " + ticketName + " sold");
@@ -44,7 +44,7 @@ public class TicketOffice {
         System.out.println("Ticket " + ticketName + " purchased " + buyerName + ".");
     }
 
-    public synchronized void returnTicket(String returnedName, @NotNull String ticketName) {
+    public synchronized void returnTicket(String returnedName,/* @NotNull*/ String ticketName) {
         availableTickets.add(ticketName.toLowerCase());
         System.out.println("Ticket " + ticketName + " returned " + returnedName + ".");
         notify();

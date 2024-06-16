@@ -170,7 +170,9 @@ public class NotepadsDataBaseApp {
     public static void filterByValue(String columnName, String value) {
 
         if (isValidColumnName(columnName)) {
-            sqlExpression = "SELECT * " + "FROM notebooks " + "WHERE " + columnName + " = ?";
+            sqlExpression = "SELECT * " +
+                    "FROM notebooks " +
+                    "WHERE " + columnName + " = ?";
         } else {
             System.out.println("no such column exists");
         }

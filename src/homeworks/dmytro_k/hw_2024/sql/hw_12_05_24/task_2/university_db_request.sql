@@ -228,7 +228,7 @@ INNER JOIN university_faculty uf
 	ON u.university_id = uf.FK_university_id
 INNER JOIN Faculty f 
 	ON uf.FK_faculty_id  = f.faculty_id
-INNER JOIN students_group sg  
+INNER JOIN students_group sg
 	ON f.faculty_id = sg.FK_group_faculty 
 GROUP BY u.name
 ORDER BY group_count
