@@ -36,15 +36,20 @@ package homeworks.dmytro_k.hw_2024.sql.hw_02_06_24;
  * ---
  */
 
+import lombok.Cleanup;
+import lombok.SneakyThrows;
+
 import java.sql.*;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
+import static homeworks.dmytro_k.hw_2024.sql.hw_02_06_24.ConstantsUtil.*;
+
 public class LaptopsDataBaseApp {
     private static final String URL = "jdbc:mysql://localhost:3306/laptops";
-    private static final String USERNAME = "root";
+    //    private static final String USERNAME = "root";
     private static final String PASSWORD = "af66s60dk29l97j;";
     private static String sqlExpression;
 
@@ -61,8 +66,8 @@ public class LaptopsDataBaseApp {
 
     public static void deleteLaptop(int laptopId) {
         sqlExpression = "DELETE " +
-                        "FROM laptops " +
-                        "WHERE laptop_id = ?";
+                "FROM laptops " +
+                "WHERE laptop_id = ?";
 
         try {
             Connection connection = connect();
@@ -95,8 +100,8 @@ public class LaptopsDataBaseApp {
         String processor = laptop.getProcessor();
 
         sqlExpression = "INSERT INTO laptops(model, manufacturer, release_date, " +
-                        "RAM_capacity, SSD_capacity, processor)" +
-                        "VALUES (?, ?, ?, ?, ?, ?)";
+                "RAM_capacity, SSD_capacity, processor)" +
+                "VALUES (?, ?, ?, ?, ?, ?)";
 
         try (Connection connection = connect();
              PreparedStatement preparedStatement = connection.prepareStatement(sqlExpression)) {
@@ -111,7 +116,7 @@ public class LaptopsDataBaseApp {
             throw new RuntimeException(e);
         }
     }
-
+    @SneakyThrows(SQLException.class)
     public static void updateLaptop(Laptop laptop, int laptopId) {
 
         String model = laptop.getModel();
@@ -122,12 +127,13 @@ public class LaptopsDataBaseApp {
         String processor = laptop.getProcessor();
 
         sqlExpression = "UPDATE laptops " +
-                        "SET model = ?, manufacturer = ?, release_date = ?, " +
-                        "RAM_capacity = ?, SSD_capacity = ?, processor = ? " +
-                        "WHERE laptop_id = ?;";
+                "SET model = ?, manufacturer = ?, release_date = ?, " +
+                "RAM_capacity = ?, SSD_capacity = ?, processor = ? " +
+                "WHERE laptop_id = ?;";
 
-        try (Connection connection = connect();
-             PreparedStatement preparedStatement = connection.prepareStatement(sqlExpression)) {
+        @Cleanup
+        Connection connection = connect();
+        PreparedStatement preparedStatement = connection.prepareStatement(sqlExpression);
             preparedStatement.setString(1, model);
             preparedStatement.setString(2, manufacturer);
             preparedStatement.setDate(3, Date.valueOf(releaseDate));
@@ -136,9 +142,7 @@ public class LaptopsDataBaseApp {
             preparedStatement.setString(6, processor);
             preparedStatement.setInt(7, laptopId);
             preparedStatement.executeUpdate();
-        } catch (SQLException e) {
-            throw new RuntimeException(e);
-        }
+
     }
 
     private static void addLaptopsToList(String sqlExpression, List<String> filterValues) {//test
