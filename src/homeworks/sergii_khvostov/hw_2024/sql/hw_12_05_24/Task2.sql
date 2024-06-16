@@ -478,6 +478,275 @@ END $$
 DELIMITER ;
 CALL GetUniversityWithMostStudents();
 
+/*views & functions*/
+/*1*/
+CREATE VIEW StudentUniversityInfo AS
+SELECT s.first_name, s.last_name, u.name AS university_name, f.name AS faculty_name, sg.name AS group_name
+FROM Student s
+INNER JOIN StudentGroup sg ON s.group_number = sg.group_id
+INNER JOIN Faculty f ON sg.faculty_id = f.faculty_id
+INNER JOIN UniversityFaculty uf ON f.faculty_id = uf.faculty_id
+INNER JOIN University u ON uf.university_id = u.university_id;
+
+DELIMITER $$
+CREATE FUNCTION GetStudentsByUniversity(university_name VARCHAR(100))
+RETURNS TABLE
+BEGIN
+    RETURN
+    SELECT first_name, last_name, university_name
+    FROM StudentUniversityInfo
+    WHERE university_name = university_name;
+END $$
+DELIMITER ;
+SELECT * FROM GetStudentsByUniversity('Kharkiv University');
+
+/*2*/
+CREATE VIEW StudentUniversityFacultyInfo AS
+SELECT s.first_name, s.last_name, u.name AS university_name, f.name AS faculty_name, sg.name AS group_name
+FROM Student s
+INNER JOIN StudentGroup sg ON s.group_number = sg.group_id
+INNER JOIN Faculty f ON sg.faculty_id = f.faculty_id
+INNER JOIN UniversityFaculty uf ON f.faculty_id = uf.faculty_id
+INNER JOIN University u ON uf.university_id = u.university_id;
+
+DELIMITER $$
+CREATE FUNCTION GetStudentsByUniversityAndFaculty(univ_name VARCHAR(100), fac_name VARCHAR(100))
+RETURNS TABLE
+BEGIN
+    RETURN
+    SELECT first_name, last_name, university_name, faculty_name
+    FROM StudentUniversityFacultyInfo
+    WHERE university_name = univ_name AND faculty_name = fac_name;
+END $$
+DELIMITER ;
+SELECT * FROM GetStudentsByUniversityAndFaculty('Kharkiv University', 'Engineering Faculty');
+
+/*3*/
+CREATE VIEW StudentGroupFacultyUniversityInfo AS
+SELECT u.name AS university_name, f.name AS faculty_name, sg.name AS group_name,
+    COUNT(s.student_id) AS student_count
+FROM Student s
+INNER JOIN StudentGroup sg ON s.group_number = sg.group_id
+INNER JOIN Faculty f ON sg.faculty_id = f.faculty_id
+INNER JOIN UniversityFaculty uf ON f.faculty_id = uf.faculty_id
+INNER JOIN University u ON uf.university_id = u.university_id
+GROUP BY u.name, f.name, sg.name;
+
+DELIMITER $$
+CREATE FUNCTION GetStudentCountsByGroup()
+RETURNS TABLE
+BEGIN
+    RETURN
+    SELECT *
+    FROM StudentGroupFacultyUniversityInfo;
+END $$
+DELIMITER ;
+SELECT * FROM GetStudentCountsByGroup();
+
+/*4*/
+--MAX
+CREATE VIEW GroupStudentCounts AS
+SELECT sg.name AS group_name, COUNT(s.student_id) AS student_count
+FROM Student s
+INNER JOIN StudentGroup sg ON s.group_number = sg.group_id
+GROUP BY sg.name;
+
+DELIMITER $$
+CREATE FUNCTION GetGroupWithMaxStudents()
+RETURNS TABLE
+BEGIN
+    RETURN
+    SELECT *
+    FROM GroupStudentCounts
+    ORDER BY student_count DESC
+    LIMIT 1;
+END $$
+DELIMITER ;
+SELECT * FROM GetGroupWithMaxStudents();
+
+--MIN
+DELIMITER $$
+CREATE FUNCTION GetGroupWithMinStudents()
+RETURNS TABLE
+BEGIN
+    RETURN
+    SELECT *
+    FROM GroupStudentCounts
+    ORDER BY student_count ASC
+    LIMIT 1;
+END $$
+DELIMITER ;
+SELECT * FROM GetGroupWithMinStudents();
+
+/*5*/
+CREATE VIEW StudentAddressCounts AS
+SELECT a.street, a.house_number, COUNT(s.student_id) AS student_count
+FROM Student s
+INNER JOIN Address a ON s.address_id = a.address_id
+GROUP BY a.street, a.house_number;
+
+DELIMITER $$
+CREATE FUNCTION GetStudentAddressCounts()
+RETURNS TABLE
+BEGIN
+    RETURN
+    SELECT *
+    FROM StudentAddressCounts;
+END $$
+DELIMITER ;
+SELECT * FROM GetStudentAddressCounts();
+
+/*6*/
+CREATE VIEW FormattedStudentBirthDates AS
+SELECT s.first_name, s.last_name, DATE_FORMAT(s.birth_date, '%d %b %y') AS formatted_birth_date
+FROM Student s;
+
+DELIMITER $$
+CREATE FUNCTION GetFormattedStudentBirthDates()
+RETURNS TABLE
+BEGIN
+    RETURN
+    SELECT *
+    FROM FormattedStudentBirthDates;
+END $$
+DELIMITER ;
+SELECT * FROM GetFormattedStudentBirthDates();
+
+/*7*/
+CREATE VIEW GroupCounts AS
+SELECT u.name AS university_name, sg.group_id, COUNT(s.student_id) AS student_count
+FROM Student s
+INNER JOIN StudentGroup sg ON s.group_number = sg.group_id
+INNER JOIN Faculty f ON sg.faculty_id = f.faculty_id
+INNER JOIN UniversityFaculty uf ON f.faculty_id = uf.faculty_id
+INNER JOIN University u ON uf.university_id = u.university_id
+GROUP BY u.name, sg.group_id;
+
+DELIMITER $$
+CREATE FUNCTION GetAverageStudentsPerGroup()
+RETURNS TABLE
+BEGIN
+    RETURN
+    SELECT university_name, AVG(student_count) AS average_students_per_group
+    FROM GroupCounts
+    GROUP BY university_name;
+END $$
+DELIMITER ;
+SELECT * FROM GetAverageStudentsPerGroup();
+
+/*8*/
+CREATE VIEW StudentHeadGroupView AS
+SELECT s.first_name, s.last_name, sg.name AS group_name
+FROM StudentGroup sg
+INNER JOIN Student s ON sg.head_student_id = s.student_id;
+
+DELIMITER $$
+CREATE FUNCTION GetStudentHeadGroup()
+RETURNS TABLE
+BEGIN
+    RETURN
+    SELECT first_name, last_name, group_name
+    FROM StudentHeadGroupView;
+END $$
+DELIMITER ;
+SELECT * FROM GetStudentHeadGroup();
+
+/*9*/
+--Faculty
+CREATE VIEW UniversityFacultyCount AS
+SELECT u.name AS university_name, COUNT(uf.faculty_id) AS faculty_count
+FROM University u
+INNER JOIN UniversityFaculty uf ON u.university_id = uf.university_id
+GROUP BY u.name;
+
+DELIMITER $$
+CREATE FUNCTION GetUniversityWithMaxFaculties()
+RETURNS TABLE
+BEGIN
+    RETURN
+    SELECT university_name, faculty_count
+    FROM UniversityFacultyCount
+    ORDER BY faculty_count
+    LIMIT 1;
+END $$
+DELIMITER ;
+SELECT * FROM GetUniversityWithMaxFaculties();
+
+--Groups
+CREATE VIEW UniversityGroupCount AS
+SELECT u.name AS university_name, COUNT(sg.group_id) AS group_count
+FROM University u
+INNER JOIN UniversityFaculty uf ON u.university_id = uf.university_id
+INNER JOIN Faculty f ON uf.faculty_id = f.faculty_id
+INNER JOIN StudentGroup sg ON f.faculty_id = sg.faculty_id
+GROUP BY u.name;
+
+DELIMITER $$
+CREATE FUNCTION GetUniversityWithMaxGroups()
+RETURNS TABLE
+BEGIN
+    RETURN
+    SELECT university_name, group_count
+    FROM UniversityGroupCount
+    ORDER BY group_count
+    LIMIT 1;
+END $$
+DELIMITER ;
+SELECT * FROM GetUniversityWithMaxGroups();
+
+--Students
+CREATE VIEW UniversityStudentCount AS
+SELECT u.name AS university_name, COUNT(s.student_id) AS student_count
+FROM University u
+INNER JOIN UniversityFaculty uf ON u.university_id = uf.university_id
+INNER JOIN Faculty f ON uf.faculty_id = f.faculty_id
+INNER JOIN StudentGroup sg ON f.faculty_id = sg.faculty_id
+INNER JOIN Student s ON sg.group_id = s.group_number
+GROUP BY u.name;
+
+DELIMITER $$
+CREATE FUNCTION GetUniversityWithMaxStudents()
+RETURNS TABLE
+BEGIN
+    RETURN
+    SELECT university_name, student_count
+    FROM UniversityStudentCount
+    ORDER BY student_count DESC
+    LIMIT 1;
+END $$
+DELIMITER ;
+SELECT * FROM GetUniversityWithMaxStudents();
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
