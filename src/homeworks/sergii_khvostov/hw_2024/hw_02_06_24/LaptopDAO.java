@@ -1,7 +1,6 @@
 package homeworks.sergii_khvostov.hw_2024.hw_02_06_24;
 
 import java.time.LocalDate;
-import java.util.Date;
 import java.util.List;
 
 public interface LaptopDAO {
