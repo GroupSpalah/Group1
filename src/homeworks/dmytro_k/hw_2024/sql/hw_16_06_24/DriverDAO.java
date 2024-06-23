@@ -78,6 +78,7 @@ public class DriverDAO {
             Qualification qualification = Qualification.valueOf(qualificationValue.toUpperCase());
 
             Driver driver = new Driver(firstName, lastName, age, qualification);
+            Qualification qualification1 = Qualification.valueOf(qualification);
             driver.setDriverId(driverId);
             drivers.add(driver);
         }

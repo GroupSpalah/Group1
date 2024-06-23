@@ -7,7 +7,7 @@ import java.time.LocalDate;
 @Setter
 @Getter
 @AllArgsConstructor
-
+@Builder
 public class Truck {
     int truckId;
     String model;
