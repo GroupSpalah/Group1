@@ -74,7 +74,8 @@ public class DriverDAO {
             String firstName = resultSet.getString("firstName");
             String lastName = resultSet.getString("lastName");
             int age = resultSet.getInt("age");
-            String qualification = resultSet.getString("qualification");
+            String qualificationValue = resultSet.getString("qualification");
+            Qualification qualification = Qualification.valueOf(qualificationValue.toUpperCase());
 
             Driver driver = new Driver(firstName, lastName, age, qualification);
             driver.setDriverId(driverId);

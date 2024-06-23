@@ -7,6 +7,7 @@ import java.util.List;
 @Setter
 @Getter
 @AllArgsConstructor
+@Builder
 
 public class Driver {
     int driverId;
@@ -16,23 +17,26 @@ public class Driver {
     Qualification qualification;
     List<Truck> truckList;
 
-    public Driver(String firstName, String lastName, int age, String qualification) {
+    public Driver(String firstName, String lastName, int age, Qualification qualification) {
         this.firstName = firstName;
         this.lastName = lastName;
         this.age = age;
-        this.qualification = Qualification.valueOf(qualification);
+        this.qualification = qualification;
+        //truckList = null
+
     }
 
     @Override
     public String toString() {
-        return "Driver " + driverId + "{" +
-                "driverId=" + driverId +
-                "| firstName='" + firstName + '\'' +
-                "| lastName='" + lastName + '\'' +
-                "| age=" + age +
-                "| qualification=" + qualification +
-                "| truckList=" + truckList +
-                '}';
+        return "Driver " + driverId + " {" +
+                "driverId = " + driverId +
+                "| firstName = '" + firstName + '\'' +
+                "| lastName = '" + lastName + '\'' +
+                "| age = " + age +
+                "| qualification = " + qualification +
+                "| truckList = " + truckList +
+                '}' + "\n------------------------------------------------------------------------"
+                + "--------------------------------------------------";
     }
 }
 

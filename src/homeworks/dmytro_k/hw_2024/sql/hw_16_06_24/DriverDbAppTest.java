@@ -6,7 +6,7 @@ public class DriverDbAppTest {
     public static void main(String[] args) {
 
         Truck newTruck = new Truck("Truck Y", 1, LocalDate.of(2023, 1, 25));
-        Driver newDriver = new Driver("New", " Driver", 30, Qualification.MEDIUM.getShortName());
+        Driver newDriver = new Driver("New", " Driver", 30, Qualification.MEDIUM);
 
 /*        TruckDAO.addTruck(newTruck);
 
@@ -19,12 +19,12 @@ public class DriverDbAppTest {
         TruckDAO.getTruckById(5);
 
 
-        //DriverDAO.getAllDrivers();
+        DriverDAO.getAllDrivers();
         //DriverDAO.getDriverById(1);
         //DriverDAO.deleteDriver(1);
         //DriverDAO.updateDriver(newDriver, 1);
         //DriverDAO.addDriver(newDriver, 1);
 
-        DriverDAO.getTrucksForDriver(1);
+        //DriverDAO.getTrucksForDriver(1);
     }
 }
