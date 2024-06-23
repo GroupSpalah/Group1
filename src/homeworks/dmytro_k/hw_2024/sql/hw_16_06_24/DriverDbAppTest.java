@@ -6,6 +6,12 @@ public class DriverDbAppTest {
     public static void main(String[] args) {
 
         Truck newTruck = new Truck("Truck Y", 1, LocalDate.of(2023, 1, 25));
+
+        Truck
+                .builder()
+                .model("")
+                .build();
+
         Driver newDriver = new Driver("New", " Driver", 30, Qualification.MEDIUM.getShortName());
 
 /*        TruckDAO.addTruck(newTruck);

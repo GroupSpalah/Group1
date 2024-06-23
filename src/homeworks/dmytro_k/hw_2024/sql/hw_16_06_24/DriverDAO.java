@@ -77,6 +77,7 @@ public class DriverDAO {
             String qualification = resultSet.getString("qualification");
 
             Driver driver = new Driver(firstName, lastName, age, qualification);
+            Qualification qualification1 = Qualification.valueOf(qualification);
             driver.setDriverId(driverId);
             drivers.add(driver);
         }

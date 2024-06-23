@@ -16,8 +16,7 @@ public class LaptopLombok {
     private int id;
 
     public void displayInfo() {
-        System.out.println("Laptop ID: " + id);
-        System.out.println("Model: " + model);
+        System.out.println("Laptop ID: " + id + "\nModel: " + model);
         System.out.println("Manufacturer: " + manufacturer);
         System.out.println("Release Date: " + releaseDate);
         System.out.println("RAM Size: " + ramSize + " GB");
