@@ -1,10 +1,19 @@
 package homeworks.dmytro_k.hw_2024.sql.hw_02_06_24;
 
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.Setter;
+
 import java.time.LocalDate;
 
+@Getter
+@AllArgsConstructor
 public class Laptop {
+    @Setter
     private int id;
+    @Setter
     private String model;
+    @Setter
     private String manufacturer;
     private LocalDate releaseDate;
     private int RAMCapacity;
@@ -19,46 +28,6 @@ public class Laptop {
         this.RAMCapacity = RAMCapacity;
         this.SSDCapacity = SSDCapacity;
         this.processor = processor;
-    }
-
-    public int getId() {
-        return id;
-    }
-
-    public void setId(int id) {
-        this.id = id;
-    }
-
-    public String getModel() {
-        return model;
-    }
-
-    public void setModel(String model) {
-        this.model = model;
-    }
-
-    public String getManufacturer() {
-        return manufacturer;
-    }
-
-    public void setManufacturer(String manufacturer) {
-        this.manufacturer = manufacturer;
-    }
-
-    public LocalDate getReleaseDate() {
-        return releaseDate;
-    }
-
-    public int getRAMCapacity() {
-        return RAMCapacity;
-    }
-
-    public int getSSDCapacity() {
-        return SSDCapacity;
-    }
-
-    public String getProcessor() {
-        return processor;
     }
 
     @Override

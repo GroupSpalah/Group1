@@ -42,7 +42,6 @@ JOIN country c
 ON p.FK_producer_country = c.id
 WHERE c.name LIKE 'C%';
 
-
 /*5*/
 SELECT * FROM item i
 JOIN producer p

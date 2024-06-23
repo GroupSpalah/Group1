@@ -19,12 +19,12 @@ import java.util.Map;
 public class LaptopsDataBaseAppTest {
     public static void main(String[] args) {
 
-        Laptop newLaptop = new Laptop("Yoga Slim 10", "Lenovo",
-                LocalDate.of(2022, 1, 25), 16, 1, "Intel Core i7-1185G7");
+        Laptop newLaptop = new Laptop("Yoga Slim 11", "Lenovo",
+                LocalDate.of(2023, 1, 25), 16, 1, "Intel Core i9-1385G9");
 
         //LaptopsDataBaseApp.addLaptopToDb(newLaptop);
 
-        //LaptopsDataBaseApp.updateLaptop(newLaptop, 31);
+        //LaptopsDataBaseApp.updateLaptop(newLaptop, 32);
 
         //видалення за id
         //LaptopsDataBaseApp.deleteLaptop(30);
@@ -47,11 +47,11 @@ public class LaptopsDataBaseAppTest {
 
         LaptopsDataBaseApp.filterByValue(allTable);
 
-        LaptopsDataBaseApp.filterByValue(modelFilters);
+        /*LaptopsDataBaseApp.filterByValue(modelFilters);*/
 
-        LaptopsDataBaseApp.filterByValue(dateFilters);
+        //LaptopsDataBaseApp.filterByValue(dateFilters);
 
-        LaptopsDataBaseApp.filterByValue(ramAndSsdCapacity);
+        //LaptopsDataBaseApp.filterByValue(ramAndSsdCapacity);
 
         /*LaptopsDataBaseApp.filterByValue("RAM_capacity", "16", "SSD_capacity", "512");*/
     }

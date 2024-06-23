@@ -48,13 +48,7 @@ import java.util.Map;
 import static homeworks.dmytro_k.hw_2024.sql.hw_02_06_24.ConstantsUtil.*;
 
 public class LaptopsDataBaseApp {
-    private static final String URL = "jdbc:mysql://localhost:3306/laptops";
-    //    private static final String USERNAME = "root";
-    private static final String PASSWORD = "af66s60dk29l97j;";
-    private static String sqlExpression;
-
-    /*Присоединение к базе данных;*/
-    private static Connection connect() throws SQLException {
+    private static Connection getConnection() throws SQLException {
         try {
             Class.forName("com.mysql.cj.jdbc.Driver");
         } catch (ClassNotFoundException e) {
@@ -64,99 +58,78 @@ public class LaptopsDataBaseApp {
         return DriverManager.getConnection(URL, USERNAME, PASSWORD);
     }
 
+    @SneakyThrows(SQLException.class)
     public static void deleteLaptop(int laptopId) {
-        sqlExpression = "DELETE " +
+        String sqlExpression = "DELETE " +
                 "FROM laptops " +
                 "WHERE laptop_id = ?";
 
-        try {
-            Connection connection = connect();
-            PreparedStatement preparedStatement = connection.prepareStatement(sqlExpression);
-            preparedStatement.setInt(1, laptopId);
-            preparedStatement.executeUpdate();
-        } catch (SQLException e) {
-            throw new RuntimeException(e);
-        }
+        @Cleanup
+        Connection connection = getConnection();
+        PreparedStatement preparedStatement = connection.prepareStatement(sqlExpression);
+        preparedStatement.setInt(1, laptopId);
+        preparedStatement.executeUpdate();
     }
 
+    @SneakyThrows(SQLException.class)
     public static void deleteAllLaptops() {
-        sqlExpression = "TRUNCATE TABLE laptops";
+        String sqlExpression = "TRUNCATE TABLE laptops";
+        @Cleanup
+        Connection connection = getConnection();
+        Statement statement = connection.createStatement();
+        statement.executeUpdate(sqlExpression);
+    }
 
-        try (Connection connection = connect();
-             Statement statement = connection.createStatement()) {
-            statement.executeUpdate(sqlExpression);
-        } catch (SQLException e) {
-            throw new RuntimeException(e);
+    @SneakyThrows(SQLException.class)
+    private static void myPreparedStatement(String sqlExpression, Laptop laptop, int laptopId) {
+        @Cleanup
+        Connection connection = getConnection();
+        PreparedStatement preparedStatement = connection.prepareStatement(sqlExpression);
+        preparedStatement.setString(1, laptop.getModel());
+        preparedStatement.setString(2, laptop.getManufacturer());
+        preparedStatement.setDate(3, Date.valueOf(laptop.getReleaseDate()));
+        preparedStatement.setInt(4, laptop.getSSDCapacity());
+        preparedStatement.setInt(5, laptop.getRAMCapacity());
+        preparedStatement.setString(6, laptop.getProcessor());
+        if (laptopId != 0) {
+            preparedStatement.setInt(7, laptopId);
         }
+        preparedStatement.executeUpdate();
     }
 
     public static void addLaptopToDb(Laptop laptop) {
 
-        String model = laptop.getModel();
-        String manufacturer = laptop.getManufacturer();
-        LocalDate releaseDate = laptop.getReleaseDate();
-        int ssdCapacity = laptop.getSSDCapacity();
-        int ramCapacity = laptop.getRAMCapacity();
-        String processor = laptop.getProcessor();
-
-        sqlExpression = "INSERT INTO laptops(model, manufacturer, release_date, " +
+        String sqlExpression = "INSERT INTO laptops(model, manufacturer, release_date, " +
                 "RAM_capacity, SSD_capacity, processor)" +
                 "VALUES (?, ?, ?, ?, ?, ?)";
 
-        try (Connection connection = connect();
-             PreparedStatement preparedStatement = connection.prepareStatement(sqlExpression)) {
-            preparedStatement.setString(1, model);
-            preparedStatement.setString(2, manufacturer);
-            preparedStatement.setDate(3, Date.valueOf(releaseDate));
-            preparedStatement.setInt(4, ssdCapacity);
-            preparedStatement.setInt(5, ramCapacity);
-            preparedStatement.setString(6, processor);
-            preparedStatement.executeUpdate();
-        } catch (SQLException e) {
-            throw new RuntimeException(e);
-        }
+        myPreparedStatement(sqlExpression, laptop, 0);
     }
-    @SneakyThrows(SQLException.class)
+
     public static void updateLaptop(Laptop laptop, int laptopId) {
 
-        String model = laptop.getModel();
-        String manufacturer = laptop.getManufacturer();
-        LocalDate releaseDate = laptop.getReleaseDate();
-        int ssdCapacity = laptop.getSSDCapacity();
-        int ramCapacity = laptop.getRAMCapacity();
-        String processor = laptop.getProcessor();
-
-        sqlExpression = "UPDATE laptops " +
+        String sqlExpression = "UPDATE laptops " +
                 "SET model = ?, manufacturer = ?, release_date = ?, " +
                 "RAM_capacity = ?, SSD_capacity = ?, processor = ? " +
                 "WHERE laptop_id = ?;";
 
-        @Cleanup
-        Connection connection = connect();
-        PreparedStatement preparedStatement = connection.prepareStatement(sqlExpression);
-            preparedStatement.setString(1, model);
-            preparedStatement.setString(2, manufacturer);
-            preparedStatement.setDate(3, Date.valueOf(releaseDate));
-            preparedStatement.setInt(4, ssdCapacity);
-            preparedStatement.setInt(5, ramCapacity);
-            preparedStatement.setString(6, processor);
-            preparedStatement.setInt(7, laptopId);
-            preparedStatement.executeUpdate();
-
+        myPreparedStatement(sqlExpression, laptop, laptopId);
     }
 
-    private static void addLaptopsToList(String sqlExpression, List<String> filterValues) {//test
+    @SneakyThrows(SQLException.class)
+    private static void addLaptopsToList(String sqlExpression, List<String> filterValues) {
 
         List<Laptop> laptops = new ArrayList<>();
 
-        try (Connection connection = connect();
-             PreparedStatement preparedStatement = connection.prepareStatement(sqlExpression)) {
+        @Cleanup
+        Connection connection = getConnection();
+        PreparedStatement preparedStatement = connection.prepareStatement(sqlExpression);
 
-            int paramIndex = 1;
+        int paramIndex = 1;
 
-            for (String filterValue : filterValues) {
-                preparedStatement.setString(paramIndex++, filterValue);
-            }
+        for (String filterValue : filterValues) {
+            preparedStatement.setString(paramIndex++, filterValue);
+        }
 
 /*            IntStream.range(1,filterValues.size()).forEach(i -> {
                 try {
@@ -166,51 +139,48 @@ public class LaptopsDataBaseApp {
                 }
             });*/
 
-            ResultSet resultSet = preparedStatement.executeQuery();
+        ResultSet resultSet = preparedStatement.executeQuery();
 
-            while (resultSet.next()) {
-                int laptopId = resultSet.getInt("laptop_id");
-                String model = resultSet.getString("model");
-                String manufacturer = resultSet.getString("manufacturer");
-                LocalDate releaseDate = resultSet.getDate("release_date").toLocalDate();
-                int ramCapacity = resultSet.getInt("RAM_capacity");
-                int ssdCapacity = resultSet.getInt("SSD_capacity");
-                String processor = resultSet.getString("processor");
+        while (resultSet.next()) {
+            int laptopId = resultSet.getInt("laptop_id");
+            String model = resultSet.getString("model");
+            String manufacturer = resultSet.getString("manufacturer");
+            LocalDate releaseDate = resultSet.getDate("release_date").toLocalDate();
+            int ramCapacity = resultSet.getInt("RAM_capacity");
+            int ssdCapacity = resultSet.getInt("SSD_capacity");
+            String processor = resultSet.getString("processor");
 
-                Laptop laptop = new Laptop(model, manufacturer,
-                        releaseDate, ramCapacity, ssdCapacity, processor);
-                laptop.setId(laptopId);
+            Laptop laptop = new Laptop(model, manufacturer,
+                    releaseDate, ramCapacity, ssdCapacity, processor);
+            laptop.setId(laptopId);
 
-                laptops.add(laptop);
-            }
-        } catch (SQLException e) {
-            throw new RuntimeException(e);
+            laptops.add(laptop);
         }
-
         laptops.forEach(System.out::println);
     }
 
+    @SneakyThrows(SQLException.class)
     private static boolean isValidColumnName(String columnName) {
 
-        sqlExpression = "SHOW COLUMNS " +
+        String sqlExpression = "SHOW COLUMNS " +
                 "FROM laptops";
         List<String> columnNames = new ArrayList<>();
 
-        try (Connection connection = connect();
-             Statement statement = connection.createStatement();
-             ResultSet resultSet = statement.executeQuery(sqlExpression)) {
+        @Cleanup
+        Connection connection = getConnection();
+        Statement statement = connection.createStatement();
+        ResultSet resultSet = statement.executeQuery(sqlExpression);
 
-            while (resultSet.next()) {
-                String field = resultSet.getString("Field");
-                columnNames.add(field);
-            }
-        } catch (SQLException e) {
-            throw new RuntimeException(e);
+        while (resultSet.next()) {
+            String field = resultSet.getString("Field");
+            columnNames.add(field);
         }
         return columnNames.contains(columnName);
     }
 
     public static void filterByValue(String columnName, String value) {
+
+        String sqlExpression = "";
 
         List<String> filterValues = new ArrayList<>();
 
@@ -287,15 +257,15 @@ public class LaptopsDataBaseApp {
             }
         }*/
 
+
         filters.entrySet()
                 .stream()
                 .peek(entry -> {
                     String columnName = entry.getKey();
                     if (!isValidColumnName(columnName)) {
-                        System.out.println("No such column exists: " + columnName);
+                        throw new IllegalArgumentException("No such column exists: " + columnName);
                     }
                 })
-                .filter(entry -> isValidColumnName(entry.getKey()))
                 .forEach(entry -> {
                     String columnName = entry.getKey();
                     String value = "%" + entry.getValue().trim() + "%";
@@ -306,7 +276,7 @@ public class LaptopsDataBaseApp {
                     filterValues.add(value);
                 });
 
-        sqlExpression = sbSqlExpression.toString();
+        String sqlExpression = sbSqlExpression.toString();
 
         addLaptopsToList(sqlExpression, filterValues);
     }
