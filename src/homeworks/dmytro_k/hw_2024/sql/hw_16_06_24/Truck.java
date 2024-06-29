@@ -4,32 +4,23 @@ import lombok.*;
 
 import java.time.LocalDate;
 
-@Setter
 @Getter
-@AllArgsConstructor
 @Builder
 public class Truck {
-    int truckId;
+    int id;
     String model;
     int driverId;
     LocalDate modelYear;
 
-    public Truck(String model, int driverId, LocalDate modelYear) {
-        this.model = model;
-        this.driverId = driverId;
-        this.modelYear = modelYear;
-    }
-
-
     @Override
     public String toString() {
-        return "Truck " + truckId + " {" +
-                " truckId = " + truckId + " |" +
+        return "\nTruck " + id + " {" +
+                " id = " + id + " |" +
                 " model = '" + model + '\'' + "|" +
                 " driverId = " + driverId + "|" +
                 " modelYear = " + modelYear +
-                "} "
+                " } "
                 + "\n-----------------------------------------------------------------------"
-                + "-----------------------------";
+                + "------------------------ ";
     }
 }

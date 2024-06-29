@@ -5,32 +5,36 @@ import java.time.LocalDate;
 public class DriverDbAppTest {
     public static void main(String[] args) {
 
-        Truck newTruck = new Truck("Truck Y", 1, LocalDate.of(2023, 1, 25));
+        DriverDAO driverDAO = new DriverDAO();
+        TruckDAO truckDAO = new TruckDAO();
 
-        Truck
+        Truck newTruck = Truck
                 .builder()
-                .model("")
+                .model("Truck Y")
+                .driverId(1)
+                .modelYear(LocalDate.of(2023, 1, 25))
                 .build();
 
-        Driver newDriver = new Driver("New", " Driver", 30, Qualification.MEDIUM.getShortName());
+        Driver newDriver = Driver
+                .builder()
+                .firstName("New")
+                .lastName("Driver")
+                .age(30)
+                .qualification(Qualification.MEDIUM)
+                .build();
 
-/*        TruckDAO.addTruck(newTruck);
+        //truckDAO.addTruck(newTruck);
+        //truckDAO.updateTruck(newTruck, 67);
+        //truckDAO.deleteTruck(66);
+        truckDAO.getAllTrucks().forEach(System.out::println);
+        System.out.println(truckDAO.getTruckById(5));
 
-        TruckDAO.updateTruck(newTruck, 67);
+        //driverDAO.addDriver(newDriver);
+        //driverDAO.updateDriver(newDriver, 1);
+        //driverDAO.deleteDriver(32);
+        driverDAO.getAllDrivers().forEach(System.out::println);
+        System.out.println(driverDAO.getDriverById(1));
 
-        TruckDAO.deleteTruck(66);*/
-
-        TruckDAO.getAllTrucks();
-
-        TruckDAO.getTruckById(5);
-
-
-        //DriverDAO.getAllDrivers();
-        //DriverDAO.getDriverById(1);
-        //DriverDAO.deleteDriver(1);
-        //DriverDAO.updateDriver(newDriver, 1);
-        //DriverDAO.addDriver(newDriver, 1);
-
-        DriverDAO.getTrucksForDriver(1);
+        driverDAO.getTrucksForDriver(1).forEach(System.out::println);
     }
 }

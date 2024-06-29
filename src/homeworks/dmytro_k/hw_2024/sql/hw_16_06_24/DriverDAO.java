@@ -3,59 +3,59 @@ package homeworks.dmytro_k.hw_2024.sql.hw_16_06_24;
 import lombok.Cleanup;
 import lombok.SneakyThrows;
 
-import java.sql.*;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Locale;
 
+import static homeworks.dmytro_k.hw_2024.sql.hw_16_06_24.ConnectionUtil.*;
 import static homeworks.dmytro_k.hw_2024.sql.hw_16_06_24.ConstantsUtil.*;
 
-public class DriverDAO {
-    private static Connection getConnection() throws SQLException {
-        try {
-            Class.forName("com.mysql.cj.jdbc.Driver");
-        } catch (ClassNotFoundException e) {
-            e.printStackTrace();
-            throw new SQLException("Connection error");
-        }
-        return DriverManager.getConnection(URL, USERNAME, PASSWORD);
-    }
+public class DriverDAO implements DAODriver {
 
     @SneakyThrows(SQLException.class)
-    private static void myPreparedStatement(String sqlExpression, Driver driver, int driverId) {
+    private void getPreparedStatement(String sqlExpression, Driver driver, int driverId) {
+
         @Cleanup
         Connection connection = getConnection();
         PreparedStatement preparedStatement = connection.prepareStatement(sqlExpression);
         preparedStatement.setString(1, driver.getFirstName());
         preparedStatement.setString(2, driver.getLastName());
         preparedStatement.setInt(3, driver.getAge());
-        preparedStatement.setString(4, driver.getQualification().toString());
+        preparedStatement.setString(4, driver
+                .getQualification()
+                .toString()
+                .toLowerCase(Locale.ROOT));
         if (driverId != 0) {
             preparedStatement.setInt(5, driverId);
         }
         preparedStatement.executeUpdate();
+        disconnect(connection, preparedStatement, null);
     }
 
-    public static void addDriver(Driver driver) {
-
-        myPreparedStatement(INSERT_DRIVER, driver, 0);
+    public void addDriver(Driver driver) {
+        getPreparedStatement(INSERT_DRIVER, driver, 0);
     }
 
-    public static void updateDriver(Driver driver, int driverId) {
-
-        myPreparedStatement(UPDATE_DRIVER, driver, driverId);
+    public void updateDriver(Driver driver, int driverId) {
+        getPreparedStatement(UPDATE_DRIVER, driver, driverId);
     }
 
     @SneakyThrows(SQLException.class)
-    public static void deleteDriver(int driverId) {
+    public void deleteDriver(int driverId) {
         @Cleanup
         Connection connection = getConnection();
-        PreparedStatement preparedStatement = connection.prepareStatement(DELETE_TRUCK);
+        PreparedStatement preparedStatement = connection.prepareStatement(DELETE_DRIVER);
         preparedStatement.setInt(1, driverId);
         preparedStatement.executeUpdate();
+        disconnect(connection, preparedStatement, null);
     }
 
     @SneakyThrows(SQLException.class)
-    private static void addDriversToList(String sqlExpression, int filterValue) {
+    private List<Driver> getDriverList(String sqlExpression, int filterValue) {
 
         List<Driver> drivers = new ArrayList<>();
 
@@ -70,34 +70,39 @@ public class DriverDAO {
         ResultSet resultSet = preparedStatement.executeQuery();
 
         while (resultSet.next()) {
-            int driverId = resultSet.getInt("driver_id");
+            int id = resultSet.getInt("driver_id");
             String firstName = resultSet.getString("firstName");
             String lastName = resultSet.getString("lastName");
             int age = resultSet.getInt("age");
             String qualificationValue = resultSet.getString("qualification");
             Qualification qualification = Qualification.valueOf(qualificationValue.toUpperCase());
 
-            Driver driver = new Driver(firstName, lastName, age, qualification);
-            Qualification qualification1 = Qualification.valueOf(qualification);
-            driver.setDriverId(driverId);
-            drivers.add(driver);
+            drivers.add(
+                    Driver
+                            .builder()
+                            .id(id)
+                            .firstName(firstName)
+                            .lastName(lastName)
+                            .age(age)
+                            .qualification(qualification)
+                            .truckList(getTrucksForDriver(id))
+                            .build()
+            );
         }
-        drivers.forEach(System.out::println);
+        disconnect(connection, preparedStatement, resultSet);
+        return drivers;
     }
 
-    public static void getAllDrivers() {
-
-        addDriversToList(SELECT_ALL_DRIVERS, 0);
+    public List<Driver> getAllDrivers() {
+        return getDriverList(SELECT_ALL_DRIVERS, 0);
     }
 
-    public static void getDriverById(int driverId) {
-
-        addDriversToList(SELECT_DRIVER_BY_ID, driverId);
+    public Driver getDriverById(int driverId) {
+        return getDriverList(SELECT_DRIVER_BY_ID, driverId).getFirst();
     }
 
-    public static void getTrucksForDriver(int driverId) {
-
-        TruckDAO.getTruckByValue(SELECT_TRUCKS_FOR_DRIVER, driverId);
+    public List<Truck> getTrucksForDriver(int driverId) {
+        TruckDAO truckDAO = new TruckDAO();
+        return truckDAO.getTrucksByValue(SELECT_TRUCKS_FOR_DRIVER, driverId);
     }
 }
-
