@@ -1,9 +1,8 @@
 package homeworks.vladyslav_lazin.hw_2024.hw_16_06_24.dao.impl;
 
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
+import java.sql.*;
+import java.util.ArrayList;
+import java.util.List;
 
 import homeworks.vladyslav_lazin.hw_2024.hw_16_06_24.dao.ConnectionUtil;
 import homeworks.vladyslav_lazin.hw_2024.hw_16_06_24.dao.TruckDao;
@@ -38,30 +37,35 @@ public class TruckDaoImpl implements TruckDao {
             preparedStatement.setInt(1, id);
             ResultSet resultSet = preparedStatement.executeQuery();
             resultSet.next();
-            truck.setId(resultSet.getInt("truck_id"));
-            truck.setModel(resultSet.getString("model"));
-            truck.setModelYear(resultSet.getInt("model_year"));
+           mapTruckFromResultSet(truck, resultSet);
             
         } catch (SQLException e) {
             System.out.println("Failed db connection");
         }
-
     return truck;
     }
-    // @Override
-    // public void update(Truck truck) {
-    //
-    // }
-    //
-    // @Override
-    // public void deleteById(int id) {
-    //
-    // }
 
-    
+    @Override
+    public List<Truck> findall() {
+        String sqlQuery = "SELECT * FROM trucks t";
+        List<Truck> trucks = new ArrayList<>();
+        try (Statement statement = connection.createStatement();
+             ResultSet resultSet = statement.executeQuery(sqlQuery)){
+            while (resultSet.next()) {
+                Truck truck = new Truck();
+                mapTruckFromResultSet(truck, resultSet);
+                trucks.add(truck);
+            }
+        } catch (SQLException e) {
+            System.out.println("Failed db connection");
+        }
 
-    // @Override
-    // public List<Truck> findAll() {
-    // return List.of();
-    // }
+        return trucks;
+    }
+
+    private void mapTruckFromResultSet(Truck truck, ResultSet resultSet) throws SQLException {
+        truck.setId(resultSet.getInt("truck_id"));
+        truck.setModel(resultSet.getString("model"));
+        truck.setModelYear(resultSet.getInt("model_year"));
+    }
 }

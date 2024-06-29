@@ -11,7 +11,7 @@ import homeworks.vladyslav_lazin.hw_2024.hw_16_06_24.service.impl.TruckServiceIm
 public class App {
     public static void main(String[] args) {
         DriverService driverService = new DriverServiceImpl();
-//        TruckService truckService = new TruckServiceImpl();
+        TruckService truckService = new TruckServiceImpl();
 //        Driver driver = Driver.builder()
 //                .firstName("Ken")
 //                .lastName("Baker")
@@ -26,6 +26,10 @@ public class App {
 //        truckService.save(truck);
 //        driverService.setTruckToDriverById(2, 3);
 
-        System.out.println(driverService.findById(1));
+//        System.out.println(driverService.findById(2));
+        driverService.findAll().forEach(System.out::println);
+        System.out.println();
+        truckService.findAll().forEach(System.out::println);
     }
+
 }

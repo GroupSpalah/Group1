@@ -5,6 +5,8 @@ import homeworks.vladyslav_lazin.hw_2024.hw_16_06_24.dao.impl.DriverDaoImpl;
 import homeworks.vladyslav_lazin.hw_2024.hw_16_06_24.model.Driver;
 import homeworks.vladyslav_lazin.hw_2024.hw_16_06_24.service.DriverService;
 
+import java.util.List;
+
 public class DriverServiceImpl implements DriverService {
     DriverDao driverDAO;
 
@@ -26,6 +28,11 @@ public class DriverServiceImpl implements DriverService {
         return driverDAO.findById(id);
     }
 
+    @Override
+    public List<Driver> findAll() {
+        return driverDAO.findAll();
+    }
+
     // @Override
     // public void update(Driver driver) {
     // driverDAO.update(driver);
@@ -36,10 +43,4 @@ public class DriverServiceImpl implements DriverService {
     // driverDAO.deleteById(id);
     // }
     //
-
-    //
-    // @Override
-    // public List<Driver> findAll() {
-    // return driverDAO.findAll();
-    // }
 }

@@ -12,10 +12,9 @@ public interface DriverDao {
     
     Driver findById(int id);
 
-//    void update(T t);
-//
-//    void deleteById(int id);
+    List<Driver> findAll();
+
    
 
-//    List<T> findAll();
+
 }
