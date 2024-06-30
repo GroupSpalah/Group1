@@ -5,8 +5,8 @@ import java.time.LocalDate;
 public class DriverDbAppTest {
     public static void main(String[] args) {
 
-        DriverDAO driverDAO = new DriverDAO();
-        TruckDAO truckDAO = new TruckDAO();
+        DriverDao driverDAO = new DriverDao();
+        TruckDao truckDAO = new TruckDao();
 
         Truck newTruck = Truck
                 .builder()

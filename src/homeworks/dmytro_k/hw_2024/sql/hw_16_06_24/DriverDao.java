@@ -14,7 +14,7 @@ import java.util.Locale;
 import static homeworks.dmytro_k.hw_2024.sql.hw_16_06_24.ConnectionUtil.*;
 import static homeworks.dmytro_k.hw_2024.sql.hw_16_06_24.ConstantsUtil.*;
 
-public class DriverDAO implements DAODriver {
+public class DriverDao implements DaoDriver {
 
     @SneakyThrows(SQLException.class)
     private void getPreparedStatement(String sqlExpression, Driver driver, int driverId) {
@@ -102,7 +102,7 @@ public class DriverDAO implements DAODriver {
     }
 
     public List<Truck> getTrucksForDriver(int driverId) {
-        TruckDAO truckDAO = new TruckDAO();
+        TruckDao truckDAO = new TruckDao();
         return truckDAO.getTrucksByValue(SELECT_TRUCKS_FOR_DRIVER, driverId);
     }
 }
