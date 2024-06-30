@@ -43,8 +43,4 @@ public class ConstantsUtil {
             "SELECT * " +
                     "FROM trucks " +
                     "WHERE truck_id=?";
-    static final String SHOW_COLUMNS =
-            "SHOW COLUMNS " +
-            "FROM trucks";
-
 }
