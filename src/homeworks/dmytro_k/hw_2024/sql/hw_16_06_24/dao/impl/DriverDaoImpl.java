@@ -1,5 +1,9 @@
-package homeworks.dmytro_k.hw_2024.sql.hw_16_06_24;
+package homeworks.dmytro_k.hw_2024.sql.hw_16_06_24.dao.impl;
 
+import homeworks.dmytro_k.hw_2024.sql.hw_16_06_24.dao.DriverDao;
+import homeworks.dmytro_k.hw_2024.sql.hw_16_06_24.domain.Driver;
+import homeworks.dmytro_k.hw_2024.sql.hw_16_06_24.Qualification;
+import homeworks.dmytro_k.hw_2024.sql.hw_16_06_24.domain.Truck;
 import lombok.Cleanup;
 import lombok.SneakyThrows;
 
@@ -14,10 +18,10 @@ import java.util.Locale;
 import static homeworks.dmytro_k.hw_2024.sql.hw_16_06_24.ConnectionUtil.*;
 import static homeworks.dmytro_k.hw_2024.sql.hw_16_06_24.ConstantsUtil.*;
 
-public class DriverDao implements DaoDriver {
+public class DriverDaoImpl implements DriverDao {
 
     @SneakyThrows(SQLException.class)
-    private void getPreparedStatement(String sqlExpression, Driver driver, int driverId) {
+    private void getPreparedStatement(String sqlExpression, Driver driver) {
 
         @Cleanup
         Connection connection = getConnection();
@@ -29,23 +33,24 @@ public class DriverDao implements DaoDriver {
                 .getQualification()
                 .toString()
                 .toLowerCase(Locale.ROOT));
-        if (driverId != 0) {
-            preparedStatement.setInt(5, driverId);
+        int id = driver.getId();
+        if (id != 0) {
+            preparedStatement.setInt(5, id);
         }
         preparedStatement.executeUpdate();
         disconnect(connection, preparedStatement, null);
     }
 
-    public void addDriver(Driver driver) {
-        getPreparedStatement(INSERT_DRIVER, driver, 0);
+    public void add(Driver driver) {
+        getPreparedStatement(INSERT_DRIVER, driver);
     }
 
-    public void updateDriver(Driver driver, int driverId) {
-        getPreparedStatement(UPDATE_DRIVER, driver, driverId);
+    public void update(Driver driver) {
+        getPreparedStatement(UPDATE_DRIVER, driver);
     }
 
     @SneakyThrows(SQLException.class)
-    public void deleteDriver(int driverId) {
+    public void deleteById(int driverId) {
         @Cleanup
         Connection connection = getConnection();
         PreparedStatement preparedStatement = connection.prepareStatement(DELETE_DRIVER);
@@ -61,6 +66,7 @@ public class DriverDao implements DaoDriver {
 
         @Cleanup
         Connection connection = getConnection();
+
         PreparedStatement preparedStatement = connection.prepareStatement(sqlExpression);
 
         if (filterValue != 0) {
@@ -93,16 +99,16 @@ public class DriverDao implements DaoDriver {
         return drivers;
     }
 
-    public List<Driver> getAllDrivers() {
+    public List<Driver> getAll() {
         return getDriverList(SELECT_ALL_DRIVERS, 0);
     }
 
-    public Driver getDriverById(int driverId) {
+    public Driver getById(int driverId) {
         return getDriverList(SELECT_DRIVER_BY_ID, driverId).getFirst();
     }
 
     public List<Truck> getTrucksForDriver(int driverId) {
-        TruckDao truckDAO = new TruckDao();
+        TruckDaoImpl truckDAO = new TruckDaoImpl();
         return truckDAO.getTrucksByValue(SELECT_TRUCKS_FOR_DRIVER, driverId);
     }
 }
