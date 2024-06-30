@@ -69,12 +69,13 @@ public class DriverDaoImpl implements DriverDao {
         return driver;
     }
 
-    public List<Driver> findAll() {
+    @Override
+    public List<Driver> findall() {
         String sqlQuery = "SELECT * FROM drivers";
         List<Driver> drivers = new ArrayList<>();
 
         try (Statement statement = connection.createStatement();
-                ResultSet resultSet = statement.executeQuery(sqlQuery)) {
+             ResultSet resultSet = statement.executeQuery(sqlQuery)) {
             while (resultSet.next()) {
                 Driver driver = new Driver();
                 mapDriverFromResultSet(driver, resultSet);
@@ -87,7 +88,6 @@ public class DriverDaoImpl implements DriverDao {
         }
         return drivers;
     }
-
 
     private void mapDriverFromResultSet(Driver driver, ResultSet resultSet) throws SQLException {
         driver.setId(resultSet.getInt("driver_id"));
