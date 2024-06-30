@@ -1,6 +1,8 @@
-package homeworks.dmytro_k.hw_2024.sql.hw_16_06_24;
+package homeworks.dmytro_k.hw_2024.sql.hw_16_06_24.dao.impl;
 
 
+import homeworks.dmytro_k.hw_2024.sql.hw_16_06_24.dao.TruckDao;
+import homeworks.dmytro_k.hw_2024.sql.hw_16_06_24.domain.Truck;
 import lombok.Cleanup;
 import lombok.SneakyThrows;
 
@@ -12,33 +14,35 @@ import java.util.List;
 import static homeworks.dmytro_k.hw_2024.sql.hw_16_06_24.ConstantsUtil.*;
 import static homeworks.dmytro_k.hw_2024.sql.hw_16_06_24.ConnectionUtil.*;
 
-public class TruckDAO implements DAOTruck {
+public class TruckDaoImpl implements TruckDao {
 
     @SneakyThrows(SQLException.class)
-    private void getPreparedStatement(String sqlExpression, Truck truck, int truckId) {
-        @Cleanup
+    private void getPreparedStatement(String sqlExpression, Truck truck) {
         Connection connection = getConnection();
         PreparedStatement preparedStatement = connection.prepareStatement(sqlExpression);
         preparedStatement.setString(1, truck.getModel());
         preparedStatement.setDate(2, Date.valueOf(truck.getModelYear()));
         preparedStatement.setInt(3, truck.getDriverId());
-        if (truckId != 0) {
-            preparedStatement.setInt(4, truckId);
+
+        int id = truck.getId();
+
+        if (id != 0) {
+            preparedStatement.setInt(4, id);
         }
         preparedStatement.executeUpdate();
         disconnect(connection, preparedStatement, null);
     }
 
-    public void addTruck(Truck truck) {
-        getPreparedStatement(INSERT_TRUCK, truck, 0);
+    public void add(Truck truck) {
+        getPreparedStatement(INSERT_TRUCK, truck);
     }
 
-    public void updateTruck(Truck truck, int truckId) {
-        getPreparedStatement(UPDATE_TRUCK, truck, truckId);
+    public void update(Truck truck) {
+        getPreparedStatement(UPDATE_TRUCK, truck);
     }
 
     @SneakyThrows(SQLException.class)
-    public void deleteTruck(int truckId) {
+    public void deleteById(int truckId) {
         @Cleanup
         Connection connection = getConnection();
         PreparedStatement preparedStatement = connection.prepareStatement(DELETE_TRUCK);
@@ -82,7 +86,7 @@ public class TruckDAO implements DAOTruck {
         return trucks;
     }
 
-    public List<Truck> getAllTrucks() {
+    public List<Truck> getAll() {
         return getTruckList(SELECT_ALL_TRUCKS, 0);
     }
 
@@ -90,7 +94,7 @@ public class TruckDAO implements DAOTruck {
         return getTruckList(sqlExpression, value);
     }
 
-    public Truck getTruckById(int truckId) {
+    public Truck getById(int truckId) {
         return getTrucksByValue(SELECT_TRUCK_BY_ID, truckId).getFirst();
     }
 }
