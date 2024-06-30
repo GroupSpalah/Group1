@@ -1,10 +1,12 @@
 package homeworks.sergii_khvostov.hw_2024.hw_16_06_24.task2;
 
+import lombok.SneakyThrows;
+
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 
-public class DriverDAO {
+public class DriverDAO implements DAOForDriver {
     private Connection connection;
     private TruckDAO truckDAO;
 
@@ -13,9 +15,9 @@ public class DriverDAO {
         this.truckDAO = new TruckDAO(connection);
     }
 
-    public void addDriver(Driver driver) throws SQLException {
-        String query = "INSERT INTO Driver (id, firstName, lastName, age, qualification) VALUES (?, ?, ?, ?, ?)";
-        try (PreparedStatement statement = connection.prepareStatement(query)) {
+    @SneakyThrows
+    public void addDriver(Driver driver) {
+        PreparedStatement statement = connection.prepareStatement(SQLRequests.addDriver);
             statement.setInt(1, driver.getId());
             statement.setString(2, driver.getFirstName());
             statement.setString(3, driver.getLastName());
@@ -27,11 +29,10 @@ public class DriverDAO {
                 truckDAO.addTruck(truck, driver.getId());
             }
         }
-    }
 
-    public Driver getDriverById(int id) throws SQLException {
-        String query = "SELECT * FROM Driver WHERE id = ?";
-        try (PreparedStatement statement = connection.prepareStatement(query)) {
+    @SneakyThrows
+    public Driver getDriverById(int id) {
+        PreparedStatement statement = connection.prepareStatement(SQLRequests.getDriverById);
             statement.setInt(1, id);
             ResultSet resultSet = statement.executeQuery();
             if (resultSet.next()) {
@@ -45,15 +46,13 @@ public class DriverDAO {
                 );
                 return driver;
             }
-        }
         return null;
     }
-
-    public List<Driver> getAllDrivers() throws SQLException {
+    @SneakyThrows
+    public List<Driver> getAllDrivers() {
         List<Driver> drivers = new ArrayList<>();
-        String query = "SELECT * FROM Driver";
-        try (Statement statement = connection.createStatement()) {
-            ResultSet resultSet = statement.executeQuery(query);
+        Statement statement = connection.createStatement();
+            ResultSet resultSet = statement.executeQuery(SQLRequests.getAllDrivers);
             while (resultSet.next()) {
                 drivers.add(new Driver(
                         resultSet.getInt("id"),
@@ -64,28 +63,23 @@ public class DriverDAO {
                         truckDAO.getTrucksByDriverId(resultSet.getInt("id"))
                 ));
             }
-        }
-        return drivers;
+            return drivers;
     }
-
-    public void deleteDriverById(int id) throws SQLException {
-        String query = "DELETE FROM Driver WHERE id = ?";
-        try (PreparedStatement statement = connection.prepareStatement(query)) {
+    @SneakyThrows
+    public void deleteDriverById(int id) {
+        PreparedStatement statement = connection.prepareStatement(SQLRequests.deleteDriverById);
             statement.setInt(1, id);
             statement.executeUpdate();
         }
-    }
 
-    public void deleteAllDrivers() throws SQLException {
-        String query = "DELETE FROM Driver";
-        try (Statement statement = connection.createStatement()) {
-            statement.executeUpdate(query);
-        }
+    @SneakyThrows
+    public void deleteAllDrivers() {
+        Statement statement = connection.createStatement();
+            statement.executeUpdate(SQLRequests.deleteAllDrivers);
     }
-
-    public void updateDriver(int id, Driver newDriver) throws SQLException {
-        String query = "UPDATE Driver SET firstName = ?, lastName = ?, age = ?, qualification = ? WHERE id = ?";
-        try (PreparedStatement statement = connection.prepareStatement(query)) {
+    @SneakyThrows
+    public void updateDriver(int id, Driver newDriver) {
+        PreparedStatement statement = connection.prepareStatement(SQLRequests.updateDriver);
             statement.setString(1, newDriver.getFirstName());
             statement.setString(2, newDriver.getLastName());
             statement.setInt(3, newDriver.getAge());
@@ -94,5 +88,6 @@ public class DriverDAO {
             statement.executeUpdate();
         }
     }
-}
+
+
 
