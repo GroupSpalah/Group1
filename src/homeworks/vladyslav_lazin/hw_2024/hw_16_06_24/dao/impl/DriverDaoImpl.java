@@ -5,7 +5,6 @@ import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 
-import homeworks.vladyslav_lazin.hw_2024.hw_16_06_24.dao.ConnectionUtil;
 import homeworks.vladyslav_lazin.hw_2024.hw_16_06_24.dao.DriverDao;
 import homeworks.vladyslav_lazin.hw_2024.hw_16_06_24.model.Driver;
 import homeworks.vladyslav_lazin.hw_2024.hw_16_06_24.model.Qualification;
@@ -15,11 +14,12 @@ import lombok.experimental.FieldDefaults;
 
 @FieldDefaults(level = AccessLevel.PRIVATE)
 public class DriverDaoImpl implements DriverDao {
-    private final Connection connection = ConnectionUtil.getConnection();
+    String sqlQuery;
+    final Connection connection = ConnectionUtil.getConnection();
 
     @Override
     public void save(Driver driver) {
-        String sqlQuery = "INSERT INTO drivers (first_name, last_name, age, qualification) " +
+    sqlQuery = "INSERT INTO drivers (first_name, last_name, age, qualification) " +
                 "VALUES (?, ?, ?, ?)";
 
         try (PreparedStatement preparedStatement = connection.prepareStatement(sqlQuery)) {
@@ -35,7 +35,7 @@ public class DriverDaoImpl implements DriverDao {
 
     @Override
     public void setTruckToDriverById(int driverId, int truckId) {
-        String sqlQuery = "UPDATE trucks " +
+        sqlQuery = "UPDATE trucks " +
                 "SET fk_driver_id = ? " +
                 "WHERE truck_id = ?";
 
@@ -51,7 +51,7 @@ public class DriverDaoImpl implements DriverDao {
 
     @Override
     public Driver findById(int id) {
-        String sqlQuery = "SELECT * " +
+        sqlQuery = "SELECT * " +
                 "FROM drivers " +
                 "WHERE driver_id = ?";
         Driver driver = new Driver();
@@ -71,7 +71,7 @@ public class DriverDaoImpl implements DriverDao {
 
     @Override
     public List<Driver> findall() {
-        String sqlQuery = "SELECT * FROM drivers";
+        sqlQuery = "SELECT * FROM drivers";
         List<Driver> drivers = new ArrayList<>();
 
         try (Statement statement = connection.createStatement();
@@ -104,7 +104,7 @@ public class DriverDaoImpl implements DriverDao {
     }
 
     private List<Truck> findTrucksByDriver(Driver driver) {
-        String sqlQuery = "SELECT t.truck_id, t.model, t.model_year " +
+        sqlQuery = "SELECT t.truck_id, t.model, t.model_year " +
                 "FROM drivers d " +
                 "INNER JOIN trucks t " +
                 "ON t.fk_driver_id = d.driver_id " +

@@ -1,7 +1,6 @@
-package homeworks.vladyslav_lazin.hw_2024.hw_16_06_24.dao;
+package homeworks.vladyslav_lazin.hw_2024.hw_16_06_24.dao.impl;
 
 import lombok.AccessLevel;
-import lombok.Getter;
 import lombok.experimental.FieldDefaults;
 
 import java.sql.Connection;
