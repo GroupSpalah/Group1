@@ -1,8 +1,14 @@
 package homeworks.vladyslav_lazin.hw_2024.hw_30_06_24.domain;
 
-import lombok.AccessLevel;
+import lombok.*;
 import lombok.experimental.FieldDefaults;
 
+@Getter
+@Setter
+@Builder
+@ToString
+@NoArgsConstructor
+@AllArgsConstructor
 @FieldDefaults(level = AccessLevel.PRIVATE)
 public class Product {
     int id;

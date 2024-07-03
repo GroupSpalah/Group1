@@ -3,7 +3,6 @@ package homeworks.vladyslav_lazin.hw_2024.hw_16_06_24.service.impl;
 import homeworks.vladyslav_lazin.hw_2024.hw_16_06_24.dao.DriverDao;
 import homeworks.vladyslav_lazin.hw_2024.hw_16_06_24.dao.impl.DriverDaoImpl;
 import homeworks.vladyslav_lazin.hw_2024.hw_16_06_24.model.Driver;
-import homeworks.vladyslav_lazin.hw_2024.hw_16_06_24.model.Truck;
 import homeworks.vladyslav_lazin.hw_2024.hw_16_06_24.service.DriverService;
 
 import java.util.List;
