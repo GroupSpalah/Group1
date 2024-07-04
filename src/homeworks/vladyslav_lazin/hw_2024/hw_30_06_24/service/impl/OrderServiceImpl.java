@@ -14,6 +14,11 @@ public class OrderServiceImpl implements OrderService {
 
     @Override
     public void save(Order order) {
+        orderDao.save(order);
+    }
 
+    @Override
+    public void addProductToOrder(int orderId, int productId) {
+        orderDao.addProductToOrder(orderId, productId);
     }
 }
