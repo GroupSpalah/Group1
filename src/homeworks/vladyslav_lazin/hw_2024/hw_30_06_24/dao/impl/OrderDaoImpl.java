@@ -42,4 +42,10 @@ public class OrderDaoImpl implements OrderDao {
             System.out.println("Failed db connection");
         }
     }
+
+    @Override
+    public Order findById(int id) {
+        sqlQuery = "";
+        return null;
+    }
 }

@@ -22,7 +22,7 @@ public class App {
                 .orderNumber(2024070401)
                 .receiptDate(LocalDate.of(2024, 07, 03))
                 .build();
-//        productService.save(product);
+        productService.save(product);
         orderService.save(order);
         orderService.addProductToOrder(1, 1);
     }

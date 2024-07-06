@@ -7,6 +7,7 @@ import lombok.experimental.FieldDefaults;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.SQLException;
 
 @FieldDefaults(level = AccessLevel.PRIVATE)
@@ -27,5 +28,19 @@ public class ProductDAOImpl implements ProductDao {
         } catch (SQLException e) {
             System.out.println("Failed db connection");
         }
+    }
+
+    @Override
+    public Product findById(int id) {
+        sqlQuery = "SELECT * " +
+                "FROM  orders " +
+                "WHERE  order_id = ?";
+        try (PreparedStatement preparedStatement = connection.prepareStatement(sqlQuery)) {
+            ResultSet resultSet = preparedStatement.executeQuery();
+
+        } catch (SQLException e) {
+            System.out.println("Failed db connection");
+        }
+        return null;
     }
 }
