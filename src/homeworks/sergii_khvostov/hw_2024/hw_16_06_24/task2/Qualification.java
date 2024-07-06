@@ -5,4 +5,3 @@ public enum Qualification {
     INTERMEDIATE,
     ADVANCED
 }
-

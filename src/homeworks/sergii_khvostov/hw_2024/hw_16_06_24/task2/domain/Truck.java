@@ -1,4 +1,4 @@
-package homeworks.sergii_khvostov.hw_2024.hw_16_06_24.task2;
+package homeworks.sergii_khvostov.hw_2024.hw_16_06_24.task2.domain;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -16,4 +16,3 @@ public class Truck {
     private String model;
     private LocalDate modelYear;
 }
-
