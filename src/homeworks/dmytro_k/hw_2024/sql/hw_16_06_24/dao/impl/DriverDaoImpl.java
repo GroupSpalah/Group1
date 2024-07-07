@@ -1,31 +1,26 @@
 package homeworks.dmytro_k.hw_2024.sql.hw_16_06_24.dao.impl;
 
-import homeworks.dmytro_k.hw_2024.sql.hw_16_06_24.dao.DriverDao;
-import homeworks.dmytro_k.hw_2024.sql.hw_16_06_24.domain.Driver;
 import homeworks.dmytro_k.hw_2024.sql.hw_16_06_24.Qualification;
+import homeworks.dmytro_k.hw_2024.sql.hw_16_06_24.dao.*;
+import homeworks.dmytro_k.hw_2024.sql.hw_16_06_24.domain.Driver;
 import homeworks.dmytro_k.hw_2024.sql.hw_16_06_24.domain.Truck;
 import lombok.Cleanup;
 import lombok.SneakyThrows;
 
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
+import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
 
-import static homeworks.dmytro_k.hw_2024.sql.hw_16_06_24.ConnectionUtil.*;
-import static homeworks.dmytro_k.hw_2024.sql.hw_16_06_24.ConstantsUtil.*;
+import static homeworks.dmytro_k.hw_2024.sql.hw_16_06_24.util.ConnectionUtil.getConnection;
+import static homeworks.dmytro_k.hw_2024.sql.hw_16_06_24.util.ConstantsUtil.*;
 
 public class DriverDaoImpl implements DriverDao {
 
     @SneakyThrows(SQLException.class)
     private void getPreparedStatement(String sqlExpression, Driver driver) {
-
-        @Cleanup
         Connection connection = getConnection();
-        PreparedStatement preparedStatement = connection.prepareStatement(sqlExpression);
+        @Cleanup PreparedStatement preparedStatement = connection.prepareStatement(sqlExpression);
         preparedStatement.setString(1, driver.getFirstName());
         preparedStatement.setString(2, driver.getLastName());
         preparedStatement.setInt(3, driver.getAge());
@@ -38,7 +33,6 @@ public class DriverDaoImpl implements DriverDao {
             preparedStatement.setInt(5, id);
         }
         preparedStatement.executeUpdate();
-        disconnect(connection, preparedStatement, null);
     }
 
     public void add(Driver driver) {
@@ -51,12 +45,10 @@ public class DriverDaoImpl implements DriverDao {
 
     @SneakyThrows(SQLException.class)
     public void deleteById(int driverId) {
-        @Cleanup
         Connection connection = getConnection();
-        PreparedStatement preparedStatement = connection.prepareStatement(DELETE_DRIVER);
+        @Cleanup PreparedStatement preparedStatement = connection.prepareStatement(DELETE_DRIVER);
         preparedStatement.setInt(1, driverId);
         preparedStatement.executeUpdate();
-        disconnect(connection, preparedStatement, null);
     }
 
     @SneakyThrows(SQLException.class)
@@ -64,16 +56,15 @@ public class DriverDaoImpl implements DriverDao {
 
         List<Driver> drivers = new ArrayList<>();
 
-        @Cleanup
         Connection connection = getConnection();
 
-        PreparedStatement preparedStatement = connection.prepareStatement(sqlExpression);
+        @Cleanup PreparedStatement preparedStatement = connection.prepareStatement(sqlExpression);
 
         if (filterValue != 0) {
             preparedStatement.setInt(1, filterValue);
         }
 
-        ResultSet resultSet = preparedStatement.executeQuery();
+        @Cleanup ResultSet resultSet = preparedStatement.executeQuery();
 
         while (resultSet.next()) {
             int id = resultSet.getInt("driver_id");
@@ -95,7 +86,6 @@ public class DriverDaoImpl implements DriverDao {
                             .build()
             );
         }
-        disconnect(connection, preparedStatement, resultSet);
         return drivers;
     }
 
@@ -108,7 +98,7 @@ public class DriverDaoImpl implements DriverDao {
     }
 
     public List<Truck> getTrucksForDriver(int driverId) {
-        TruckDaoImpl truckDAO = new TruckDaoImpl();
-        return truckDAO.getTrucksByValue(SELECT_TRUCKS_FOR_DRIVER, driverId);
+        TruckDao truckDao = new TruckDaoImpl();
+        return truckDao.getTrucksByValue(SELECT_TRUCKS_FOR_DRIVER, driverId);
     }
 }

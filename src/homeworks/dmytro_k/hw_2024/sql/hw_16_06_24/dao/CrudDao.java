@@ -12,5 +12,4 @@ public interface CrudDao<T> {
     List<T> getAll();
 
     T getById(int id);
-
 }

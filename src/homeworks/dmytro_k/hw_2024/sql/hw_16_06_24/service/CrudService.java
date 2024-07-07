@@ -12,5 +12,4 @@ public interface CrudService<T> {
     List<T> getAll();
 
     T getById(int id);
-
 }

@@ -1,11 +1,15 @@
 package homeworks.dmytro_k.hw_2024.sql.hw_16_06_24.domain;
 
-import lombok.*;
+import lombok.AccessLevel;
+import lombok.Builder;
+import lombok.Getter;
+import lombok.experimental.FieldDefaults;
 
 import java.time.LocalDate;
 
 @Getter
 @Builder
+@FieldDefaults(level = AccessLevel.PRIVATE)
 public class Truck {
     int id;
     String model;
