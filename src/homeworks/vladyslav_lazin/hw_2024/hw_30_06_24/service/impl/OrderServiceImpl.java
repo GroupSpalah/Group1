@@ -18,6 +18,11 @@ public class OrderServiceImpl implements OrderService {
     }
 
     @Override
+    public Order findById(int id) {
+        return orderDao.findById(id);
+    }
+
+    @Override
     public void addProductToOrder(int orderId, int productId) {
         orderDao.addProductToOrder(orderId, productId);
     }

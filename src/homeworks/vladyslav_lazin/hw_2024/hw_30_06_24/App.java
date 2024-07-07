@@ -13,17 +13,20 @@ public class App {
     public static void main(String[] args) {
         ProductService productService = new ProductServiceImpl();
         OrderService orderService = new OrderServiceImpl();
-        Product product = Product.builder()
-                .name("iPhone 14")
-                .description("The newest phone from Apple")
-                .price(1499.99F)
-                .build();
-        Order order = Order.builder()
-                .orderNumber(2024070401)
-                .receiptDate(LocalDate.of(2024, 07, 03))
-                .build();
-        productService.save(product);
-        orderService.save(order);
-        orderService.addProductToOrder(1, 1);
+//        Product product = Product.builder()
+//                .name("iPhone 14")
+//                .description("The newest phone from Apple")
+//                .price(1499.99F)
+//                .build();
+//        Order order = Order.builder()
+//                .orderNumber(2024070401)
+//                .receiptDate(LocalDate.of(2024, 07, 03))
+//                .build();
+//        productService.save(product);
+//        orderService.save(order);
+//        orderService.addProductToOrder(1, 2);
+        System.out.println(productService.findById(2));
+        System.out.println(orderService.findById(1));
+
     }
 }

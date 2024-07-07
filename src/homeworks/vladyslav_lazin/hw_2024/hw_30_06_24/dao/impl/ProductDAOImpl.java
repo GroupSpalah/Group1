@@ -33,14 +33,21 @@ public class ProductDAOImpl implements ProductDao {
     @Override
     public Product findById(int id) {
         sqlQuery = "SELECT * " +
-                "FROM  orders " +
-                "WHERE  order_id = ?";
+                "FROM  products " +
+                "WHERE  product_id = ?";
+        Product product = new Product();
         try (PreparedStatement preparedStatement = connection.prepareStatement(sqlQuery)) {
+            preparedStatement.setInt(1, id);
             ResultSet resultSet = preparedStatement.executeQuery();
+            resultSet.next();
+            product.setId(resultSet.getInt("product_id"));
+            product.setName(resultSet.getString("name"));
+            product.setDescription(resultSet.getString("description"));
+            product.setPrice(resultSet.getFloat("price"));
 
         } catch (SQLException e) {
-            System.out.println("Failed db connection");
+            System.out.println("Find product by id was failure!");
         }
-        return null;
+        return product;
     }
 }
