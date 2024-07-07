@@ -30,7 +30,7 @@ public class DriverServiceImpl implements DriverService {
 
     @Override
     public List<Driver> findAll() {
-        return driverDAO.findAll();
+        return driverDAO.findall();
     }
 
     // @Override

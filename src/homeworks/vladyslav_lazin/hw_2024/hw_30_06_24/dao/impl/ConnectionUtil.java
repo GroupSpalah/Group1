@@ -1,7 +1,7 @@
-package homeworks.vladyslav_lazin.hw_2024.hw_16_06_24.dao;
+package homeworks.vladyslav_lazin.hw_2024.hw_30_06_24.dao.impl;
 
 import lombok.AccessLevel;
-import lombok.Getter;
+import lombok.Cleanup;
 import lombok.experimental.FieldDefaults;
 
 import java.sql.Connection;
@@ -10,7 +10,7 @@ import java.sql.SQLException;
 
 @FieldDefaults(level = AccessLevel.PRIVATE)
 public class ConnectionUtil {
-    static final String URL = "jdbc:mysql://localhost:3306/drivers";
+    static final String URL = "jdbc:mysql://localhost:3306/store";
     static final String USERNAME = "root";
     static final String PASSWORD = "123";
     static Connection connection;
