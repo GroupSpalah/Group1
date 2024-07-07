@@ -10,6 +10,7 @@ import java.util.Map;
 @NoArgsConstructor
 @Data
 @Builder
+@AllArgsConstructor
 @FieldDefaults(level = AccessLevel.PRIVATE)
 
 public class Order {

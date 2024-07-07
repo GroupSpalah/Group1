@@ -61,7 +61,12 @@ public class ModificationExecutorDaoImpl implements ModificationExecutorDao {
                 insertOrderDetailsStmt.setInt(3, details.getQuantity());
                 insertOrderDetailsStmt.addBatch();
             } catch (SQLException e) {
-                throw new RuntimeException(e);
+//                throw new RuntimeException(e);
+                try {
+                    conn.rollback();
+                } catch (SQLException ex) {
+                    throw new RuntimeException(ex);
+                }
             }
         });
 

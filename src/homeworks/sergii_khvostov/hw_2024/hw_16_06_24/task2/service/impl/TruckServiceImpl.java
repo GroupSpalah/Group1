@@ -9,7 +9,7 @@ import java.util.List;
 
 public class TruckServiceImpl implements TruckService {
 
-    private final TruckDAO truckDAO;
+    private final TruckDAO truckDAO;//mysql, oracle
 
     public TruckServiceImpl(TruckDAO truckDAO) {
         this.truckDAO = truckDAO;

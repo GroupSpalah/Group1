@@ -30,6 +30,7 @@ public class OrderDAO implements CrudDao<Order> {
         int orderId = generatedKeys.getInt(1);
         @Cleanup
         PreparedStatement itemStatement = connection.prepareStatement(addOrderItems);
+
         for (Product product : order.getProducts().keySet()) {
             itemStatement.setInt(1, orderId);
             itemStatement.setInt(2, product.getId());
