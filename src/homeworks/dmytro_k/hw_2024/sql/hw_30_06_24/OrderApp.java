@@ -6,6 +6,8 @@ import homeworks.dmytro_k.hw_2024.sql.hw_30_06_24.dao.impl.ModificationDaoImpl;
 import homeworks.dmytro_k.hw_2024.sql.hw_30_06_24.dao.impl.ExtractorDaoImpl;
 import homeworks.dmytro_k.hw_2024.sql.hw_30_06_24.util.ConnectionUtil;
 
+import java.sql.SQLException;
+
 /**
  * Задача
  * В задании необходимо выполнить следующие действия:
@@ -39,7 +41,7 @@ import homeworks.dmytro_k.hw_2024.sql.hw_30_06_24.util.ConnectionUtil;
  */
 
 public class OrderApp {
-    public static void main(String[] args) {
+    public static void main(String[] args) throws SQLException {
 
         ModificationDao modificationDao = new ModificationDaoImpl();
         ExtractorDao extractorDao = new ExtractorDaoImpl();

@@ -46,6 +46,22 @@ public class OrderDaoImpl implements OrderDao {
     }
 
     @Override
+    public void deleteProductFromOrder(int orderId, int productId) {
+        sqlQuery = "DELETE FROM order_to_product " +
+                "WHERE fk_product_id = ? " +
+                "AND fk_product_id = ? " +
+                "LIMIT 1";
+
+        try (PreparedStatement preparedStatement = connection.prepareStatement(sqlQuery)) {
+            preparedStatement.setInt(1, orderId);
+            preparedStatement.setInt(2, productId);
+            preparedStatement.execute();
+        } catch (SQLException e) {
+            System.out.println("Failed db connection");
+        }
+    }
+
+    @Override
     public Order findById(int id) {
         sqlQuery = "SELECT * " +
                 "FROM orders WHERE order_id = ?";
@@ -58,7 +74,7 @@ public class OrderDaoImpl implements OrderDao {
             order.setId(resultSet.getInt("order_id"));
             order.setOrderNumber(resultSet.getInt("numb"));
             order.setReceiptDate(resultSet.getDate("receipt_date").toLocalDate());
-        }  catch (SQLException e) {
+        } catch (SQLException e) {
             System.out.println("Find order by id was failure");
         }
         List<Product> productsInOrder = findProductsByOrderId(id);
@@ -73,6 +89,26 @@ public class OrderDaoImpl implements OrderDao {
         return order;
     }
 
+    @Override
+    public List<Order> findAll() {
+        sqlQuery = "SELECT * " +
+                "FROM orders";
+        List<Order> orders = new ArrayList<>();
+
+        try (Statement statement = connection.createStatement();
+            ResultSet resultSet = statement.executeQuery(sqlQuery)) {
+
+        } catch (SQLException e) {
+            System.out.println("Something went wrong");
+        }
+        return List.of();
+    }
+
+    @Override
+    public void deleteById(int id) {
+
+    }
+
     private List<Product> findProductsByOrderId(int id) {
         sqlQuery = "SELECT p.product_id, p.name, p.description, p.price " +
                 "FROM orders o " +
@@ -82,7 +118,7 @@ public class OrderDaoImpl implements OrderDao {
                 "ON otp.fk_product_id = p.product_id " +
                 "WHERE o.order_id = ?";
         List<Product> products = new ArrayList<>();
-        try (PreparedStatement preparedStatement = connection.prepareStatement(sqlQuery)){
+        try (PreparedStatement preparedStatement = connection.prepareStatement(sqlQuery)) {
             preparedStatement.setInt(1, id);
             ResultSet resultSet = preparedStatement.executeQuery();
             while (resultSet.next()) {
@@ -93,7 +129,7 @@ public class OrderDaoImpl implements OrderDao {
                 product.setPrice(resultSet.getFloat("price"));
                 products.add(product);
             }
-        }  catch (SQLException e) {
+        } catch (SQLException e) {
             System.out.println("Failed db connection");
         }
         return products;

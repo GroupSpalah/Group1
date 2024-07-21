@@ -9,6 +9,7 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.List;
 
 @FieldDefaults(level = AccessLevel.PRIVATE)
 public class ProductDAOImpl implements ProductDao {
@@ -49,5 +50,15 @@ public class ProductDAOImpl implements ProductDao {
             System.out.println("Find product by id was failure!");
         }
         return product;
+    }
+
+    @Override
+    public List<Product> findAll() {
+        return List.of();
+    }
+
+    @Override
+    public void deleteById(int id) {
+
     }
 }

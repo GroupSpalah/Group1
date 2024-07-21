@@ -6,8 +6,7 @@ import homeworks.sergii_khvostov.hw_2024.hw_30_06_24.domain.Order;
 import homeworks.sergii_khvostov.hw_2024.hw_30_06_24.domain.Product;
 import homeworks.sergii_khvostov.hw_2024.hw_30_06_24.service.OrderService;
 import homeworks.sergii_khvostov.hw_2024.hw_30_06_24.service.ProductService;
-import homeworks.sergii_khvostov.hw_2024.hw_30_06_24.service.impl.OrderServiceImpl;
-import homeworks.sergii_khvostov.hw_2024.hw_30_06_24.service.impl.ProductServiceImpl;
+
 import lombok.Cleanup;
 import lombok.SneakyThrows;
 
@@ -20,39 +19,19 @@ import java.util.Map;
 public class OrderProductService {
     @SneakyThrows
     public static void main(String[] args) {
-        OrderService orderService = new OrderServiceImpl(new OrderDAO());
-        ProductService productService = new ProductServiceImpl(new ProductDAO());
+        ProductService productService = new ProductService();
+        OrderService orderService = new OrderService();
 
-        @Cleanup
-        // Создание нового заказа
-        Order order = new Order("ORD001", LocalDate.now());
-        order.addProduct(new Product("Product 1", "Description 1", BigDecimal.valueOf(100)), 2);
-        order.addProduct(new Product("Product 2", "Description 2", BigDecimal.valueOf(150)), 1);
+        Product product1 = new Product("Product 1", "Description 1", new BigDecimal("100.00"));
+        Product product2 = new Product("Product 2", "Description 2", new BigDecimal("200.00"));
+        productService.createProduct(product1.getName(), product1.getDescription(), product1.getPrice());
+        productService.createProduct(product2.getName(), product2.getDescription(), product2.getPrice());
 
+        Map<Product, Integer> products = new HashMap<>();
+        products.put(product1, 2);
+        products.put(product2, 1);
 
-        // Добавление заказа и продуктов в базу данных через сервисы
-        orderService.addOrder(order);
-        for (Product product : order.getProducts().keySet()) {
-            productService.addProduct(product);
-        }
-
-
-        // Получение всех заказов
-        List<Order> orders = orderService.getAllOrders();
-        for (Order o : orders) {
-            System.out.println(o);
-        }
-
-        // Получение продукта по ID
-        Product product = productService.getProductById(1);
-        System.out.println("Product: " + product);
-
-        // Обновление заказа
-        order.setOrderNumber("ORD002");
-        orderService.updateOrder(order);
-
-        // Удаление продукта
-        productService.deleteProduct(2);
+        orderService.createOrder("Order001", LocalDate.now(), products);
     }
 }
 
