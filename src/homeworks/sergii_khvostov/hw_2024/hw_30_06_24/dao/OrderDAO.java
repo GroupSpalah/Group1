@@ -38,6 +38,9 @@ public class OrderDAO implements CrudDao<Order> {
                 itemStatement.setInt(3, order.getProducts().get(product));
                 itemStatement.addBatch();
             }
+
+            order.getProducts();
+
             itemStatement.executeBatch();
         }
     }
