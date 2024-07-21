@@ -1,5 +1,9 @@
 package homeworks.dmytro_k.hw_2024.sql.hw_30_06_24;
 
+import homeworks.dmytro_k.hw_2024.sql.hw_30_06_24.dao.ModificationDao;
+import homeworks.dmytro_k.hw_2024.sql.hw_30_06_24.dao.ExtractorDao;
+import homeworks.dmytro_k.hw_2024.sql.hw_30_06_24.dao.impl.ModificationDaoImpl;
+import homeworks.dmytro_k.hw_2024.sql.hw_30_06_24.dao.impl.ExtractorDaoImpl;
 import homeworks.dmytro_k.hw_2024.sql.hw_30_06_24.util.ConnectionUtil;
 
 /**
@@ -25,10 +29,10 @@ import homeworks.dmytro_k.hw_2024.sql.hw_30_06_24.util.ConnectionUtil;
  * • описание;
  * • цену.
  * <p>
- * +- test• Вывести полную информацию о заданном заказе.
- * • Вывести номера заказов, сумма которых не превосходит заданную, и количество различных товаров равно заданному.
- * • Вывести номера заказов, содержащих заданный товар.
- * • Вывести номера заказов, не содержащих заданный товар и поступивших в течение текущего дня.
+ * ++• Вывести полную информацию о заданном заказе.
+ * ++• Вывести номера заказов, сумма которых не превосходит заданную, и количество различных товаров равно заданному.
+ * ++• Вывести номера заказов, содержащих заданный товар.
+ * ++• Вывести номера заказов, не содержащих заданный товар и поступивших в течение текущего дня.
  * +- test• Сформировать новый заказ, состоящий из товаров, заказанных в текущий день.
  * +- test• Удалить все заказы, в которых присутствует заданное количество заданного товара.
  * (CONST)
@@ -37,6 +41,16 @@ import homeworks.dmytro_k.hw_2024.sql.hw_30_06_24.util.ConnectionUtil;
 public class OrderApp {
     public static void main(String[] args) {
 
+        ModificationDao modificationDao = new ModificationDaoImpl();
+        ExtractorDao extractorDao = new ExtractorDaoImpl();
+
+        System.out.println(extractorDao.getOrderDetails(4));
+        System.out.println(extractorDao.getOrdersContainingProduct(6));
+        System.out.println(extractorDao.getOrdersBySumAndProductCount(500, 2));
+        System.out.println(extractorDao.getOrdersNotContainingProductToday(7));
+
+        modificationDao.deleteOrdersByProductQuantity(60, 2);
+        modificationDao.createOrderFromToday();
 
         ConnectionUtil.disconnect();
     }

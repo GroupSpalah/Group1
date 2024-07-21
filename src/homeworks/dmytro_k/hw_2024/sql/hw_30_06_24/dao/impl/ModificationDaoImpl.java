@@ -1,8 +1,9 @@
 package homeworks.dmytro_k.hw_2024.sql.hw_30_06_24.dao.impl;
 
-import homeworks.dmytro_k.hw_2024.sql.hw_30_06_24.dao.ModificationExecutorDao;
+import homeworks.dmytro_k.hw_2024.sql.hw_30_06_24.dao.ModificationDao;
 import homeworks.dmytro_k.hw_2024.sql.hw_30_06_24.domain.Order;
 import homeworks.dmytro_k.hw_2024.sql.hw_30_06_24.domain.OrderDetail;
+import homeworks.dmytro_k.hw_2024.sql.hw_30_06_24.domain.Product;
 import homeworks.dmytro_k.hw_2024.sql.hw_30_06_24.util.ConnectionUtil;
 import lombok.Cleanup;
 import lombok.SneakyThrows;
@@ -14,7 +15,7 @@ import java.util.List;
 
 import static homeworks.dmytro_k.hw_2024.sql.hw_30_06_24.util.ConstantsUtil.*;
 
-public class ModificationExecutorDaoImpl implements ModificationExecutorDao {
+public class ModificationDaoImpl implements ModificationDao {
 
     @SneakyThrows(SQLException.class)
     public void createOrderFromToday() {
@@ -38,26 +39,10 @@ public class ModificationExecutorDaoImpl implements ModificationExecutorDao {
         List<OrderDetail> orderDetailsList = getOrderDetailsForToday(conn, sqlDate);
         @Cleanup PreparedStatement insertOrderDetailsStmt = conn.prepareStatement(INSERT_ORDER_DETAILS_QUERY);
 
-/*        for (OrderDetail details : orderDetailsList) {
-            insertOrderDetailsStmt.setInt(1, getLastInsertedOrderId());
-            insertOrderDetailsStmt.setInt(2, details.getProductId());
-            insertOrderDetailsStmt.setInt(3, details.getQuantity());
-            insertOrderDetailsStmt.addBatch();
-        }*/
-/*        int index = 0;
-        while (index < orderDetailsList.size()) {
-            OrderDetails details = orderDetailsList.get(index);
-            insertOrderDetailsStmt.setInt(1, getLastInsertedOrderId());
-            insertOrderDetailsStmt.setInt(2, details.getProductId());
-            insertOrderDetailsStmt.setInt(3, details.getQuantity());
-            insertOrderDetailsStmt.addBatch();
-
-            index++;
-        }*/
         orderDetailsList.forEach(details -> {
             try {
                 insertOrderDetailsStmt.setInt(1, getLastInsertedOrderId());
-                insertOrderDetailsStmt.setInt(2, details.getProductId());
+                insertOrderDetailsStmt.setInt(2, details.getProduct().getId());
                 insertOrderDetailsStmt.setInt(3, details.getQuantity());
                 insertOrderDetailsStmt.addBatch();
             } catch (SQLException e) {
@@ -69,7 +54,6 @@ public class ModificationExecutorDaoImpl implements ModificationExecutorDao {
                 }
             }
         });
-
 
         insertOrderDetailsStmt.executeBatch();
         conn.commit();
@@ -89,39 +73,6 @@ public class ModificationExecutorDaoImpl implements ModificationExecutorDao {
         return lastInsertedId;
     }
 
-/*    @SneakyThrows
-    private List<OrderDetail> getOrderDetailsForToday(Date sqlDate) {
-        List<OrderDetail> orderDetailsList = new ArrayList<>();
-        String query = "SELECT od.order_detail_id, od.quantity, p.product_id, p.product_name, p.product_description, p.price " +
-                "FROM order_details od " +
-                "JOIN orders o ON od.order_id = o.order_id " +
-                "JOIN products p ON od.product_id = p.product_id " +
-                "WHERE o.order_date = ?";
-
-        Connection conn = ConnectionUtil.getConnection();
-        @Cleanup PreparedStatement stmt = conn.prepareStatement(query);
-        stmt.setDate(1, sqlDate);
-
-        @Cleanup ResultSet rs = stmt.executeQuery();
-        while (rs.next()) {
-            int orderDetailId = rs.getInt("order_detail_id");
-            int quantity = rs.getInt("quantity");
-            int productId = rs.getInt("product_id");
-            String productName = rs.getString("product_name");
-            String productDescription = rs.getString("product_description");
-            double price = rs.getDouble("price");
-
-            Product product = new Product(productId, productName, productDescription, price);
-            OrderDetails orderDetails = new OrderDetails(null, product, quantity);
-            orderDetails.setOrderDetailId(orderDetailId);
-
-            orderDetailsList.add(orderDetails);
-        }
-
-        return orderDetailsList;
-    }*/
-
-
     @SneakyThrows
     private List<OrderDetail> getOrderDetailsForToday(Connection conn, Date sqlDate) {
 
@@ -132,9 +83,17 @@ public class ModificationExecutorDaoImpl implements ModificationExecutorDao {
         @Cleanup ResultSet rs = stmt.executeQuery();
         while (rs.next()) {
 
+            Product product = Product
+                    .builder()
+                    .id(rs.getInt("product_id"))
+                    .name(rs.getString("name"))
+                    .description(rs.getString("description"))
+                    .price(rs.getFloat("price"))
+                    .build();
+
             orderDetailsList.add(OrderDetail
                     .builder()
-                    .productId(rs.getInt("product_id"))
+                    //.product.setId(rs.getInt("product_id"))
                     .quantity(rs.getInt("quantity"))
                     .build());
         }

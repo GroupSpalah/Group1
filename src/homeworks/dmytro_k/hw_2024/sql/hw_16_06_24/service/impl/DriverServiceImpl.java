@@ -12,7 +12,7 @@ public class DriverServiceImpl implements DriverService {
     private DriverDao dao;
 
     @Override
-    public List<Truck> getTrucksForDriver(int driverId) {
+    public List<Truck> getTrucksByDriverId(int driverId) {
         return dao.getTrucksForDriver(driverId);
     }
 
