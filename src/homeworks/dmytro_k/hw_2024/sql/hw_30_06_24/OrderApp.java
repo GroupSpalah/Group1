@@ -2,6 +2,8 @@ package homeworks.dmytro_k.hw_2024.sql.hw_30_06_24;
 
 import homeworks.dmytro_k.hw_2024.sql.hw_30_06_24.util.ConnectionUtil;
 
+import java.sql.SQLException;
+
 /**
  * Задача
  * В задании необходимо выполнить следующие действия:
@@ -35,7 +37,7 @@ import homeworks.dmytro_k.hw_2024.sql.hw_30_06_24.util.ConnectionUtil;
  */
 
 public class OrderApp {
-    public static void main(String[] args) {
+    public static void main(String[] args) throws SQLException {
 
 
         ConnectionUtil.disconnect();

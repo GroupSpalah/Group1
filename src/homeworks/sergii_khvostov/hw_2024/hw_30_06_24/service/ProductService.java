@@ -1,17 +1,33 @@
 package homeworks.sergii_khvostov.hw_2024.hw_30_06_24.service;
 
+import homeworks.sergii_khvostov.hw_2024.hw_30_06_24.dao.DAOFactory;
+import homeworks.sergii_khvostov.hw_2024.hw_30_06_24.dao.ProductDAO;
 import homeworks.sergii_khvostov.hw_2024.hw_30_06_24.domain.Product;
 
+import java.math.BigDecimal;
 import java.util.List;
 
-public interface ProductService {
-    void addProduct(Product product);
+public class ProductService {
+    private final ProductDAO productDAO = DAOFactory.getProductDAO();
 
-    List<Product> getAllProducts();
+    public void createProduct(String name, String description, BigDecimal price) {
+        Product product = new Product(name, description, price);
+        productDAO.add(product);
+    }
 
-    Product getProductById(int id);
+    public List<Product> getAllProducts() {
+        return productDAO.getAll();
+    }
 
-    void updateProduct(Product product);
+    public Product getProductById(int id) {
+        return productDAO.getById(id);
+    }
 
-    void deleteProduct(int id);
+    public void updateProduct(Product product) {
+        productDAO.update(product);
+    }
+
+    public void deleteProduct(int id) {
+        productDAO.delete(id);
+    }
 }

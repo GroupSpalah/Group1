@@ -18,23 +18,28 @@ public class ProductDAO implements CrudDao<Product> {
     public void add(Product product) {
         @Cleanup
         Connection connection = DatabaseConnection.getConnection();
-        PreparedStatement statement = connection.prepareStatement(addProduct, Statement.RETURN_GENERATED_KEYS);
+        @Cleanup
+        PreparedStatement statement = connection.prepareStatement(ADD_PRODUCT, Statement.RETURN_GENERATED_KEYS);
         statement.setString(1, product.getName());
         statement.setString(2, product.getDescription());
         statement.setBigDecimal(3, product.getPrice());
         statement.executeUpdate();
+        @Cleanup
         ResultSet generatedKeys = statement.getGeneratedKeys();
 
-        product.setId(generatedKeys.getInt(1));
+        if (generatedKeys.next()) {
+            product.setId(generatedKeys.getInt(1));
+        }
     }
-
 
     @SneakyThrows
     public List<Product> getAll() {
         List<Product> products = new ArrayList<>();
         @Cleanup
         Connection connection = DatabaseConnection.getConnection();
-        PreparedStatement statement = connection.prepareStatement(getAllProducts);
+        @Cleanup
+        PreparedStatement statement = connection.prepareStatement(GET_ALL_PRODUCTS);
+        @Cleanup
         ResultSet resultSet = statement.executeQuery();
         while (resultSet.next()) {
             Product product = new Product();
@@ -51,23 +56,28 @@ public class ProductDAO implements CrudDao<Product> {
     public Product getById(int productId) {
         @Cleanup
         Connection connection = DatabaseConnection.getConnection();
-        PreparedStatement statement = connection.prepareStatement(getByIdProduct);
+        @Cleanup
+        PreparedStatement statement = connection.prepareStatement(GET_BY_ID_PRODUCT);
         statement.setInt(1, productId);
+        @Cleanup
         ResultSet resultSet = statement.executeQuery();
-        Product product = new Product();
-        product.setId(resultSet.getInt("id"));
-        product.setName(resultSet.getString("name"));
-        product.setDescription(resultSet.getString("description"));
-        product.setPrice(resultSet.getBigDecimal("price"));
-
-        return product;
+        if (resultSet.next()) {
+            Product product = new Product();
+            product.setId(resultSet.getInt("id"));
+            product.setName(resultSet.getString("name"));
+            product.setDescription(resultSet.getString("description"));
+            product.setPrice(resultSet.getBigDecimal("price"));
+            return product;
+        }
+        return null;
     }
 
     @SneakyThrows
     public void update(Product product) {
         @Cleanup
         Connection connection = DatabaseConnection.getConnection();
-        PreparedStatement statement = connection.prepareStatement(updateProduct);
+        @Cleanup
+        PreparedStatement statement = connection.prepareStatement(UPDATE_PRODUCT);
         statement.setString(1, product.getName());
         statement.setString(2, product.getDescription());
         statement.setBigDecimal(3, product.getPrice());
@@ -75,12 +85,12 @@ public class ProductDAO implements CrudDao<Product> {
         statement.executeUpdate();
     }
 
-
     @SneakyThrows
     public void delete(int productId) {
         @Cleanup
         Connection connection = DatabaseConnection.getConnection();
-        PreparedStatement statement = connection.prepareStatement(deleteProduct);
+        @Cleanup
+        PreparedStatement statement = connection.prepareStatement(DELETE_PRODUCT);
         statement.setInt(1, productId);
         statement.executeUpdate();
     }
