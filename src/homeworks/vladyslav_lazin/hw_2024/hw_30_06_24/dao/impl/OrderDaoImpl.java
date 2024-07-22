@@ -139,6 +139,7 @@ public class OrderDaoImpl implements OrderDao {
                 "ON otp.fk_product_id = p.product_id " +
                 "WHERE o.order_id = ?";
         List<Product> products = new ArrayList<>();
+
         try (PreparedStatement preparedStatement = connection.prepareStatement(sqlQuery)) {
             preparedStatement.setInt(1, id);
             ResultSet resultSet = preparedStatement.executeQuery();
