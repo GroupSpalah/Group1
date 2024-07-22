@@ -48,7 +48,7 @@ public class OrderDaoImpl implements OrderDao {
     @Override
     public void deleteProductFromOrder(int orderId, int productId) {
         sqlQuery = "DELETE FROM order_to_product " +
-                "WHERE fk_product_id = ? " +
+                "WHERE fk_order_id = ? " +
                 "AND fk_product_id = ? " +
                 "LIMIT 1";
 
@@ -65,26 +65,15 @@ public class OrderDaoImpl implements OrderDao {
     public Order findById(int id) {
         sqlQuery = "SELECT * " +
                 "FROM orders WHERE order_id = ?";
-        Order order = new Order();
+        Order order = null;
 
         try (PreparedStatement preparedStatement = connection.prepareStatement(sqlQuery)) {
             preparedStatement.setInt(1, id);
             ResultSet resultSet = preparedStatement.executeQuery();
             resultSet.next();
-            order.setId(resultSet.getInt("order_id"));
-            order.setOrderNumber(resultSet.getInt("numb"));
-            order.setReceiptDate(resultSet.getDate("receipt_date").toLocalDate());
+            order = mapOrderFromResultSet(resultSet);
         } catch (SQLException e) {
             System.out.println("Find order by id was failure");
-        }
-        List<Product> productsInOrder = findProductsByOrderId(id);
-        if (!productsInOrder.isEmpty()) {
-            order.setProducts(productsInOrder.stream()
-                    .collect(Collectors.toMap(
-                            product -> product,
-                            product -> 1,
-                            Integer::sum
-                    )));
         }
         return order;
     }
@@ -97,18 +86,50 @@ public class OrderDaoImpl implements OrderDao {
 
         try (Statement statement = connection.createStatement();
             ResultSet resultSet = statement.executeQuery(sqlQuery)) {
-
+            while (resultSet.next()) {
+                orders.add(mapOrderFromResultSet(resultSet));
+            }
         } catch (SQLException e) {
             System.out.println("Something went wrong");
         }
-        return List.of();
+        return orders;
     }
 
     @Override
     public void deleteById(int id) {
-
+        sqlQuery = "DELETE FROM orders WHERE order_id = ?";
+        try (PreparedStatement preparedStatement = connection.prepareStatement(sqlQuery)) {
+            preparedStatement.setInt(1, id);
+            preparedStatement.execute();
+        } catch (SQLException e) {
+            System.out.println("Something went wrong");
+        }
+        sqlQuery =  "DELETE FROM order_to_product " +
+                "WHERE fk_order_id = ?";
+        try (PreparedStatement preparedStatement = connection.prepareStatement(sqlQuery)) {
+            preparedStatement.setInt(1, id);
+            preparedStatement.execute();
+        } catch (SQLException e) {
+            System.out.println("Something went wrong");
+        }
     }
+    private Order mapOrderFromResultSet(ResultSet resultSet) throws SQLException {
+        Order order = new Order();
+        order.setId(resultSet.getInt("order_id"));
+        order.setOrderNumber(resultSet.getInt("numb"));
+        order.setReceiptDate(resultSet.getDate("receipt_date").toLocalDate());
 
+        List<Product> productsInOrder = findProductsByOrderId(order.getId());
+        if (!productsInOrder.isEmpty()) {
+            order.setProducts(productsInOrder.stream()
+                    .collect(Collectors.toMap(
+                            product -> product,
+                            product -> 1,
+                            Integer::sum
+                    )));
+        }
+        return order;
+    }
     private List<Product> findProductsByOrderId(int id) {
         sqlQuery = "SELECT p.product_id, p.name, p.description, p.price " +
                 "FROM orders o " +
