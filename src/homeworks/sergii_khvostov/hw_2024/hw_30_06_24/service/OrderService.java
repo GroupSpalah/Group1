@@ -10,29 +10,29 @@ import java.util.List;
 import java.util.Map;
 
 public class OrderService {
-    private final OrderDAO orderDAO = DAOFactory.getOrderDAO();
+    private final OrderDAO ORDER_DAO = DAOFactory.getOrderDAO();
 
     public void createOrder(String orderNumber, LocalDate orderDate, Map<Product, Integer> products) {
         Order order = new Order(orderNumber, orderDate);
         for (Map.Entry<Product, Integer> entry : products.entrySet()) {
             order.addProduct(entry.getKey(), entry.getValue());
         }
-        orderDAO.add(order);
+        ORDER_DAO.add(order);
     }
 
     public List<Order> getAllOrders() {
-        return orderDAO.getAll();
+        return ORDER_DAO.getAll();
     }
 
     public Order getOrderById(int id) {
-        return orderDAO.getById(id);
+        return ORDER_DAO.getById(id);
     }
 
     public void updateOrder(Order order) {
-        orderDAO.update(order);
+        ORDER_DAO.update(order);
     }
 
     public void deleteOrder(int id) {
-        orderDAO.delete(id);
+        ORDER_DAO.delete(id);
     }
 }

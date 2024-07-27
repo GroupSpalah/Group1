@@ -8,26 +8,26 @@ import java.math.BigDecimal;
 import java.util.List;
 
 public class ProductService {
-    private final ProductDAO productDAO = DAOFactory.getProductDAO();
+    private final ProductDAO PRODUCT_DAO = DAOFactory.getProductDAO();
 
     public void createProduct(String name, String description, BigDecimal price) {
         Product product = new Product(name, description, price);
-        productDAO.add(product);
+        PRODUCT_DAO.add(product);
     }
 
     public List<Product> getAllProducts() {
-        return productDAO.getAll();
+        return PRODUCT_DAO.getAll();
     }
 
     public Product getProductById(int id) {
-        return productDAO.getById(id);
+        return PRODUCT_DAO.getById(id);
     }
 
     public void updateProduct(Product product) {
-        productDAO.update(product);
+        PRODUCT_DAO.update(product);
     }
 
     public void deleteProduct(int id) {
-        productDAO.delete(id);
+        PRODUCT_DAO.delete(id);
     }
 }
